@@ -1,0 +1,4 @@
+signup details
+    name,email,username,college,gender,city,profession,password,captcha
+
+login details
