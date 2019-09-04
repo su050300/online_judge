@@ -5,11 +5,9 @@
     <title></title>
   </head>
   <body>
-    <form method="post">
-      <button type="button" formaction="/admin/problem_verification/verify/<%=problem_name%>">Verify</button>
-      <button type="button" formaction="/admin/problem_verification/discard/<%=problem_name%>">Discard</button>
 
-    </form>
+<a href="<%=problem_name%>/verify/">verify</a>
+<a href="<%= problem_name%>/discard/">discard</a>
     <h1>
       <%= problem_name%>
     </h1>
@@ -20,19 +18,19 @@
     </div>
     <div class="problem">
       <h3>Problem Statement</h3>
-      <p><%=problem_statement%></p>
+      <p><%-problem_statement%></p>
       <h3>Input Format</h3>
-      <p><%=input%></p>
+      <p><%-input%></p>
       <h3>Output Format</h3></h3>
-      <p><%=output%></p>
+      <p><%-output%></p>
       <h3>Constraints</h3>
-      <p><%=constraints%></p>
+      <p><%-constraints%></p>
       <h3>Sample Input</h3>
-      <p><%=sample_in%></p>
+      <p><%-sample_in%></p>
       <h3>Sample Output</h3>
-      <p><%=sample_out%></p>
+      <p><%-sample_out%></p>
       <h3>Explanation</h3>
-      <p><%=explanation%></p>
+      <p><%-explanation%></p>
 
 
     </div>
