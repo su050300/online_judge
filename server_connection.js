@@ -1,57 +1,47 @@
-const express=require("express");
-const app=express();
+var express=require('express');
+var app=express();
+var session=require('express-session');
+var bodyParser = require('body-parser');
+//require('./routes')(app,session);
+var path=require('path');
+var flash=require('connect-flash');
+var cookieParser = require('cookie-parser');
+var MemoryStore = require('memorystore')(session);
 
-//require('./db_connection.js');
+
+//app.use(require('./routes/index.js')(app,session));
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','ejs');
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname,'public')));
+app.use(bodyParser.urlencoded({extended: true  }));
 
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root123',
-    database: 'online_judge'
-  })
 
-  connection.connect(function(err) {
-    if (err) throw err
-    console.log('You are now connected...')
-  })
+  var SESS_NAME='user';
+  var SESS_SECRET='secret word';
+  var SESS_LIFETIME=1000*60*60*2;
 
-require('./api_file_list.js')(app,connection);
-/*
-app.post("/",function(req,res){
-  res.send(`<h3>Register</h3>`);
-  var submission=req.body.submission;
-  var input=req.body.input;
-  fs.writeFile(__dirname+"/codes/a.c",submission,function(){
-    var resultPromise = c.runFile(__dirname+"/codes/a.c", { stdin:input});
-resultPromise
-    .then(result => {
-      res.set('Content-Type', 'text/plain');
-      if (result['stderr'] != "" || result['errorType'] != null){
-        console.log(result['stderr']);
-        console.log(result['memoryUsage']);
-        console.log(result['cpuUsage']);
-        //res.write(result['stdout']);
-        res.write(result['errorType'] + " error" + "\n");
-        res.write(result['stderr']);
-        res.end();
-      }
-      else{
-        console.log(result['memoryUsage']);
-        console.log(result['cpuUsage']);
-        res.send(result['stdout']);
-        //res.send(result);
-      }
+  app.use(session({
 
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    name:SESS_NAME,
+    resave: false,
+    saveUninitialized: false,
+    secret: SESS_SECRET,
+    cookie:{
+      maxAge: SESS_LIFETIME,
+      sameSite: true
+    },
+    store: new MemoryStore({
+     checkPeriod: SESS_LIFETIME // prune expired entries every 24h
+   })
+  }));
 
-  });
+  app.use(flash());
 
-});*/
+  // console.log(session.userId);
+  require('./routes')(app);
+
 app.listen(3000,function(){
 
 });

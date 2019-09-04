@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <% if (message) { %>
+        <p> welcome  <%=message%>!!!</p>
+        <a href = 'logout'>Logout!!</a>
+        <a href = 'problem_set'>Problem Set!!</a>
+        <%} else { %>
+        <p> Invalid </p>
+        <a href = 'login'>Login</a>
+        <a href = 'register'>Register</a>
+        <% } %>
+  </body>
+</html>

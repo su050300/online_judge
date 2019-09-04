@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="../../public/js/tinymce.min.js" referrerpolicy="origin"></script>
+  <script type="text/javascript">
+    tinymce.init({
+      selector: '.textarea1',
+      branding: false,
+      statusbar: false,
+      menubar: 'edit format',
+      init_instance_callback: function(editor) {
+        var freeTiny = document.querySelectorAll('.tox .tox-notification--in');
+        freeTiny.forEach(element => {
+          element.style.display = 'none';
+        });
+
+
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <form action='/problem_set' method='post' enctype='multipart/form-data'>
+    <% if(!message){%>
+    <p>
+      <script>
+        alert('low number of points');
+        window.location.href = "/home";
+      </script>
+      <%}%>
+    </p>
+    <input type='text' name='problem_name' required placeholder='problem name'>
+    <label></label>Difficulty</label>
+    <input type='radio' name='difficulty' value='easy'>Easy<br>
+    <input type='radio' name='difficulty' value='medium'>Medium<br>
+    <input type='radio' name='difficulty' value='hard'>Hard<br>
+    <input type='text' name='subdomain' required placeholder='subdomain'>
+    <input type='number' name='time_limit' min='0.5' max='5.0' required placeholder='time_limit' step='0.5'>
+    <input type='number' name='memory_limit' required placeholder='memory_limit'>
+    <br><br>
+    <textarea class='textarea1' name='problem_statement' required placeholder="problem statement"></textarea>
+    <label>Upload image here if any</label>
+    <br><br><input type='file' name='image' accept='.png, .jpg, .jpeg' size='1024*250'>
+    <textarea class='textarea1' name='input' required placeholder='input'></textarea>
+    <textarea class='textarea1' name='constraints' required placeholder='constraints'></textarea>
+    <textarea class='textarea1' name='output' required placeholder='output'></textarea>
+    <textarea class='textarea1' name='sample_in' required placeholder='sample input'></textarea>
+    <textarea class='textarea1' name='sample_out' required placeholder='sample output'></textarea>
+    <textarea class='textarea1' name='explanation' required placeholder='explanation'></textarea>
+    <input type='file' name='testcase' accept='.zip' size='1024*1024'>
+    <button type='submit'>Submit</button>
+
+  </form>
+
+</body>
+
+</html>

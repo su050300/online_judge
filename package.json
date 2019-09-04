@@ -1,0 +1,30 @@
+{
+  "name": "online-judge",
+  "version": "1.0.0",
+  "description": "online_judge",
+  "main": "server_connection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samsoldeinstein/online_judge.git"
+  },
+  "author": "Shivam Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samsoldeinstein/online_judge/issues"
+  },
+  "homepage": "https://github.com/samsoldeinstein/online_judge#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compile-run": "^2.3.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "memorystore": "^1.6.1",
+    "mysql": "^2.17.1",
+    "path": "^0.12.7"
+  }
+}

@@ -4,11 +4,44 @@ CREATE TABLE user(
     -> username VARCHAR(30) NOT NULL UNIQUE,
     -> email VARCHAR(50) NOT NULL UNIQUE,
     -> password VARCHAR(40) NOT NULL,
-    -> gender SET('male','female','other'),
+    -> gender SET('male','female','other'),  // do it not null
     -> city VARCHAR(20) NOT NULL,
     -> state VARCHAR(20) NOT NULL,
     -> college VARCHAR(100) NOT NULL,
     -> points INT(6) NOT NULL DEFAULT 0);
 
+
+
+> CREATE TABLE problems(
+    -> problem_id INT(6) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> user_id INT(6) NOT NULL,
+    -> problem_name VARCHAR(30) NOT NULL,
+    -> difficulty SET('easy','medium','hard'),
+    -> subdomain SET('strings','sorting','search','arrays','graph','greedy','dp','bitman','game','recursion','algorithm','np') NOT NULL,
+    -> time_limit FLOAT(3) NOT NULL,
+    -> memory_limit INT(3) NOT NULL,
+    -> problem_statement TEXT NOT NULL,
+    -> input TEXT NOT NULL,
+    -> constraints TEXT NOT NULL,
+    -> output TEXT NOT NULL,
+    -> sample_in TEXT NOT NULL,
+    -> sample_out TEXT NOT NULL,
+    -> explanation TEXT NOT NULL);
+
+
+
+mysql> CREATE TABLE verified_problems(
+    -> problem_id INT(6) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> user_id INT(6) NOT NULL,
+    -> problem_name VARCHAR(30) NOT NULL,
+    -> difficulty SET('easy','medium','hard'),subdomain SET('strings','sorting','search','arrays','graph','greedy','dp','bitman','game','recursion','algorithm','np') NOT NULL,
+    -> time_limit FLOAT(3) NOT NULL,
+    -> memory_limit INT(3) NOT NULL,
+    -> problem_statement TEXT NOT NULL,
+    -> input TEXT NOT NULL,
+    -> constraints TEXT NOT NULL,output TEXT NOT NULL,
+    -> sample_in TEXT NOT NULL,
+    -> sample_out TEXT NOT NULL,
+    -> explanation TEXT NOT NULL);
 
     
