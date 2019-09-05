@@ -7,8 +7,8 @@ var path=require('path');
 var flash=require('connect-flash');
 var cookieParser = require('cookie-parser');
 var MemoryStore = require('memorystore')(session);
-
-
+// var PORT = 3000;
+var PORT = require('./routes/constant.js');
 //app.use(require('./routes/index.js')(app,session));
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({extended: true  }));
 
   // console.log(session.userId);
   require('./routes')(app);
-
-app.listen(3000,function(){
+// console.log(PORT['PORT']);
+app.listen(PORT['PORT'],function(){
 
 });

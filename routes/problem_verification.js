@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('./db_connection.js');
+var PORT = require('./constant.js');
 
 router.get('/', function(req, res, next) {
           // res.writeHead(200,{'Content-Type':'text/h2tml'});
@@ -10,6 +11,26 @@ router.get('/', function(req, res, next) {
   });
 
 });
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  port: PORT['PORT'],
+  secure: true,
+  auth: {
+    user: 'blackhat050300@gmail.com',
+    pass: 'Mnnit@123456'
+  }
+});
+
+var mailOptions = {
+  from: 'blackhat050300@gmail.com',
+  subject: 'Problem response from codespark'
+};
+
+
+
+
 router.post('/', function(req, res, next) {
           // res.writeHead(200,{'Content-Type':'text/html'});
   var i = 0;
@@ -63,19 +84,71 @@ router.get('/:problem_name', function(req, res) {
 router.get('/:problem_name/verify/', function(req, res, next) {
   var problem_name = req.params.problem_name;
   connection.query('INSERT INTO verified_problems SELECT * FROM problems WHERE problem_name=?',[problem_name], function(err, rows, fields) {
-    if (err) throw err    });
+    if (err) throw err   
+  else{
   connection.query('DELETE FROM problems WHERE problem_name=?',[problem_name], function(err, rows, fields) {
       if (err) throw err
+      else{
+        connection.query('SELECT * FROM verified_problems WHERE problem_name = ?',[problem_name],function(err, rows, fields){
+          if (err) throw err
+          else{
+            var problem_date = rows[0]['problem_date'];
+            var user_id = rows[0]['user_id'];
+            connection.query('SELECT email FROM user WHERE id = ?',[user_id],function(err, rows, fields){
+              if (err) throw err
+              
+        mailOptions.to = rows[0]['email'];
+        mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been verified and is added to the site';
+        transporter.sendMail(mailOptions, function(error, info){
+        console.log('mailed');
+          if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    })
+    }
+    })
+    }
     res.redirect('/admin/problem_verification/');
     });
+  
+    }
+   })
   });
 
   router.get('/:problem_name/discard', function(req, res, next) {
     var problem_name = req.params.problem_name;
-    connection.query('DELETE FROM problems WHERE problem_name=?',[problem_name], function(err, rows, fields) {
-        if (err) throw err
-    res.redirect('/admin/problem_verification/');
-      });
+    connection.query('SELECT * FROM problems WHERE problem_name = ?',[problem_name],function(err, rows, fields){
+      if (err) throw err
+      else{
+        var problem_date = rows[0]['problem_date'];
+        var user_id = rows[0]['user_id'];
+        connection.query('SELECT email FROM user WHERE id = ?',[user_id],function(err, rows, fields){
+          if (err) throw err
+          else{
+            mailOptions.to = rows[0]['email'];
+            mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been disqualified due to certain reasons';
+            connection.query('DELETE FROM problems WHERE problem_name = ?',[problem_name], function(err, rows, fields) {
+              if (err) throw err
+              transporter.sendMail(mailOptions, function(error, info){
+                console.log('mailed');
+                  if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+            res.redirect('/admin/problem_verification/');
+            });
+    
+    
+}
+})
+}
+})
+    
     });
 
 
