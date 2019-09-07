@@ -1,0 +1,14 @@
+/* container */
+
+.cont {
+    margin: 7% 20%;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+}
+
+
+/* padding for all */
+
+.padit {
+    padding: 3% 5%;
+}

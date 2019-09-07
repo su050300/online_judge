@@ -1,0 +1,28 @@
+/* container-fluid */
+
+.headr {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    font-family: 'Ubuntu', sans-serif;
+    background-image: linear-gradient(115deg, #fff 50%, #b3d9ff 50%);
+}
+
+.fo {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* images */
+
+.init {
+    margin: 0;
+    padding: 0;
+}
+
+.highlight {
+    padding-top: 15%;
+}
+
+
+/* footer section */

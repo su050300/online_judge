@@ -1,0 +1,15 @@
+/* user */
+
+.user {
+    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
+    margin: 7% 15%;
+}
+
+.border {
+    box-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.3);
+}
+
+.specfont {
+    font-size: 1rem;
+}

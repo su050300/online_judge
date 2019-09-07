@@ -1,0 +1,34 @@
+.contain {
+    margin: 7% 20%;
+}
+
+.card {
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    text-align: center;
+}
+
+.card-body {
+    padding: 7% 10%;
+}
+
+.card-footer {
+    text-align: center;
+}
+
+.padit {
+    padding-left: 10%;
+    font-size: 1.1rem;
+}
+
+.text-muted {
+    font-size: 1rem;
+}
+
+.card-footer {
+    background-color: none;
+}
