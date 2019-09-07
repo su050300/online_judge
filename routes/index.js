@@ -18,6 +18,7 @@ module.exports = function (app) {
     app.use('/admin/login', require('./adminlogin'));
     app.use('/admin/home', require('./adminhome'));
     app.use('/admin/logout', require('./adminlogout'));
+    app.use('/contest/create_details', require('./contest_details'));
    //404 page
     app.set(function (req, res) {
         if (!res.headersSent) {

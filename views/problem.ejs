@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
 
-<a href="<%=problem_name%>/verify/">verify</a>
-<a href="<%= problem_name%>/discard/">discard</a>
-    <h1>
-      <%= problem_name%>
-    </h1>
-    <div class="problem-details">
-      <p>author:<%=author%></p>
-      <p>difficulty:<%=difficulty%></p>
-      <p>subdomain:<%=subdomain%></p>
-    </div>
-    <div class="problem">
-      <h3>Problem Statement</h3>
-      <p><%-problem_statement%></p>
-      <h3>Input Format</h3>
-      <p><%-input%></p>
-      <h3>Output Format</h3></h3>
-      <p><%-output%></p>
-      <h3>Constraints</h3>
-      <p><%-constraints%></p>
-      <h3>Sample Input</h3>
-      <p><%-sample_in%></p>
-      <h3>Sample Output</h3>
-      <p><%-sample_out%></p>
-      <h3>Explanation</h3>
-      <p><%-explanation%></p>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <a href="<%=problem_id%>/verify/">verify</a>
+  <a href="<%= problem_id%>/discard/">discard</a>
+  <h1>
+    <%= problem_name%>
+  </h1>
+  <div class="problem-details">
+    <p>author:<%=author%></p>
+    <p>difficulty:<%=difficulty%></p>
+    <p>subdomain:<%=subdomain%></p>
+  </div>
+  <div class="problem">
+    <h3>Problem Statement</h3>
+    <p><%-problem_statement%></p>
+    <h3>Input Format</h3>
+    <p><%-input%></p>
+    <h3>Output Format</h3>
+    </h3>
+    <p><%-output%></p>
+    <h3>Constraints</h3>
+    <p><%-constraints%></p>
+    <h3>Sample Input</h3>
+    <p><%-sample_in%></p>
+    <h3>Sample Output</h3>
+    <p><%-sample_out%></p>
+    <h3>Explanation</h3>
+    <p><%-explanation%></p>
 
 
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

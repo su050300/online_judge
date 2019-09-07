@@ -44,6 +44,6 @@ mysql> CREATE TABLE verified_problems(
     -> sample_out TEXT NOT NULL,
     -> explanation TEXT NOT NULL);
 
-    
+
 
     create table submission( problem_id INT(6) NOT NULL , user_id INT(6) NOT NULL, datetime datetime NOT NULL, status SET('AC','RE','WA','TLE','CE') NOT NULL, solution TEXT NOT NULL, time FLOAT NOT NULL, memory FLOAT NOT NULL, language SET('C','C++','Java','Python','NodeJs') NOT NULL);

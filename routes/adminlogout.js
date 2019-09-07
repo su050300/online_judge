@@ -6,6 +6,6 @@ router.get('/', redirectAdminLogin, function(req, res, next) {
   res.clearCookie('user');
   req.session = null;
 
-  res.redirect('/login');
+  res.redirect('/admin/login');
 });
 module.exports = router;
