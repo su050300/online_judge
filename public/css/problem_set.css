@@ -1,0 +1,30 @@
+/* container */
+
+.containit {
+    margin: 4% 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.containit textarea {
+    resize: none;
+}
+
+.form-control:focus {
+    border-color: #d6d6c2;
+    box-shadow: none;
+}
+
+.padit {
+    margin-top: 5%;
+    padding-left: 3%;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}

@@ -1,0 +1,35 @@
+/* description-header */
+
+
+/* container */
+
+.cont {
+    margin: 5% 3%;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+}
+
+
+/* padding for all */
+
+.padit {
+    padding: 1% 5%;
+}
+
+
+/*problem desciption page */
+
+.sample {
+    background-color: #d4d7dd;
+    padding: 2% 2%;
+}
+
+
+/* media queries */
+
+@media (max-width:700px) {
+    .container {
+        margin: 7% 0%;
+    }
+}

@@ -61,13 +61,13 @@ router.post('/',redirectLogin,function(req,res,next){
        
       
       sql_query = sql_query + table_join + submission_query + where_query + order_by_query + order_by_date;
-      console.log(sql_query);
+      
       connection.query(sql_query,[user_id], function(err, rows, fields) {
         if (err) throw err
         if (!rows) {
           res.write('No problems match your search');
         } else {        
-          console.log(rows.length);  
+           
            for (var i = 0;i < rows.length;i++) {
             if (rows[i]['status'] === 'AC' && status.length == 1 && status[0] == '0')
               continue;
@@ -83,7 +83,7 @@ router.post('/',redirectLogin,function(req,res,next){
               problem_status = 'Unsolved';
             else 
               problem_status = 'solved';
-              // console.log('mja aa gya');    
+               
             var senddata = '<tr><td><a href="/practice/' + rows[i]['problem_name']+'">'+ rows[i]['problem_name']+ '</a></td><td>' + rows[i]['difficulty']+ '</td><td>' + problem_points + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + problem_status + '</td></tr>';
             res.write(senddata);
           }

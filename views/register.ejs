@@ -1,28 +1,132 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
+<%-include('headheader');-%>
 
-    </title>
-</head>
-<body>
-<h1>Register</h1>
-        <form method = 'post' action = '/register'>
-            <input type = 'text' name = 'name' placeholder = 'Name' required />
-            <input type = 'text' name = 'username' placeholder = 'Username' required />
-            <input type = 'email' name = 'email' placeholder = 'Email' required />
-            <input type = 'password' name = 'password' placeholder = 'Password' required />
-            <Label>Gender</Label>
-            <input type = 'radio' name = 'gender' value = 'male'>Male<br>
-            <input type = 'radio' name = 'gender' value = 'female'>Female<br>
-            <input type = 'radio' name = 'gender' value = 'other'>Other<br>
-            <input type = 'text' name = 'city' placeholder = 'City' required />
-            <input type = 'text' name = 'state' placeholder = 'State' required />
-            <input type = 'text' name = 'college' placeholder = 'College' required />
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/headertop.css">
+    <%-include('footheader');-%>
+    <!-- container -->
+    <div class="contain">
+        <form method='post' action='/register' class="form-horizontal">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Register</h4>
+                </div>
+                <div class="card-body">
+                    <!-- name of the user -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='text' id="name" name='name' class="form-control" placeholder='Name' required />
+                        </div>
+                    </div>
+                    <!-- username -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='text' id="username" name='username' class="form-control" placeholder='Username' required />
+                        </div>
+                    </div>
+                    <!-- email id -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="mail">Email</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='email' id="mail" name='email' class="form-control" placeholder='Email' required />
+                        </div>
+
+                    </div>
+                    <!-- password -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='password' id="password" name='password' class="form-control" placeholder='Password' required />
+                        </div>
+                    </div>
+                    <!-- gender -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Gender</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-check padit">
+                                <input type='radio' class="form-check-input" id="male" name='gender' value='male'>
+                                <label for="male" class="form-check-label text-muted">Male</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="form-check padit">
+                                <input type='radio' class="form-check-input" id="medium" name='gender' value='female'>
+                                <label for="female" class="form-check-label text-muted">Female</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-check padit">
+
+                                <input type='radio' class="form-check-input" id="other" name='gender' value='other'>
+                                <label for="other" class="form-check-label text-muted">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- city -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='text' id="city" name='city' class="form-control" placeholder='City' required />
+                        </div>
+                    </div>
+                    <!-- state -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="state">State</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='text' id="state" name='state' class="form-control" placeholder='State' required />
+                        </div>
+                    </div>
+                    <!-- college -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label for="college">College</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type='text' name='college' class="form-control" placeholder='College' required />
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- submit -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-success" name='submit'>Submit</button>
+                    </div>
+
+                    <p class="text-muted text-center">already have an account?<a href='/login'>Login</a></p>
+                </div>
+
+
+            </div>
+
+
+
+
             <% if(message)%>
-            <p><%=message%></p>
-            <button name = 'submit'>Submit</button>
+                <p>
+                    <%=message%>
+                </p>
+
         </form>
-        <a href = '/login'>Login</a>
-    </body>
-        </html>
+    </div>
+
+
+    <%-include('footer');-%>
