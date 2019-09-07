@@ -5,10 +5,10 @@ var connection = require('./db_connection.js');
 
 
 router.get('/' ,(function(req,res,next){
-    if(req.session.username)
-        res.render('home.ejs',{message:req.session.username})
+    if(req.session.adminname)
+        res.render('adminhome.ejs',{message:req.session.adminname})
 
     else
-        res.render('home.ejs',{message:''});
+        res.render('adminhome.ejs',{message:''});
 }));
 module.exports=router;

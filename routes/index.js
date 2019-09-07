@@ -3,6 +3,10 @@ module.exports = function (app) {
         res.redirect('./home');
 
     });
+    app.get('/admin', function (req, res) {
+        res.redirect('./admin/home');
+
+    });
 
     app.use('/home',require('./home'));
     app.use('/register',require('./register'));
@@ -11,6 +15,9 @@ module.exports = function (app) {
     app.use('/problem_set', require('./problem_set'));
     app.use('/practice', require('./practice'));
     app.use('/admin/problem_verification', require('./problem_verification'));
+    app.use('/admin/login', require('./adminlogin'));
+    app.use('/admin/home', require('./adminhome'));
+    app.use('/admin/logout', require('./adminlogout'));
    //404 page
     app.set(function (req, res) {
         if (!res.headersSent) {

@@ -2,9 +2,13 @@ var express = require('express');
 var router = express.Router();
 var connection = require('./db_connection.js');
 var PORT = require('./constant.js');
+var redirectAdminLogin = require('../middleware/check').redirectAdminLogin;
+var fs = require('fs-extra');
 
-router.get('/', function(req, res, next) {
-          // res.writeHead(200,{'Content-Type':'text/h2tml'});
+var path = require("path");
+
+router.get('/', redirectAdminLogin, function(req, res, next) {
+  // res.writeHead(200,{'Content-Type':'text/h2tml'});
 
   res.render('problem_verification.ejs', {
     message: ''
@@ -31,8 +35,8 @@ var mailOptions = {
 
 
 
-router.post('/', function(req, res, next) {
-          // res.writeHead(200,{'Content-Type':'text/html'});
+router.post('/', redirectAdminLogin, function(req, res, next) {
+  // res.writeHead(200,{'Content-Type':'text/html'});
   var i = 0;
   connection.query('SELECT problem_id,problem_name FROM problems ', function(err, rows, fields) {
     if (err) throw err
@@ -40,7 +44,7 @@ router.post('/', function(req, res, next) {
       res.write('no more problems to verify');
     } else {
       while (rows[i]) {
-        var senddata = '<tr><td>' + rows[i]['problem_id'] + '</td><td><a href="/admin/problem_verification/'+rows[i]['problem_name']+'">' + rows[i]['problem_name'] + '</a></td></tr>';
+        var senddata = '<tr><td>' + rows[i]['problem_id'] + '</td><td><a href="/admin/problem_verification/' + rows[i]['problem_name'] + '">' + rows[i]['problem_name'] + '</a></td></tr>';
         res.write(senddata);
         i++;
       }
@@ -50,7 +54,7 @@ router.post('/', function(req, res, next) {
 
   });
 });
-router.get('/:problem_name', function(req, res) {
+router.get('/:problem_name', redirectAdminLogin, function(req, res) {
   var problem_name = req.params.problem_name;
   // console.log(problem_name);
   connection.query('SELECT * FROM problems WHERE problem_name = ?', [problem_name], function(err, rows, fields) {
@@ -75,81 +79,106 @@ router.get('/:problem_name', function(req, res) {
           sample_out: rows[0]['sample_out'],
           explanation: rows[0]['explanation']
         }
-        res.render('problem',problem);
+        res.render('problem', problem);
       });
     }
   });
 });
 
-router.get('/:problem_name/verify/', function(req, res, next) {
-  var problem_name = req.params.problem_name;
-  connection.query('INSERT INTO verified_problems SELECT * FROM problems WHERE problem_name=?',[problem_name], function(err, rows, fields) {
-    if (err) throw err   
-  else{
-  connection.query('DELETE FROM problems WHERE problem_name=?',[problem_name], function(err, rows, fields) {
-      if (err) throw err
-      else{
-        connection.query('SELECT * FROM verified_problems WHERE problem_name = ?',[problem_name],function(err, rows, fields){
-          if (err) throw err
-          else{
-            var problem_date = rows[0]['problem_date'];
-            var user_id = rows[0]['user_id'];
-            connection.query('SELECT email FROM user WHERE id = ?',[user_id],function(err, rows, fields){
-              if (err) throw err
-              
-        mailOptions.to = rows[0]['email'];
-        mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been verified and is added to the site';
-        transporter.sendMail(mailOptions, function(error, info){
-        console.log('mailed');
-          if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-    })
-    }
-    })
-    }
-    res.redirect('/admin/problem_verification/');
-    });
-  
-    }
-   })
-  });
 
-  router.get('/:problem_name/discard', function(req, res, next) {
-    var problem_name = req.params.problem_name;
-    connection.query('SELECT * FROM problems WHERE problem_name = ?',[problem_name],function(err, rows, fields){
-      if (err) throw err
-      else{
-        var problem_date = rows[0]['problem_date'];
-        var user_id = rows[0]['user_id'];
-        connection.query('SELECT email FROM user WHERE id = ?',[user_id],function(err, rows, fields){
-          if (err) throw err
-          else{
-            mailOptions.to = rows[0]['email'];
-            mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been disqualified due to certain reasons';
-            connection.query('DELETE FROM problems WHERE problem_name = ?',[problem_name], function(err, rows, fields) {
-              if (err) throw err
-              transporter.sendMail(mailOptions, function(error, info){
-                console.log('mailed');
-                  if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
+router.get('/:problem_name/verify/', redirectAdminLogin, function(req, res, next) {
+  var problem_name = req.params.problem_name;
+  connection.query('INSERT INTO verified_problems SELECT * FROM problems WHERE problem_name=?', [problem_name], function(err, rows, fields) {
+    if (err) throw err
+    else {
+      connection.query('DELETE FROM problems WHERE problem_name=?', [problem_name], function(err, rows, fields) {
+        if (err) throw err
+        else {
+          connection.query('SELECT * FROM verified_problems WHERE problem_name = ?', [problem_name], function(err, rows, fields) {
+            if (err) throw err
+            else {
+              var problem_date = rows[0]['problem_date'];
+              var user_id = rows[0]['user_id'];
+              var problem_id = rows[0]['problem_id'];
+              var prevdir =__dirname+'/../problems/testcase/' + problem_id;
+              var nextdir =__dirname+'/../verified_problems/testcase/' + problem_id;
+              fs.copySync(prevdir, nextdir);
+              fs.removeSync(prevdir);
+              var ext=['.png', '.jpg', '.jpeg'];
+              ext.forEach(function(imgext)
+              {
+                previmg=__dirname+'/../problems/image/' + problem_id+imgext;
+                if(fs.existsSync(previmg))
+                {
+                    var nextimg =__dirname+'/../verified_problems/image/' + problem_id+imgext;
+                    fs.moveSync(previmg, nextimg);
                 }
               });
-            res.redirect('/admin/problem_verification/');
+
+
+
+              connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
+                if (err) throw err
+
+                mailOptions.to = rows[0]['email'];
+                mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been verified and is added to the site';
+                transporter.sendMail(mailOptions, function(error, info) {
+                  console.log('mailed');
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                  }
+                });
+              });
+            }
+          })
+        }
+        res.redirect('/admin/problem_verification/');
+      });
+
+    }
+  });
+});
+
+router.get('/:problem_name/discard', redirectAdminLogin, function(req, res, next) {
+  var problem_name = req.params.problem_name;
+  connection.query('SELECT * FROM problems WHERE problem_name = ?', [problem_name], function(err, rows, fields) {
+    if (err) throw err
+    else {
+      var problem_date = rows[0]['date'];
+      var user_id = rows[0]['user_id'];
+      var problem_id = rows[0]['problem_id'];
+      var prevdir =__dirname+'/../problems/testcase/' + problem_id;
+      fs.removeSync(prevdir);
+      connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
+        if (err) throw err
+        else {
+          mailOptions.to = rows[0]['email'];
+          mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been disqualified due to certain reasons';
+          connection.query('DELETE FROM problems WHERE problem_name = ?', [problem_name], function(err, rows, fields) {
+            if (err) throw err
+            transporter.sendMail(mailOptions, function(error, info) {
+              console.log('mailed');
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
             });
-    
-    
-}
-})
-}
-})
-    
-    });
+            res.redirect('/admin/problem_verification/');
+          });
+        }
+      });
+      res.redirect('/admin/problem_verification/');
+    }
+  })
+});
+
+
+
+
+
 
 
 
