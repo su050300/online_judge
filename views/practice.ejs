@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body onload="load_practice()">
+    <h1>Practice</h1>
+    <form onchange = "load_practice()">
+    <label>Status</label>
+    <input type="checkbox" class="status" value="1"> Solved<br>
+    <input type="checkbox" class="status" value="0"> Unsolved<br>
+    
+    <label>Difficulty</label>
+    <input type="checkbox" class="difficulty" value="easy"> Easy<br>
+    <input type="checkbox" class="difficulty" value="medium"> Medium<br>
+    <input type="checkbox" class="difficulty" value="hard"> Hard<br>
+
+    <label>Subdomain</label>
+    <input type="checkbox" class="subdomain" value="search"> Search<br>
+    <input type="checkbox" class="subdomain" value="arrays"> Arrays<br>
+    <input type="checkbox" class="subdomain" value="strings"> Strings<br>
+    <input type="checkbox" class="subdomain" value="sorting"> Sorting<br>
+    <input type="checkbox" class="subdomain" value="recursion"> Recursion<br>
+    <input type="checkbox" class="subdomain" value="bitman"> Bit Manipulation<br>
+    <input type="checkbox" class="subdomain" value="greedy"> Greedy<br>
+    <input type="checkbox" class="subdomain" value="dp"> Dynamic Programming<br>
+    <input type="checkbox" class="subdomain" value="graph"> Graph<br>
+    <input type="checkbox" class="subdomain" value="game"> Game Theory<br>
+    <input type="checkbox" class="subdomain" value="algorithm"> Algorithm<br>
+    <input type="checkbox" class="subdomain" value="np"> NP Complete NP Hard<br>
+
+    
+      <table>
+        <!-- <thead>
+          <tr>
+            <td>Problem Id</td>
+            <td>Problem Name</td>
+
+          </tr>
+        </thead> -->
+
+        <tbody id="problem-list">  </tbody>
+      </table>
+
+
+<script type="text/javascript">
+function load_practice(){
+    var xhttp;
+    var query = {status: '',difficulty: '',subdomain: ''};
+    xhttp = new XMLHttpRequest();
+    var status = document.getElementsByClassName('status');
+    var difficulty = document.getElementsByClassName('difficulty');
+    var  subdomain = document.getElementsByClassName('subdomain');
+    if (status.length != 0 || difficulty.length != 0 || subdomain.length != 0){
+      for (var i = 0;i < status.length;i++){
+        if (status[i].checked){
+         query.status += status[i].value + ' ';  
+      } 
+    }
+    for (var i = 0;i < difficulty.length;i++){
+        if (difficulty[i].checked){
+         query.difficulty += difficulty[i].value + ' ';  
+      } 
+    }
+    for (var i = 0;i < subdomain.length;i++){
+        if (subdomain[i].checked){
+         query.subdomain += subdomain[i].value + ' ';  
+      } 
+    }
+    
+        console.log(query);
+    }
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("problem-list").innerHTML = this.responseText;
+    console.log(this.responseText);
+    }
+  };
+  
+    xhttp.open("POST", "/practice", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(query));
+  }
+
+    
+  
+  
+
+</script>
+
+
+</body>
+
+  </html>

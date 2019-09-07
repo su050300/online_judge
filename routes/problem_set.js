@@ -78,6 +78,7 @@ router.post('/',function(req,res,next){
                                 else{
                                 connection.query('SELECT problem_id FROM problems WHERE problem_name = ?',[problem_name], function(err,rows,fields){
                                     if (err) throw err
+                                    if (req.files.image){
                                     var image_name = req.files.image.name.split('.')
                                     
                                     image_name = rows[0]['problem_id'] + '.' + image_name[image_name.length-1];
@@ -85,6 +86,7 @@ router.post('/',function(req,res,next){
                                     req.files.image.mv('problems/image/' + image_name,function(err){
                                         if (err) throw err
                                         });
+                                    }
                                         var dir = 'problems/testcase/' + rows[0]['problem_id'];
                                         req.files.testcase.mv(dir + '.zip',function(err){
                                             if (err) throw err

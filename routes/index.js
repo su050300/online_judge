@@ -9,6 +9,7 @@ module.exports = function (app) {
     app.use('/login', require('./login'));
     app.use('/logout', require('./logout'));
     app.use('/problem_set', require('./problem_set'));
+    app.use('/practice', require('./practice'));
     app.use('/admin/problem_verification', require('./problem_verification'));
    //404 page
     app.set(function (req, res) {
