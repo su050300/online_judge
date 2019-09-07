@@ -12,18 +12,18 @@
             editor.on('change', function (e) {
             editor.save();
             });
-            },  
+            },
           init_instance_callback : function(editor) {
             var freeTiny = document.querySelectorAll('.tox .tox-notification--in');
             freeTiny.forEach(element => {
                 element.style.display = 'none';
         });
-          
-    
+
+
         }
         });
         </script>
-</head>    
+</head>
     <body>
         <form method = 'post' action = '/problem_set' enctype = 'multipart/form-data'>
             <% if(message === 0){%>
@@ -58,7 +58,7 @@
             <br><br>
             <textarea  class ='textarea1' name = 'problem_statement' required></textarea>
             <label>Upload image here if any</label>
-            <br><br><input type = 'file' name = 'image' accept = '.png, .jpg, .jpeg' size = '1024*250'> 
+            <br><br><input type = 'file' name = 'image' accept = '.png, .jpg, .jpeg' size = '1024*250'>
             <textarea class = 'textarea1' name = 'input' required placeholder = 'input'></textarea>
             <textarea class = 'textarea1' name = 'constraints' required placeholder = 'constraints'></textarea>
             <textarea class = 'textarea1' name = 'output' required placeholder = 'output'></textarea>
@@ -67,10 +67,8 @@
             <textarea class = 'textarea1' name = 'explanation' required placeholder = 'explanation'></textarea>
             <input type = 'file' name = 'testcase' accept = '.zip' size = '1024*1024'>
             <button type = 'submit'>Submit</button>
-            
+
         </form>
 
     </body>
 </html>
-
-               
