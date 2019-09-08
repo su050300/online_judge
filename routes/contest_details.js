@@ -5,9 +5,7 @@ var redirectLogin = require('../middleware/check').redirectLogin;
 
 router.get('/', redirectLogin, function(req, res, next) {
   if (!req.session.username) {
-    res.render('login.ejs', {
-      message: 'You are not logged in'
-    });
+    res.render('login.ejs', {message: 'You are not logged in'});
   } else {
     res.render('contest_details.ejs',{message:''});
   }
