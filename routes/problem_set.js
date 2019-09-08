@@ -75,7 +75,7 @@ router.post('/',redirectLogin,function(req,res,next){
                             }
                             connection.query('INSERT INTO problems SET ?', [problem], function (err, rows,fields) {
                                 if (err) throw err
-                                else{
+                                else {
                                 connection.query('SELECT problem_id FROM problems WHERE problem_name = ?',[problem_name], function(err,rows,fields){
                                     if (err) throw err
                                     if (req.files.image){

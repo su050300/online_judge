@@ -18,11 +18,12 @@ router.post('/', redirectLogin, function(req, res, next) {
       message: 'You are not logged in'
     });
   } else {
-    connection.query('SELECT * FROM verified_contest_details WHERE contest_name = ? UNION SELECT * FROM contest_details WHERE contest_name = ?',[req.body.contest_name], function (err, rows, fields) {
+    connection.query('SELECT * FROM verified_contest_details WHERE contest_name = ? UNION SELECT * FROM contest_details WHERE contest_name = ?',[req.body.contest_name,req.body.contest_name,], function (err, rows, fields) {
       if (err) throw err
-      if(rows.length){
+      if(!rows.length){
         res.render('contest_details',{message:'Contest name already exists.!!'});
       }
+
     });
   }
 });

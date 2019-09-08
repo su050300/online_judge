@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body onload="getcontest()">
+    <h1>Contest</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <td>Contest Id</td>
+            <td>Contest Name</td>
+
+          </tr>
+        </thead>
+
+        <tbody id="contest-list">  </tbody>
+      </table>
+
+
+<script type="text/javascript">
+    function getproblems(){
+      var xhttp;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("contest-list").innerHTML = this.responseText;
+    console.log(this.responseText);
+    }
+  };
+
+  xhttp.open("POST", "/admin/contest_verification", true);
+  xhttp.send();}
+
+</script>
+  </body>
+</html>
