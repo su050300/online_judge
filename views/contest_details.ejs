@@ -38,11 +38,11 @@
     <script type="text/javascript">
       function set_date()
       {
-        var currdate = new Date();
-        console.log(currdate.toISOString());
-        currdate = currdate.toISOString().slice(0,10);
-        currdate=currdate.split("-").reverse().join("-");
-        console.log(currdate);
+        var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+        indiaTime = new Date(indiaTime);
+        indiaTime = indiaTime.toLocaleString().split(',');
+        indiaTime[0] = indiaTime[0].split('/').join('-');
+  
         document.getElementById("start_date").setAttribute("min",currdate);
         document.getElementById("end_date").setAttribute("min",currdate);
 
@@ -51,7 +51,7 @@
         currdate = currdate.toISOString().slice(0,10);
         currdate=currdate.split("-").reverse().join("-");
 
-        console.log(currdate);
+
         document.getElementById("start_date").setAttribute("max",currdate);
         document.getElementById("end_date").setAttribute("max",currdate);
       }

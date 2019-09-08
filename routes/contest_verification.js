@@ -101,7 +101,7 @@ router.get('/:contest_id/verify/', redirectAdminLogin, function(req, res, next) 
               const contest_details = {
                 contest_id:contest_id,
                 user_id: user_id,
-                contest_name : rows[0]['user_id'],
+                contest_name : rows[0]['contest_name'],
                 start_date :rows[0]['start_date'],
                 start_time : rows[0]['start_time'],
                 end_date :rows[0]['end_date'],

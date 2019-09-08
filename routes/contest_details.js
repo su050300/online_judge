@@ -42,13 +42,12 @@ router.post('/', redirectLogin, function(req, res, next) {
             res.render('contest_details',{message:1}); // 1 for contest name already exists
           }
         else{
-        var currdate = new Date();
-        currdate = currdate.toISOString().slice(0,10);
-        console.log(req.body.start_date);
-        console.log(req.body.end_date);
-        console.log(req.body.start_time+':00');
-        console.log(req.body.end_time+':00');
-        const contest_details = {
+          var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+          indiaTime = new Date(indiaTime);
+          indiaTime = indiaTime.toLocaleString().split(',');
+          indiaTime[0] = indiaTime[0].split('/').reverse().join('-');
+
+          const contest_details = {
           user_id: user_id,
           contest_name : req.body.contest_name,
           start_date : req.body.start_date + '',
@@ -57,7 +56,7 @@ router.post('/', redirectLogin, function(req, res, next) {
           end_time : req.body.end_time + ':00',
           org_type : req.body.org_type,
           org_name : req.body.org_name,
-          date : currdate
+          date : indiaTime[0]
       }
         connection.query('INSERT INTO contest_details SET ?',[contest_details],function(err,rows,fields){
           if (err) throw err

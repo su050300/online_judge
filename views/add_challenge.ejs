@@ -1,0 +1,25 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <% if (!message) { %>
+        <p> Add challenges here</p>
+        <button onclick = 'existing_challenges()'>Add exising challenge</button>
+        <button onclick = 'new_challenges()'>Add new Challenge</button>
+        <div  id = 'existing_challenge' style = "display:none">
+            <%if(message){%>
+            <%for (i)
+        </div>
+        <%}%>   
+  </body>
+  <script>
+   function existing_challenges(){
+    document.getElementById('existing_challenge').style.display = 'block';
+   }
+  </script>
+</html>
+
+
+

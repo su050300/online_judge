@@ -1,3 +1,4 @@
+require('./cron_jobs');
 module.exports = function (app) {
     app.get('/', function (req, res) {
         res.redirect('./home');
