@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <a href="<%=contest_id%>/verify/">verify</a>
+  <a href="<%= contest_id%>/discard/">discard</a>
+  <h1>
+    <%= contest_name%>
+  </h1>
+  <div class="contest-details">
+    <p>Author: <%=author%></p>
+    <p>Start Date: <%=start_date%></p>
+    <p>Start Time: <%=start_time%></p>
+    <p>End Date: <%=end_date%></p>
+    <p>End Time: <%=end_time%></p>
+    <p>Organisation Type: <%=org_type%></p>
+    <p>Organisation Name: <%=org_name%></p>
+  </div>
+
+</body>
+
+</html>

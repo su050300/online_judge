@@ -7,7 +7,7 @@ const min_points_required = 5000;
 router.get('/', redirectLogin, function(req, res, next) {
   if (!req.session.username) {
     res.render('login.ejs', {message: 'You are not logged in'});
-  } 
+  }
   else {
     connection.query('SELECT points FROM user WHERE username = ?',[req.session.username], function (err, rows, fields) {
         if (err) throw err
@@ -24,7 +24,8 @@ router.post('/', redirectLogin, function(req, res, next) {
   if (!req.session.username) {
     res.render('login.ejs', {message: 'You are not logged in'});
   } else {
-    var user_id;
+
+    var user_id
     connection.query('SELECT id FROM user WHERE username = ?',[req.session.username], function (err, rows, fields) {
       if (err) throw err
       user_id = rows[0]['id'];
@@ -48,7 +49,7 @@ router.post('/', redirectLogin, function(req, res, next) {
         console.log(req.body.start_time+':00');
         console.log(req.body.end_time+':00');
         const contest_details = {
-          user_id: user_id,       
+          user_id: user_id,
           contest_name : req.body.contest_name,
           start_date : req.body.start_date + '',
           start_time : req.body.start_time + ':00',
@@ -63,9 +64,12 @@ router.post('/', redirectLogin, function(req, res, next) {
           res.render('contest_details',{message:2}); //2 for Your contest is added to the verification list.You will be notified when your contest gets verified
         })
       }
+
     });
   }
 });
   }
 });
+
+
 module.exports = router;

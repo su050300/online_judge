@@ -27,7 +27,9 @@ module.exports = function (app) {
     app.use('/contest/home', require('./contesthome'));
     app.use('/contest/add_challenge', require('./add_challenge'));
     app.use('/contest/logout', require('./contestlogout'));
-    //404 page
+    app.use('/admin/contest_verification', require('./contest_verification'));
+
+   //404 page
     app.set(function (req, res) {
         if (!res.headersSent) {
             res.status(404).render('404');
