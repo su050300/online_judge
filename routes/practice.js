@@ -29,7 +29,7 @@ router.post('/',redirectLogin,function(req,res,next){
     connection.query('SELECT id FROM user WHERE username = ?',[req.session.username],function(err,rows,fields){
       if (err) throw err
       var user_id = rows[0]['id'];
-      var sql_query = "SELECT vp.problem_name,vp.difficulty,vp.subdomain,sub.status FROM verified_problems AS vp ";
+      var sql_query = "SELECT vp.problem_id, vp.problem_name,vp.difficulty,vp.subdomain,sub.status FROM verified_problems AS vp ";
       var table_join = "";
       var submission_query = " submission AS sub ON (sub.problem_id = vp.problem_id AND sub.user_id = ? AND sub.status = 'AC') ";
       var where_query = "";
@@ -59,38 +59,7 @@ router.post('/',redirectLogin,function(req,res,next){
         table_join = " LEFT JOIN";
 
 
-      sql_query = sql_query + table_join + submission_query + where_query + order_by_query + order_by_date;
 
-      connection.query(sql_query,[user_id], function(err, rows, fields) {
-        if (err) throw err
-        if (!rows) {
-          res.write('No problems match your search');
-        } else {
-
-           for (var i = 0;i < rows.length;i++) {
-            if (rows[i]['status'] === 'AC' && status.length == 1 && status[0] == '0')
-              continue;
-            var problem_points = 0,problem_status;
-            if (rows[0]['difficulty'] === 'easy')
-                problem_points = 30;
-            else if (rows[0]['difficulty'] === 'medium')
-                problem_points = 60;
-            else
-
-                problem_points = 100;
-            if (rows[i]['status'] === null)
-              problem_status = 'Unsolved';
-            else
-              problem_status = 'solved';
-
-            var senddata = '<tr><td><a href="/practice/' + rows[i]['problem_name']+'">'+ rows[i]['problem_name']+ '</a></td><td>' + rows[i]['difficulty']+ '</td><td>' + problem_points + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + problem_status + '</td></tr>';
-            res.write(senddata);
-          }
-          res.end();
-        }
-      });
-      });
-});
 
 
     sql_query = sql_query + table_join + submission_query + where_query + order_by_query + order_by_date;
