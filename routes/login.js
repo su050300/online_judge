@@ -19,7 +19,7 @@ router.post('/',redirectHome,function(req,res,next){
             if(!rows.length){
                 res.render('login.ejs',{message:'Username not exists'});
              }
-             else if(!rows[0]['password'] === pass){
+             else if(rows[0]['password'] !== pass){
                 res.render('login.ejs',{message:'Username and password do not match'});
              }
              else {

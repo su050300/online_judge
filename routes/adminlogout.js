@@ -4,7 +4,7 @@ var redirectAdminLogin = require('../middleware/check').redirectAdminLogin;
 
 router.get('/', redirectAdminLogin, function(req, res, next) {
   res.clearCookie('user');
-  req.session = null;
+  req.session.adminname = null;
 
   res.redirect('/admin/login');
 });

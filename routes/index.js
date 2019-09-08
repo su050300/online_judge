@@ -4,7 +4,11 @@ module.exports = function (app) {
 
     });
     app.get('/admin', function (req, res) {
-        res.redirect('./admin/home');
+        res.redirect('./admin/login');
+
+    });
+    app.get('/contest', function (req, res) {
+        res.redirect('./contest/login');
 
     });
 
@@ -19,7 +23,11 @@ module.exports = function (app) {
     app.use('/admin/home', require('./adminhome'));
     app.use('/admin/logout', require('./adminlogout'));
     app.use('/contest/create_details', require('./contest_details'));
-   //404 page
+    app.use('/contest/login', require('./contestlogin'));
+    app.use('/contest/home', require('./contesthome'));
+    app.use('/contest/add_challenge', require('./add_challenge'));
+    app.use('/contest/logout', require('./contestlogout'));
+    //404 page
     app.set(function (req, res) {
         if (!res.headersSent) {
             res.status(404).render('404');
