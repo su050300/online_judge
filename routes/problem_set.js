@@ -44,8 +44,10 @@ router.post('/',redirectLogin,function(req,res,next){
                         res.render('problem_set',{message:3});  // 3 for This problem  already exists
                     }
                     else{
-                        var currdate = new Date();
-                        currdate = currdate.toISOString().slice(0,10);
+                        var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+                        indiaTime = new Date(indiaTime);
+                        indiaTime = indiaTime.toLocaleString().split(',');
+                        indiaTime[0] = indiaTime[0].split('/').reverse().join('-');
 
                     connection.query('SELECT * FROM verified_problems WHERE date = ? UNION SELECT * FROM problems WHERE date = ?',[currdate,currdate], function (err, rows, fields) {
                         if (err) throw err
@@ -71,7 +73,7 @@ router.post('/',redirectLogin,function(req,res,next){
                                 sample_in : req.body.sample_in,
                                 sample_out : req.body.sample_out,
                                 explanation : req.body.explanation,
-                                date : currdate
+                                date : indiaTime[0]
                             }
                             connection.query('INSERT INTO problems SET ?', [problem], function (err, rows,fields) {
                                 if (err) throw err
