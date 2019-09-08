@@ -14,10 +14,11 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   port: PORT['PORT'],
   secure: true,
-  auth: {
+      auth: {
     user: 'blackhat050300@gmail.com',
     pass: 'Mnnit@123456'
   }
+
 });
 
 var mailOptions = {

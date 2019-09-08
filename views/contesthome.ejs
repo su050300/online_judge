@@ -3,13 +3,53 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>
+  <body onload="getcontestdata()">
       <% if (!message) { %>
         <p> welcome here you can manage your contest!!!</p>
         <a href = 'logout'>Logout!!</a>
         <a href = 'add_challenge'>Add Challenge</a>
-        <%}%>   
+        <%}%>
+        <form action="" method="post">
+            <label>Contest Id:</label><input type="text" id="contest_id" disabled><br>
+            <label>Contest Name:</label><input type="text" id="contest_name" disabled><br>
+            <label>Contest Link:</label><input type="text" id="contest_link" disabled><br>
+            <label>Start Date:</label><input type="date" id="start_date" disabled><br>
+            <label>Start Time:</label><input type="time" id="start_time" disabled><br>
+            <label>End Date:</label><input type="date" id="end_date"><br>
+            <label>End Time:</label><input type="time" id="end_time"><br>
+            <label>Organisation Type:</label><input type="text" id="org_type" disabled><br>
+            <label>Organisation Name:</label><input type="text" id="org_name" disabled><br>
+
+        </form>
+        <div id="problem-list">
+
+        </div>
+        <script type="text/javascript">
+            function getcontestdata(){
+              var xhttp;
+          xhttp = new XMLHttpRequest();
+          xhttp.responseType="json";
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+            document.getElementById('contest_id').setAttribute('value',this.response.contest_id);
+            document.getElementById('contest_name').setAttribute('value',this.response.contest_name);
+            document.getElementById('contest_link').setAttribute('value',this.response.contest_link);
+            document.getElementById('start_date').setAttribute('value',this.response.start_date);
+            document.getElementById('start_time').setAttribute('value',this.response.start_time);
+            document.getElementById('end_date').setAttribute('value',this.response.end_date);
+            document.getElementById('end_time').setAttribute('value',this.response.end_time);
+            document.getElementById('org_type').setAttribute('value',this.response.org_type);
+            document.getElementById('org_name').setAttribute('value',this.response.org_name);
+
+
+            console.log(this.response);
+            }
+          };
+
+          xhttp.open("POST", "/contest/home", true);
+          xhttp.send();}
+
+        </script>
   </body>
 </html>
-
-
