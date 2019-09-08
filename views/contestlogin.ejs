@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+
+    </title>
+</head>
+<body>
+<h1>Contest Login</h1>
+        <form method = 'post' action = '/contest/login'>
+
+            <input type = 'text' name = 'username' placeholder = 'Username' required />
+            <input type = 'password' name = 'password' placeholder = 'Password' required />
+            <%if(message)%>
+            <p><%=message%></p>
+            <button name = 'submit'>Submit</button>
+        </form>
+    </body>
+        </html>

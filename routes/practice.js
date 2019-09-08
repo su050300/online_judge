@@ -63,13 +63,13 @@ router.post('/',redirectLogin,function(req,res,next){
 
 
     sql_query = sql_query + table_join + submission_query + where_query + order_by_query + order_by_date;
-    console.log(sql_query);
+    // console.log(sql_query);
     connection.query(sql_query, [user_id], function(err, rows, fields) {
       if (err) throw err
       if (!rows) {
         res.write('No problems match your search');
       } else {
-        console.log(rows.length);
+        // console.log(rows.length);
         for (var i = 0; i < rows.length; i++) {
           if (rows[i]['status'] === 'AC' && status.length == 1 && status[0] == '0')
             continue;

@@ -5,10 +5,20 @@
     <title></title>
   </head>
   <body onload="set_date()">
-    <form method='post'  action='/contest/create_details' >
+    <form action='/contest/create_details' method='post'>
         <label>Contest Name</label><input type="text" name="contest_name" placeholder="contest name">
-        <% if(message){ %>
-        <p> <%=message%></p>
+        <% if(message === 0){%>
+          <p><script>alert('low number of points');
+              window.location.assign('/home');
+          </script></p>
+          <%}else if (message === 1){ %>
+              <p><script>alert('Contest name already exists');
+                  window.location.assign('/home');
+              </script></p>
+          <%}else if (message === 2){ %>
+              <p><script>alert('Your contest is added to the verification list.You will be notified when your contest gets verified');
+                  window.location.assign('/home');
+              </script></p>
           <%}%>
         <label>Start date</label><input type="date" name="start_date" id="start_date">
         <label>Start time</label><input type="time" name="start_time" step="900">
@@ -21,7 +31,7 @@
           <option value="other">Other</option>
         </select>
       <label>Organisation Name</label><input type="text" name="org_name" max="255" min="3">
-<button type="submit" name="submit">Submit</button>
+<input type="submit" name="submit" value="Submit">
 
 
     </form>

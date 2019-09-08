@@ -28,5 +28,18 @@ module.exports = {
             return res.redirect('/admin/home');
         }
         next();
+    },
+    redirectContestLogin: function redirectContestLogin(req, res, next) {
+        if (!req.session.contest_username){
+            return res.redirect('/contest/home');
+        }
+        next();
+    },
+
+    redirectContestHome: function redirectContestHome(req, res, next) {
+        if (req.session.contest_username) {
+            return res.redirect('/contest/home');
+        }
+        next();
     }
 }
