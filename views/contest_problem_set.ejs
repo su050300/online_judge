@@ -1,0 +1,223 @@
+<%-include('headheader');-%>
+        <script type = 'text/javascript' src= "/js/tinymce.min.js" referrerpolicy="origin"></script>
+        <script type="text/javascript">
+        tinymce.init({
+          selector: '.textarea1',
+          branding:false,
+          statusbar: false,
+          menubar: 'edit format',
+          setup: function (editor) {
+            editor.on('change', function (e) {
+            editor.save();
+            });
+            },
+          init_instance_callback : function(editor) {
+            var freeTiny = document.querySelectorAll('.tox .tox-notification--in');
+            freeTiny.forEach(element => {
+                element.style.display = 'none';
+        });
+
+
+        }
+        });
+        </script>
+        <link rel="stylesheet" href="/css/problem_set.css">
+        <link rel="stylesheet" href="/css/headertop.css">
+ <%-include('footheader');-%>
+ <div class="containit">
+
+        <form method = 'post' action = '/contest/add_challenge/new_challenge'   enctype = 'multipart/form-data'>
+
+
+            <% if (message === 2){ %>
+                <p><script>alert('Problem name already exists');
+                    window.location.assign('/contest/add_challenge');
+                </script></p>
+            <%}else if (message === 3){ %>
+                <p><script>alert('This problem statement already exists');
+                    window.location.assign('/contest/add_challenge');
+                </script></p>
+            <%}else if (message === 4){ %>
+                <p><script>alert('Your problem is added to the verification list.You will be notified when your problem gets verified');
+                    window.location.assign('/contest/add_challenge');
+                </script></p>
+            <%}%>
+            <h3 class="text-lead padit">Contest Problems Details</h3>
+            <!-- problem name -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="problem">Problem Name</label>
+                </div>
+                <div class="col-lg-5">
+
+                    <input type='text' id="problem" class="form-control" name='problem_name' required placeholder='problem name'>
+                </div>
+
+            </div>
+            <!-- difficulty -->
+            <div class="row padit">
+                <div class="col-lg-3">
+                    <label>Difficulty</label>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-check">
+
+                        <input type='radio' class="form-check-input" id="easy" name='difficulty' value='easy'>
+
+
+                        <label for="easy" class="form-check-label text-muted text-center">Easy</label>
+
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <input type='radio' class="form-check-input" id="medium" name='difficulty' value='medium'>
+                    <label for="medium" class="form-check-label text-muted">Medium</label>
+
+                </div>
+                <div class="col-lg-2">
+
+                    <input type='radio' class="form-check-input" id="hard" name='difficulty' value='hard'>
+                    <label for="hard" class="form-check-label text-muted">Hard</label>
+
+
+                </div>
+            </div>
+
+
+
+            <!-- subdomain -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="subdomain">Subdomain</label>
+                </div>
+                <div class="col-lg-5">
+                    <input type='text' class="form-control addmar" name='subdomain' required placeholder='subdomain'>
+                </div>
+            </div>
+            <!-- time limit -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="time">Time Limit</label>
+                </div>
+                <div class="col-lg-5">
+                    <input type='number' class="form-control addmar" name='time_limit' min='0.5' max='5.0' required placeholder='time_limit' step='0.5'>
+                </div>
+
+            </div>
+            <!-- memory limit -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="memory">Memory Limit</label>
+                </div>
+                <div class="col-lg-5">
+                    <input type='number' class="form-control addmar" name='memory_limit' min="1" max="512" required placeholder='memory_limit'>
+                </div>
+
+            </div>
+            <hr/>
+            <!-- problem statement -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="statement">Problem Statement</label>
+                </div>
+
+                <div class="col-lg-8">
+                    <textarea class='textarea1' id="statement" rows="8" cols="60" class="form-control" name='problem_statement' required></textarea>
+                </div>
+            </div>
+            <!-- image upload -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label>
+                            Upload image here if any
+                        </label>
+                </div>
+                <div class="col-lg-4">
+                    <input type='file' class="form-control" name='image' accept='.png, .jpg, .jpeg' size='1024*250'>
+                </div>
+
+            </div>
+            <!-- input -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="input">
+                        INPUT
+                    </label>
+                </div>
+                <div class="col-lg-8">
+                    <textarea id="input" class='textarea1' class="form-control" rows="8" cols="60" name='input' required placeholder='input'></textarea>
+                </div>
+            </div>
+            <!-- constraints -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="constrant">
+                        CONSTRAINTS
+                    </label>
+                </div>
+
+                <div class="col-lg-8">
+                    <textarea class='textarea1' id="constrant" class="form-control" rows="8" cols="60" name='constraints' required placeholder='constraints'></textarea>
+                </div>
+            </div>
+            <!-- output -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label for="output">
+                                OUTPUT
+                             </label>
+                </div>
+
+                <div class="col-lg-8">
+                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='output' required placeholder='output'></textarea>
+                </div>
+            </div>
+            <!-- sample input -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label>
+                                SAMPLE INPUT
+                               </label>
+                </div>
+
+                <div class="col-lg-8">
+                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_in' required placeholder='sample input'></textarea>
+                </div>
+            </div>
+            <!-- sample output -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label>
+                                SAMPLE OUTPUT
+                            </label>
+                </div>
+                <div class="col-lg-8">
+                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_out' required placeholder='sample output'></textarea>
+                </div>
+            </div>
+            <!-- explanations -->
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <label>
+                                EXPLANATIONS
+                            </label>
+                </div>
+
+                <div class="col-lg-8">
+                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='explanation' required placeholder='explanation'></textarea>
+                </div>
+            </div>
+            <div class="form-group row padit">
+                <div class="col-lg-3">
+                    <input type='file' class="form-control" name='testcase' accept='.zip' required>
+                </div>
+            </div>
+            <!-- button -->
+            <div class="submit padit">
+                <button type='submit' class="btn btn-success">Submit</button>
+            </div>
+
+
+        </form>
+    </div>
+        <%-include('footer');-%>

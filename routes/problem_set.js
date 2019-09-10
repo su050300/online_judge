@@ -32,13 +32,13 @@ router.get('/',redirectLogin,function(req,res,next){
 router.post('/',redirectLogin,function(req,res,next){
     var problem_name = req.body.problem_name;
     problem_name = problem_name.toLowerCase();
-    connection.query('SELECT * FROM verified_problems WHERE problem_name = ? UNION SELECT * FROM problems WHERE problem_name = ?',[problem_name,problem_name], function (err, rows, fields) {
+    connection.query('SELECT problem_name FROM verified_problems WHERE problem_name = ? UNION SELECT problem_name FROM problems WHERE problem_name = ? UNION SELECT problem_name FROM contest_new_problems WHERE problem_name = ?',[problem_name,problem_name,problem_name], function (err, rows, fields) {
         if (err) throw err
         if(rows.length){
             res.render('problem_set',{message:2});  // 2 for Problem name already exists
         }
         else{
-                connection.query('SELECT * FROM verified_problems WHERE problem_statement = ? UNION SELECT * FROM problems WHERE problem_statement = ?',[req.body.problem_statement,req.body.problem_statement], function (err, rows, fields) {
+                connection.query('SELECT problem_statement FROM verified_problems WHERE problem_statement = ? UNION SELECT problem_statement FROM problems WHERE problem_statement = ?  UNION SELECT problem_statement FROM contest_new_problems WHERE problem_statement = ?',[req.body.problem_statement,req.body.problem_statement,req.body.problem_statement], function (err, rows, fields) {
                     if (err) throw err
                     if(rows.length){
                         res.render('problem_set',{message:3});  // 3 for This problem  already exists
@@ -48,6 +48,7 @@ router.post('/',redirectLogin,function(req,res,next){
                         indiaTime = new Date(indiaTime);
                         indiaTime = indiaTime.toLocaleString().split(',');
                         indiaTime[0] = indiaTime[0].split('/').reverse().join('-');
+                        currdate=indiaTime[0];
 
                     connection.query('SELECT * FROM verified_problems WHERE date = ? UNION SELECT * FROM problems WHERE date = ?',[currdate,currdate], function (err, rows, fields) {
                         if (err) throw err

@@ -14,10 +14,11 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   port: PORT['PORT'],
   secure: true,
-  auth: {
+      auth: {
     user: 'blackhat050300@gmail.com',
     pass: 'Mnnit@123456'
   }
+
 });
 
 var mailOptions = {
@@ -71,7 +72,8 @@ router.get('/:contest_id', redirectAdminLogin, function(req, res) {
           end_date: rows[0]['end_date'],
           end_time: rows[0]['end_time'],
           org_type: rows[0]['org_type'],
-          org_name: rows[0]['org_name']
+          org_name: rows[0]['org_name'],
+
         }
         res.render('contest_info', contest_info);
       });
@@ -109,7 +111,11 @@ router.get('/:contest_id/verify/', redirectAdminLogin, function(req, res, next) 
                 org_name : rows[0]['org_name'],
                 date : rows[0]['date'],
                 username:username,
-                password:hashpassword
+                password:hashpassword,
+                description:"This contest is being organized by "+rows[0]['org_name'],
+                prizes:"",
+                rules:"",
+                scoring:""
               }
               connection.query('INSERT INTO verified_contest_details SET ?',[contest_details],function(err, rows, fields){
                 if(err)throw err
@@ -141,40 +147,46 @@ router.get('/:contest_id/verify/', redirectAdminLogin, function(req, res, next) 
 });
 });
 
-router.get('/:problem_id/discard', redirectAdminLogin, function(req, res, next) {
-  var problem_id = req.params.problem_id;
-  connection.query('SELECT * FROM problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
+
+
+router.get('/:contest_id/discard/', redirectAdminLogin, function(req, res, next) {
+  var contest_id = req.params.contest_id;
+  connection.query('SELECT * FROM contest_details WHERE contest_id=?', [contest_id], function(err, rows, fields) {
     if (err) throw err
     else {
-      var problem_date = rows[0]['date'];
-      var user_id = rows[0]['user_id'];
-      var problem_id = rows[0]['problem_id'];
-      var problem_name=rows[0]['problem_name'];
-      var prevdir =__dirname+'/../problems/testcase/' + problem_id;
-      fs.removeSync(prevdir);
-      connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
-        if (err) throw err
-        else {
-          mailOptions.to = rows[0]['email'];
-          mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been disqualified due to certain reasons';
-          connection.query('DELETE FROM problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
-            if (err) throw err
-            transporter.sendMail(mailOptions, function(error, info) {
-              console.log('mailed');
-              if (error) {
-                console.log(error);
-              } else {
-                console.log('Email sent: ' + info.response);
+              var date=rows[0]['date'];
+              var user_id = rows[0]['user_id'];
+              var contest_name=rows[0]['contest_name'];
+
               }
-            });
-            res.redirect('/admin/problem_verification/');
-          });
+
+                connection.query('DELETE FROM contest_details WHERE contest_id=?', [contest_id], function(err, rows, fields) {
+                    if (err) throw err
+                    else {
+
+                connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
+                  if (err) throw err
+
+                  mailOptions.to = rows[0]['email'];
+                  mailOptions.html = '<p>Your contest ' + contest_name + ' submitted on ' + date + ' has been discarded.</p>';
+                  transporter.sendMail(mailOptions, function(error, info) {
+                    console.log('mailed');
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+                });
         }
-      });
-      res.redirect('/admin/problem_verification/');
-    }
-  })
+        res.redirect('/admin/contest_verification/');
+
+    });
+
 });
+});
+
+
 
 
 function saltHashPassword(password)
