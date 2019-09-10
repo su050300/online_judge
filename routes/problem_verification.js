@@ -65,7 +65,7 @@ router.get('/:problem_id', redirectAdminLogin, function(req, res) {
         if (err) throw err
         var problem = {
           author: rows1[0]['username'],
-          problem_id:rows[0]['problem_id'],
+          problem_id: rows[0]['problem_id'],
           problem_name: rows[0]['problem_name'],
           difficulty: rows[0]['difficulty'],
           subdomain: rows[0]['subdomain'],
@@ -100,19 +100,17 @@ router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) 
               var problem_date = rows[0]['problem_date'];
               var user_id = rows[0]['user_id'];
               var problem_id = rows[0]['problem_id'];
-              var problem_name=rows[0]['problem_name'];
-              var prevdir =__dirname+'/../problems/testcase/' + problem_id;
-              var nextdir =__dirname+'/../verified_problems/testcase/' + problem_id;
+              var problem_name = rows[0]['problem_name'];
+              var prevdir = __dirname + '/../problems/testcase/' + problem_id;
+              var nextdir = __dirname + '/../verified_problems/testcase/' + problem_id;
               fs.copySync(prevdir, nextdir);
               fs.removeSync(prevdir);
-              var ext=['.png', '.jpg', '.jpeg'];
-              ext.forEach(function(imgext)
-              {
-                previmg=__dirname+'/../problems/image/' + problem_id+imgext;
-                if(fs.existsSync(previmg))
-                {
-                    var nextimg =__dirname+'/../verified_problems/image/' + problem_id+imgext;
-                    fs.moveSync(previmg, nextimg);
+              var ext = ['.png', '.jpg', '.jpeg'];
+              ext.forEach(function(imgext) {
+                previmg = __dirname + '/../problems/image/' + problem_id + imgext;
+                if (fs.existsSync(previmg)) {
+                  var nextimg = __dirname + '/../verified_problems/image/' + problem_id + imgext;
+                  fs.moveSync(previmg, nextimg);
                 }
               });
 
@@ -150,8 +148,8 @@ router.get('/:problem_id/discard', redirectAdminLogin, function(req, res, next) 
       var problem_date = rows[0]['date'];
       var user_id = rows[0]['user_id'];
       var problem_id = rows[0]['problem_id'];
-      var problem_name=rows[0]['problem_name'];
-      var prevdir =__dirname+'/../problems/testcase/' + problem_id;
+      var problem_name = rows[0]['problem_name'];
+      var prevdir = __dirname + '/../problems/testcase/' + problem_id;
       fs.removeSync(prevdir);
       connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
         if (err) throw err

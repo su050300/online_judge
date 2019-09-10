@@ -3,29 +3,37 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body onload="getcontestdata()">
+  <body onload="getcontestdetails()">
       <% if (!message) { %>
         <p> welcome here you can manage your contest!!!</p>
         <a href = 'logout'>Logout!!</a>
         <a href = 'add_challenge'>Add Challenge</a>
         <%}%>
-        <form action="" method="post">
+        <form action="/contest/home/change" method="post">
             <label>Contest Id:</label><input type="text" id="contest_id" disabled><br>
             <label>Contest Name:</label><input type="text" id="contest_name" disabled><br>
             <label>Contest Link:</label><input type="text" id="contest_link" disabled><br>
             <label>Start Date:</label><input type="date" id="start_date" disabled><br>
             <label>Start Time:</label><input type="time" id="start_time" disabled><br>
-            <label>End Date:</label><input type="date" id="end_date"><br>
-            <label>End Time:</label><input type="time" id="end_time"><br>
+            <label>End Date:</label><input type="date" id="end_date" name="end_date"><br>
+            <label>End Time:</label><input type="time" id="end_time" name="end_time"><br>
             <label>Organisation Type:</label><input type="text" id="org_type" disabled><br>
             <label>Organisation Name:</label><input type="text" id="org_name" disabled><br>
+            <label>Description:</label> <textarea name="description" rows="8" cols="80" id="description"></textarea><br>
+            <label>Prizes:</label><textarea name="prizes" rows="8" cols="80" id="prizes"></textarea><br>
+            <label>Rules:</label><textarea name="rules" rows="8" cols="80" id="rules"></textarea><br>
+            <label>Scoring:</label><textarea name="scoring" rows="8" cols="80" id="scoring"></textarea><br>
+            <button type="submit">Apply Changes</button>
+
+
+
 
         </form>
         <div id="problem-list">
 
         </div>
         <script type="text/javascript">
-            function getcontestdata(){
+            function getcontestdetails(){
               var xhttp;
           xhttp = new XMLHttpRequest();
           xhttp.responseType="json";
@@ -41,6 +49,11 @@
             document.getElementById('end_time').setAttribute('value',this.response.end_time);
             document.getElementById('org_type').setAttribute('value',this.response.org_type);
             document.getElementById('org_name').setAttribute('value',this.response.org_name);
+            document.getElementById('description').innerHTML=this.response.description;
+            document.getElementById('prizes').innerHTML=this.response.prizes;
+            document.getElementById('rules').innerHTML=this.response.rules;
+            document.getElementById('scoring').innerHTML=this.response.scoring;
+
 
 
             console.log(this.response);
@@ -51,5 +64,6 @@
           xhttp.send();}
 
         </script>
+
   </body>
 </html>

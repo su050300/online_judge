@@ -32,11 +32,30 @@ router.post('/',redirectContestLogin,function(req,res,next)
       end_date: end_date,
       end_time:end_time,
       org_type: rows[0]['org_type'],
-      org_name: rows[0]['org_name']
+      org_name: rows[0]['org_name'],
+      description: rows[0]['description'],
+      prizes: rows[0]['prizes'],
+      rules: rows[0]['rules'],
+      scoring: rows[0]['scoring']
+
+
     }
     res.json(contest_info);
     res.end();
 
   });
+});
+
+
+
+
+router.post('/change',redirectContestLogin,function(req,res,next)
+{
+  connection.query('UPDATE verified_contest_details SET ? WHERE contest_id=? ',[req.body,req.session.contest_id],function(err,rows,fields){
+    if (err) throw err
+    console.log(rows[0]);
+    res.redirect('/contest/home');
+     //2 for Your contest is added to the verification list.You will be notified when your contest gets verified
+  })
 });
 module.exports=router;
