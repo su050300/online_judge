@@ -38,13 +38,14 @@ var mailOptions = {
 router.post('/', redirectAdminLogin, function(req, res, next) {
   // res.writeHead(200,{'Content-Type':'text/html'});
   var i = 0;
-  connection.query('SELECT problem_id,problem_name FROM problems ', function(err, rows, fields) {
+  connection.query('SELECT problem_id,problem_name,difficulty,subdomain,date FROM problems ', function(err, rows, fields) {
     if (err) throw err
     if (!rows.length) {
       res.write('no more problems to verify');
     } else {
       while (rows[i]) {
-        var senddata = '<tr><td>' + rows[i]['problem_id'] + '</td><td><a href="/admin/problem_verification/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td></tr>';
+        rows[i]['date'] = (rows[i]['date'].toISOString()).slice(0,10);
+        var senddata = '<tr><td><a href="/admin/problem_verification/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty']  + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + rows[i]['date'] + '</td></tr>';
         res.write(senddata);
         i++;
       }
@@ -108,7 +109,7 @@ router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) 
               var ext=['.png', '.jpg', '.jpeg'];
               ext.forEach(function(imgext)
               {
-                previmg=__dirname+'/../problems/image/' + problem_id+imgext;
+                var previmg=__dirname+'/../problems/image/' + problem_id+imgext;
                 if(fs.existsSync(previmg))
                 {
                     var nextimg =__dirname+'/../verified_problems/image/' + problem_id+imgext;

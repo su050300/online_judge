@@ -1,0 +1,233 @@
+body {
+    background-color: #6f42c1;
+}
+
+
+/* containers */
+
+.container-fluid {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    background-image: url("/images/code.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.contn {
+    padding: 9% 0%;
+}
+
+.transp {
+    background-color: transparent !important;
+}
+
+
+/* paddings */
+
+.pad {
+    padding-left: 7%;
+}
+
+.padtop {
+    padding-top: 5%;
+}
+
+.standpad {
+    padding-left: 2%;
+}
+
+.details {
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+    padding: 2% 7%;
+}
+
+
+/* about section */
+
+.about {
+    margin: 12% 0;
+    padding: 7% 15%;
+    background-color: #f7f4f7;
+    visibility: hidden;
+    opacity: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+}
+
+.head {
+    font-size: 1.8rem;
+}
+
+.row {
+    margin: 0 0;
+}
+
+
+/* rules section */
+
+.rule-section {
+    margin: 9% 0;
+}
+
+.rule {
+    padding: 7% 15%;
+    background-color: #f7f4f7;
+    visibility: hidden;
+    opacity: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+}
+
+
+/* header css */
+
+.headr {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.fa-user-circle {
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.transp {
+    background-color: transparent !important;
+}
+
+
+/* hovering effect on link */
+
+.chall:hover {
+    stroke: white;
+    stroke-width: 4;
+    stroke-dasharray: 112;
+    animation: chall 1s ease-in-out;
+}
+
+.pract:hover {
+    stroke: white;
+    stroke-width: 4;
+    stroke-dasharray: 83;
+    animation: pract 1s ease-in-out;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.padit {
+    margin-right: 5%;
+}
+
+.tags {
+    position: relative;
+    top: 15px;
+    left: 4.8px;
+}
+
+li svg {
+    position: relative;
+    top: -1.6px;
+    left: 4.8px;
+}
+
+
+/* circle svg */
+
+.cir {
+    position: relative;
+    right: 44px;
+    top: 5px;
+    opacity: 0;
+}
+
+
+/* overriding default bootstrap css */
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:hover .cir {
+    animation: circ 1s ease-in-out;
+    animation-play-state: running;
+    opacity: 0.2;
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: transparent;
+}
+
+
+/*    */
+
+
+/* header css ends here */
+
+
+/* keyframes */
+
+@keyframes chall {
+    from {
+        stroke-dashoffset: 112;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes pract {
+    from {
+        stroke-dashoffset: 83;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes circ {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+@keyframes transfer {
+    from {
+        transform: translateX(-15%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes transrules {
+    from {
+        transform: translateX(15%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@media(max-width:1000px) {
+    .rules,
+    .prizes,
+    .scoring,
+    .about {
+        background-image: none;
+    }
+}

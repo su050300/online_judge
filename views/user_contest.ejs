@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+        <a href = 'logout'>Logout!!</a>
+        <a href = '/home/contest/create_contest'>Create contest</a>
+
+        <h3><strong>present contests</strong></h3>
+        <table>
+            <thead>
+            <tr>
+                <td>contest name</td>
+                <td>organization name</td>
+                <td>start date</td>
+                <td>start time</td>
+                <td>end date</td>
+                <td>end time</td>
+            </tr>
+        </thead>
+        <tbody>
+            <%if(message1){%>
+            <%-message1%>
+                <%}%>
+            </tbody>
+        </table>
+        <h3><strong>future contests</strong></h3>
+        <table>
+            <thead>
+            <tr>
+                <td>contest name</td>
+                <td>organization name</td>
+                <td>start date</td>
+                <td>start time</td>
+                <td>end date</td>
+                <td>end time</td>
+            </tr>
+        </thead>
+        <tbody>
+            <%if(message2){%>
+                <%-message2%>
+                <%}%>
+            </tbody>
+        </table>
+
+        <h3><strong>past contests</strong></h3>
+        <table>
+            <thead>
+            <tr>
+                <td>contest name</td>
+                <td>organization name</td>
+                <td>start date</td>
+                <td>start time</td>
+                <td>end date</td>
+                <td>end time</td>
+            </tr>
+        </thead>
+        <tbody>
+            <%if(message3){%>
+            <%-message3%>
+                <%}%>
+        </tbody>
+        </table>
+    </body>
+</html>
