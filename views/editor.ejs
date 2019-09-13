@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ACE in Action</title>
+  <style type="text/css" media="screen">
+    body {
+      overflow: auto;
+    }
+
+    #editor {
+      /* position: absolute; */
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      /* width: 60rem;
+      margin: auto;
+      margin-bottom: 20rem; */
+
+
+    }
+  </style>
+  <link rel="stylesheet" href="/css/ide.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <%-include('headheader');-%>
+
+
+
+
+    <div class="row upperrow">
+      <!-- selecting the language -->
+      <div class="col-lg-4">
+        <select class="custom-select" id="language">
+          <option value="c">C</option>
+          <option value="cpp">CPP</option>
+          <option value="csharp">C#</option>
+          <option value="golang">GO</option>
+          <option value="java">JAVA</option>
+          <option value="javascript">JAVASCRIPT</option>
+          <option value="python2">PYTH(2.7)</option>
+          <option value="python3">PYTH(3.6)</option>
+          <option value="ruby">RUBY</option>
+          <option value="rust">RUST</option>
+
+        </select>
+      </div>
+      <div class="col-lg-6">
+        <p class="lead text-center">Enter Your Code here</p>
+      </div>
+      <div class="d-flex justify-content-around">
+        <!-- download icon -->
+        <div class="col-sm-1">
+          <button>
+            <i class="fa fa-download"></i>
+          </button>
+        </div>
+        <!-- cog icon -->
+        <div class="col-sm-1">
+          <div class="dropdown dropleft">
+            <button type="button" id="butto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i></button>
+            <div class="dropdown-menu" aria-labelledby="butto">
+              <div class="dropdown-item">
+                <div class="form-group">
+                  <label for="fontsize">
+                    Font-size
+                  </label>
+                  <input type="number" class="form-control" id="fontsize" name="fontsize" min="0" max="32" placeholder="Set the font-size">
+                </div>
+              </div>
+              <div class="dropdown-item">
+                <div class="form-group">
+                  <div class="col">
+                    <div class="row">
+                      <caption>Theme</caption>
+                    </div>
+                    <div class="row">
+                      <input type="radio" name="same" id="light">
+                      <label for="light">
+                        Light
+                      </label>
+                    </div>
+                    <div class="row">
+
+                      <input type="radio" name="same" id="dark">
+                      <label for="dark">
+                        Dark
+                      </label>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div id="editor">
+    </div>
+    <label>INPUT:</label> <br><textarea name="stdin" rows="8" cols="80" id="stdin" style="resize:none"></textarea><br>
+    <button type="button" name="button" onclick="run()">Run</button><br>
+    <div class="status">
+
+    </div>
+    <div class="time">
+
+    </div>
+    <div class="memory">
+
+    </div>
+    <div class="output">
+
+    </div>
+  </div>
+
+  <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/c_cpp");
+    editor.resize();
+    editor.setOptions({
+      autoScrollEditorIntoView: true,
+      maxLines: 35,
+      minLines: 25,
+      wrap: true,
+      fontSize: '1rem'
+    });
+    editor.renderer.setScrollMargin(10, 10, 10, 10);
+    document.querySelector("#language").addEventListener("change", function() {
+      var lang = document.querySelector("#language").value
+      if (lang === "c" || lang === "cpp")
+        lang = "c_cpp";
+      else if (lang === "python2" || lang === "python3")
+        lang = "python";
+      editor.session.setMode("ace/mode/" + lang);
+    });
+  </script>
+
+
+
+
+
+
+  <script src="/js/jide.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    function run() {
+      var runbody = {
+        source_code: '',
+        language: '',
+        stdin: ''
+      }
+      runbody.source_code = editor.getValue();
+      runbody.language = document.querySelector("#language").value;
+      runbody.stdin = document.querySelector("#stdin").value;
+      console.log(runbody);
+
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.responseType = "json";
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var output = this.response;
+          var out = "";
+          var st = output.status.description;
+          switch (output.status.id) {
+            case 3:
+              out = atob(output.stdout);
+              break;
+            case 6:
+              out = atob(output.compile_output);
+              break;
+            case 11:
+              out = atob(output.stdout);
+          }
+          if (out)
+            document.querySelector(".output").innerHTML = '<label>OUTPUT:</label><br><textarea name="stdout" rows="8" cols="80" id="stdout" readonly style="resize:none">' + out + '</textarea>';
+          document.querySelector(".status").innerHTML = '<label>STATUS:</label><br><textarea name="status" rows="1" cols="30" id="status" readonly style="resize:none">' + st + '</textarea>';
+          document.querySelector(".time").innerHTML = '<label>TIME:</label><br><textarea name="time" rows="1" cols="30" id="time" readonly style="resize:none">' + output.time + 'sec</textarea>';
+          document.querySelector(".memory").innerHTML = '<label>MEMORY:</label><br><textarea name="memory" rows="1" cols="30" id="memory" readonly style="resize:none">' + output.memory + 'KB</textarea>';
+          save();
+
+
+
+
+        }
+      };
+
+      xhttp.open("POST", "/editor", true);
+      xhttp.setRequestHeader("Content-Type", "application/json");
+      xhttp.send(JSON.stringify(runbody));
+    }
+    function save(){
+      var saveobj={
+        submission: editor.getValue(),
+        language:document.querySelector("#language").value
+      }
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.responseType = "json";
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+
+        }}
+        xhttp.open("POST", "/editor/save", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(saveobj));
+    }
+  </script>
+</body>
+
+</html>

@@ -6,8 +6,11 @@
   </head>
   <body>
         <a href = 'logout'>Logout!!</a>
-        <a href = '/home/contest/create_contest'>Create contest</a>
+        <!-- link for hosting a new contest -->
+        <a href = '/compete/create_contest'>Create contest</a>  
 
+
+        <!-- info of the different contests at different times present past and future-->
         <h3><strong>present contests</strong></h3>
         <table>
             <thead>
@@ -21,6 +24,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- ejs present contest data is coming here -->
             <%if(message1){%>
             <%-message1%>
                 <%}%>
@@ -39,6 +43,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- ejs future contest data is coming here -->
             <%if(message2){%>
                 <%-message2%>
                 <%}%>
@@ -49,6 +54,7 @@
         <table>
             <thead>
             <tr>
+                <!-- details to be displayed -->
                 <td>contest name</td>
                 <td>organization name</td>
                 <td>start date</td>
@@ -58,6 +64,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- ejs past contest data is coming here -->
             <%if(message3){%>
             <%-message3%>
                 <%}%>

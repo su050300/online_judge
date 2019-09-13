@@ -1,0 +1,20 @@
+.cont {
+    font-family: 'IBM Plex Sans', sans-serif;
+    margin: 7% 15%;
+}
+
+
+/* table */
+
+.pad-table {
+    padding: 3% 9%;
+}
+
+
+/* media queries */
+
+@media(max-width:900px) {
+    .cont {
+        margin: 12% 3%;
+    }
+}

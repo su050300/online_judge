@@ -6,7 +6,7 @@
 
     </head>
 
-    <body>
+    <body onload = 'button_change()'>
         <!-- header container -->
         <div class="container-fluid headr">
             <nav class="navbar navbar-expand-lg navbar-dark transp bg-dark">
@@ -65,8 +65,7 @@
 
             <div class="contn">
                 <h3 class="text-center py-4">
-                    <p>Register for
-                        <%=contest_name%> now</p>
+                    <p id = "contest_name"></p>
                 </h3>
 
                 <div class="row">
@@ -75,13 +74,13 @@
                         <p>Start Date:</p>
                     </div>
                     <div class="col-sm-3">
-                        <span class="pad"><%=start_date%></span>
+                        <span class="pad" id = "start_date"></span>
                     </div>
                     <div class="col-sm-1">
                         <p>Start Time:</p>
                     </div>
                     <div class="col-sm-3">
-                        <span class="pad"><%=start_time%></span>
+                        <span class="pad" id = "start_time"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -90,19 +89,18 @@
                         <p>End Date:</p>
                     </div>
                     <div class="col-sm-3">
-                        <span class="pad"><%=end_date%></span>
+                        <span class="pad" id = "end_date"></span>
                     </div>
                     <div class="col-sm-1">
                         <p>End Time:</p>
                     </div>
                     <div class="col-sm-2">
-                        <span class="pad"><%=end_time%></span>
+                        <span class="pad" id = "end_time"></span>
                     </div>
                 </div>
 
-
                 <div class="button text-center py-5">
-                    <button class="btn btn-success btn-lg">Register</button>
+                    <button onclick="window.location.href=window.location.href+'/register'" class="btn btn-success btn-lg" id ="button_status" style="display:none;"></button>
                 </div>
 
             </div>
@@ -116,19 +114,19 @@
                     <ul>
                         <li>
                             <div class="info">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quam nostrum fugiat mollitia delectus reiciendis ea soluta corporis odit at fugit esse debitis culpa minima sit non obcaecati consequuntur et.</p>
+                                <p id  = "description"></p>
                             </div>
                         </li>
                         <li>
-                            <div class="organiser">
-                                <span class="font-weight-bold">Organiser:</span><span class="standpad">This contest is hosted by
-                                        <%=org_name%></span>
+                            <div class="organiser" >
+                                <span class="font-weight-bold">Organiser:</span><span class="standpad" id = "org_name">
+                                </span>
                             </div>
 
                         </li>
                         <li>
                             <div class="prizes">
-                                <span class="font-weight-bold">Prizes:</span><span class="standpad">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero quidem, et voluptatibus animi ullam consequatur nobis ad expedita vel, similique atque voluptatum numquam dolorem deleniti totam sit commodi maiores deserunt?</span>
+                                <span class="font-weight-bold">Prizes:</span><span class="standpad" id = "prizes"></span>
 
                             </div>
                         </li>
@@ -148,18 +146,18 @@
                     <ul>
                         <li>
                             <div class="info">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quam nostrum fugiat mollitia delectus reiciendis ea soluta corporis odit at fugit esse debitis culpa minima sit non obcaecati consequuntur et.</p>
+                                <p></p>
                             </div>
                         </li>
                         <li>
                             <div class="info">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quam nostrum fugiat mollitia delectus reiciendis ea soluta corporis odit at fugit esse debitis culpa minima sit non obcaecati consequuntur et.</p>
+                                <p id = "rules"></p>
                             </div>
 
                         </li>
                         <li>
                             <div class="info">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, quam nostrum fugiat mollitia delectus reiciendis ea soluta corporis odit at fugit esse debitis culpa minima sit non obcaecati consequuntur et.</p>
+                                <p id = "scoring"></p>
                             </div>
                         </li>
                     </ul>
@@ -173,4 +171,59 @@
         </div>
 
         <script src="/js/contest.js"></script>
+
+        <script>
+        function button_change() {
+            // console.log("called");
+            var xhttp;
+            xhttp = new XMLHttpRequest();
+            xhttp.responseType = "json";
+            xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var reference = this.response;
+                // console.log(reference.register + "status");
+                if (this.response.register === "registered"){
+                    document.getElementById('contest_name').innerHTML = "You are registered for the contest " + reference.rows[0]['contest_name'] + " and will be notified 1 hr before the contest.";
+                } 
+                else if (this.response.register === "Not Registered"){
+                    document.getElementById('contest_name').innerHTML = "Register now for the contest " + reference.rows[0]['contest_name']; 
+                    document.getElementById('button_status').innerHTML = "Register";
+                    document.getElementById('button_status').style.display = "block";
+                }
+                else if (this.response.register === "Solve Problems"){
+                    document.getElementById('contest_name').innerHTML = "Contest " + reference.rows[0]['contest_name'] + " has started<br>Click below to solve problems "; 
+                    document.getElementById('button_status').innerHTML = "Solve Problems";
+                    document.getElementById('button_status').style.display = "block";
+                    document.getElementById('button_status').setAttribute("onclick","window.location.href=window.location.href+'/solve_problems'");
+                }
+                else if (this.response.register === "Not Allowed"){
+                    document.getElementById('contest_name').innerHTML = "You are not allowed to participate in this contest " + reference.rows[0]['contest_name'] + " because you are contest host "; 
+                }
+                else{
+                    document.getElementById('contest_name').innerHTML = "Contest " + reference.rows[0]['contest_name'] + " has ended<br>Click below to practice problems "; 
+                    document.getElementById('button_status').innerHTML = "Practice Problems";
+                    document.getElementById('button_status').style.display = "block";
+                    document.getElementById('button_status').setAttribute("onclick","window.location.href=window.location.href+'/practice_problems'");
+
+                }
+                var startDate = new Date(reference.rows[0]['start_date']).toUTCString();
+                var endDate = new Date(reference.rows[0]['end_date']).toUTCString();
+                document.getElementById('start_date').innerHTML = startDate.slice(0,16);
+                document.getElementById('start_time').innerHTML = reference.rows[0]['start_time'];
+                document.getElementById('end_date').innerHTML = endDate.slice(0,16);
+                document.getElementById('end_time').innerHTML = reference.rows[0]['end_time'];
+                document.getElementById('description').innerHTML = reference.rows[0]['description'];
+                document.getElementById('org_name').innerHTML = reference.rows[0]['org_name'];
+                document.getElementById('prizes').innerHTML = reference.rows[0]['prizes'];
+                document.getElementById('rules').innerHTML = reference.rows[0]['rules'];
+                document.getElementById('scoring').innerHTML = reference.rows[0]['scoring'];
+            }
+        }
+            xhttp.open("POST", window.location.href, true);
+            xhttp.send();
+        }
+        setInterval("button_change()",1000);
+        
+
+        </script>
         <%-include('footer');-%>

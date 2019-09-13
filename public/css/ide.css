@@ -1,0 +1,130 @@
+/* compiler */
+
+.row1 {
+    margin-left: 5%;
+}
+
+.row1>.row {
+    margin: 0 0;
+}
+
+.border-secondary {
+    margin-left: 6%;
+    margin-top: 3%;
+}
+
+/* .compiler-container {
+    margin-left: 3%;
+    margin-right: 2%;
+    margin-bottom: 7%;
+    font-size: 1.2rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #d6d6c2;
+    overflow: hidden;
+    box-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.3);
+} */
+
+
+/* css for upper row */
+
+.upperrow {
+  width: 60rem;
+}
+.container{
+  margin: auto;
+  /* margin-top: 20rem; */
+  margin-bottom: 7rem;
+}
+
+.custom-select:focus {
+    border-color: #d6d6c2;
+    box-shadow: none;
+}
+
+
+/* dropdowns */
+
+.dropdown-item,
+.dropdown-item input {
+    font-size: 0.8rem;
+}
+
+
+/* css for ide*/
+
+.rownumber {
+    position: relative;
+    padding: 0.6%;
+    left: 3vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1rem;
+    text-align: center;
+    height: 495PX;
+    overflow-y: auto;
+}
+
+
+/* font for content in ide */
+
+.fonts {
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.padright {
+    padding-right: 2%;
+}
+
+.contain {
+    border: 1px solid #a3a375;
+}
+
+.compiler-container textarea {
+    resize: none;
+}
+
+#txtarea {
+    height: 500px;
+}
+
+
+/* inputs and outputs */
+
+.inp {
+    margin-left: 8%;
+    margin-top: 5%;
+}
+
+.input-padding {
+    padding-bottom: 5%;
+}
+
+.run {
+    margin: 3% 2%;
+}
+
+.button {
+    background-color: #333333;
+    color: #eeeeee;
+}
+
+.button:hover {
+    background-color: #737373;
+    color: #eeeeee;
+}
+
+.inp .card-header {
+    font-size: 1.2rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #ebebe0;
+}
+
+.form-control:focus {
+    border-color: #d6d6c2;
+    box-shadow: none;
+}
+
+.outpu {
+    display: none;
+}

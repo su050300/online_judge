@@ -1,15 +1,17 @@
 var express = require('express');
 var router = express.Router();
-var fileUpload = require('express-fileupload');
-var fs = require('fs');
-var unzip = require('unzip');
+var fileUpload = require('express-fileupload');     //npm module for processsing uploaded files
+var fs = require('fs');                             // npm module to handle files and folders
+var unzip = require('unzip');                       //npm module to unzip the zipped folder
 var connection = require('./db_connection.js');
 var redirectLogin = require('../middleware/check').redirectLogin;
-const benchmark_points = 50;
+const benchmark_points = 1000;    //minimum points required for being a problem setter
 
 
 router.use(fileUpload());
 
+
+//get api for checking whether user have minimum number of points required or not
 router.get('/',redirectLogin,function(req,res,next){
     if (!req.session.username){
         res.render('login.ejs',{message:'You are not logged in'});
@@ -28,28 +30,33 @@ router.get('/',redirectLogin,function(req,res,next){
       });
 
 
-
+// post api for checking existing problem name and existing problem statement . Also it allows the user to post only 5 problems a day and if limit reached shows an alert  
 router.post('/',redirectLogin,function(req,res,next){
     var problem_name = req.body.problem_name;
     problem_name = problem_name.toLowerCase();
+
+    //checking for already existing problem name
     connection.query('SELECT problem_name FROM verified_problems WHERE problem_name = ? UNION SELECT problem_name FROM problems WHERE problem_name = ? UNION SELECT problem_name FROM contest_new_problems WHERE problem_name = ?',[problem_name,problem_name,problem_name], function (err, rows, fields) {
         if (err) throw err
         if(rows.length){
             res.render('problem_set',{message:2});  // 2 for Problem name already exists
         }
         else{
-                connection.query('SELECT problem_statement FROM verified_problems WHERE problem_statement = ? UNION SELECT problem_statement FROM problems WHERE problem_statement = ?  UNION SELECT problem_statement FROM contest_new_problems WHERE problem_statement = ?',[req.body.problem_statement,req.body.problem_statement,req.body.problem_statement], function (err, rows, fields) {
-                    if (err) throw err
-                    if(rows.length){
-                        res.render('problem_set',{message:3});  // 3 for This problem  already exists
-                    }
-                    else{
-                        var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
-                        indiaTime = new Date(indiaTime);
-                        indiaTime = indiaTime.toLocaleString().split(',');
-                        indiaTime[0] = indiaTime[0].split('/').reverse().join('-');
-                        currdate=indiaTime[0];
 
+            //checking for already existing problem statement
+            connection.query('SELECT problem_statement FROM verified_problems WHERE problem_statement = ? UNION SELECT problem_statement FROM problems WHERE problem_statement = ?  UNION SELECT problem_statement FROM contest_new_problems WHERE problem_statement = ?',[req.body.problem_statement,req.body.problem_statement,req.body.problem_statement], function (err, rows, fields) {
+                if (err) throw err
+                if(rows.length){
+                     res.render('problem_set',{message:3});  // 3 for This problem  already exists
+                }
+                else{
+                    var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+                    indiaTime = new Date(indiaTime);
+                    indiaTime = indiaTime.toLocaleString().split(',');
+                    indiaTime[0] = indiaTime[0].split('/').reverse().join('-');
+                    currdate=indiaTime[0];
+
+                    //checking for the days problem setting limit
                     connection.query('SELECT * FROM verified_problems WHERE date = ? UNION SELECT * FROM problems WHERE date = ?',[currdate,currdate], function (err, rows, fields) {
                         if (err) throw err
                         if(rows.length >= 5){
@@ -61,7 +68,7 @@ router.post('/',redirectLogin,function(req,res,next){
                             if (err) throw err
 
                             const problem = {
-                                user_id: rows[0]['id'],        // change user id here according to the session
+                                user_id: rows[0]['id'],       
                                 problem_name : problem_name,
                                 difficulty : req.body.difficulty,
                                 subdomain : req.body.subdomain,
@@ -91,6 +98,8 @@ router.post('/',redirectLogin,function(req,res,next){
                                         });
                                     }
                                         var dir = 'problems/testcase/' + rows[0]['problem_id'];
+                                        
+                                        //making the necessary operations on the uploaded folder and image
                                         req.files.testcase.mv(dir + '.zip',function(err){
                                             if (err) throw err
 
@@ -114,7 +123,7 @@ router.post('/',redirectLogin,function(req,res,next){
                                 }
                         })
                     })
-                }
+                  }
 
                   })
 

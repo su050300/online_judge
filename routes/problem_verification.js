@@ -1,22 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('./db_connection.js');
-var PORT = require('./constant.js');
+var PORT = require('./constant.js');          //importing a file that contains the constant values 
 var redirectAdminLogin = require('../middleware/check').redirectAdminLogin;
-var fs = require('fs-extra');
+var fs = require('fs-extra');         //npm module for handling files and folders
+var nodemailer = require('nodemailer');   //npm module for sending mails using gmail service
 
-var path = require("path");
-
-router.get('/', redirectAdminLogin, function(req, res, next) {
-  // res.writeHead(200,{'Content-Type':'text/h2tml'});
-
-  res.render('problem_verification.ejs', {
-    message: ''
-  });
-
-});
-var nodemailer = require('nodemailer');
-
+//creating nodemailer transporter
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   port: PORT['PORT'],
@@ -33,38 +23,64 @@ var mailOptions = {
 };
 
 
+//get api for getting problem verfication admin page according to page number
+router.get('/:page_no', redirectAdminLogin, function(req, res, next) {
+  res.render('problem_verification.ejs', {message: ''});
+});
 
 
-router.post('/', redirectAdminLogin, function(req, res, next) {
-  // res.writeHead(200,{'Content-Type':'text/html'});
+//post api for getting problem verfication admin page according to page number
+router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
+  var page_no = req.params.page_no; 
   var i = 0;
   connection.query('SELECT problem_id,problem_name,difficulty,subdomain,date FROM problems ', function(err, rows, fields) {
     if (err) throw err
     if (!rows.length) {
-      res.write('no more problems to verify');
+      res.send('no more problems to verify');
     } else {
-      while (rows[i]) {
-        rows[i]['date'] = (rows[i]['date'].toISOString()).slice(0,10);
-        var senddata = '<tr><td><a href="/admin/problem_verification/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty']  + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + rows[i]['date'] + '</td></tr>';
-        res.write(senddata);
-        i++;
+
+      //setting info for pagination
+      var pages = Math.ceil(rows.length*1.0/20.0);
+      var page_info = "";
+      for (var i = 1;i <= pages;i++){
+        page_info += "<a href = '/admin/problem_verification/" + i + "'>" + i + "</a>"; 
       }
-      res.end();
 
-    }
+      var senddata = "";
+      var upper_bound = page_no*20;
+      if (page_no*20 > rows.length)
+        upper_bound = rows.length;
 
+      for (var i = (page_no-1)*20;i < upper_bound;i++){
+        rows[i]['date'] = (rows[i]['date'].toISOString()).slice(0,10);
+        senddata += '<tr><td><a href="/admin/problem_verification/' + page_no + '/'  +rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty']  + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + rows[i]['date'] + '</td></tr>';
+      }
+
+      var data = {senddata,page_info}
+      res.send(data);
+     }
   });
 });
-router.get('/:problem_id', redirectAdminLogin, function(req, res) {
+
+
+//get api for opening problem that is displayed on the problem verification page
+router.get('/:page_no/:problem_id', redirectAdminLogin, function(req, res) {
   var problem_id = req.params.problem_id;
+  
+  //fetching problem details
   connection.query('SELECT * FROM problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
     if (err) throw err
+    
     if (!rows.length) {
-      res.redirect('/admin/problem_verification/');
-    } else {
+      res.redirect('/admin/problem_verification/' + page_no);
+    }
+    else {
+
       connection.query('SELECT username FROM user WHERE id = ?', [rows[0]['user_id']], function(err, rows1, fields) {
         if (err) throw err
+        
         var problem = {
+          status: 'unverified',
           author: rows1[0]['username'],
           problem_id: rows[0]['problem_id'],
           problem_name: rows[0]['problem_name'],
@@ -80,20 +96,27 @@ router.get('/:problem_id', redirectAdminLogin, function(req, res) {
           sample_out: rows[0]['sample_out'],
           explanation: rows[0]['explanation']
         }
+        
+        //rendering the problem data
         res.render('problem', problem);
       });
     }
   });
 });
 
-
-router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) {
+//get api for sending mail to notify the user about the completed verification of his setted problem  
+router.get('/:page_no/:problem_id/verify/', redirectAdminLogin, function(req, res, next) {
   var problem_id = req.params.problem_id;
+
+  //inserting the verified problem data into verified_problems table
   connection.query('INSERT INTO verified_problems SELECT * FROM problems WHERE problem_id=?', [problem_id], function(err, rows, fields) {
     if (err) throw err
+    
     else {
+      //deleting that verified problem data from problems table
       connection.query('DELETE FROM problems WHERE problem_id=?', [problem_id], function(err, rows, fields) {
         if (err) throw err
+
         else {
           connection.query('SELECT * FROM verified_problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
             if (err) throw err
@@ -104,6 +127,8 @@ router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) 
               var problem_name = rows[0]['problem_name'];
               var prevdir = __dirname + '/../problems/testcase/' + problem_id;
               var nextdir = __dirname + '/../verified_problems/testcase/' + problem_id;
+              
+              //moving and copying the testcase and the image to the correct position 
               fs.copySync(prevdir, nextdir);
               fs.removeSync(prevdir);
               var ext = ['.png', '.jpg', '.jpeg'];
@@ -116,7 +141,7 @@ router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) 
               });
 
 
-
+              //sending verification completed email via gmail service
               connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
                 if (err) throw err
 
@@ -134,31 +159,43 @@ router.get('/:problem_id/verify/', redirectAdminLogin, function(req, res, next) 
             }
           })
         }
-        res.redirect('/admin/problem_verification/');
+        res.redirect('/admin/problem_verification/'+req.params.page_no);
       });
 
     }
   });
 });
 
-router.get('/:problem_id/discard', redirectAdminLogin, function(req, res, next) {
+
+//get api for sending mail to notify the user about discarding of his setted problem due to some reason/issue 
+router.get('/:page_no/:problem_id/discard', redirectAdminLogin, function(req, res, next) {
   var problem_id = req.params.problem_id;
+
   connection.query('SELECT * FROM problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
     if (err) throw err
+
     else {
       var problem_date = rows[0]['date'];
       var user_id = rows[0]['user_id'];
       var problem_id = rows[0]['problem_id'];
       var problem_name = rows[0]['problem_name'];
       var prevdir = __dirname + '/../problems/testcase/' + problem_id;
+      
+      //removing the unwanted testcase and image of dicarded question
       fs.removeSync(prevdir);
       connection.query('SELECT email FROM user WHERE id = ?', [user_id], function(err, rows, fields) {
         if (err) throw err
+
         else {
+          
           mailOptions.to = rows[0]['email'];
           mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been disqualified due to certain reasons';
+
+          //deleting entry from the table
           connection.query('DELETE FROM problems WHERE problem_id = ?', [problem_id], function(err, rows, fields) {
             if (err) throw err
+
+            //sending email about problem discarding
             transporter.sendMail(mailOptions, function(error, info) {
               console.log('mailed');
               if (error) {
@@ -167,20 +204,13 @@ router.get('/:problem_id/discard', redirectAdminLogin, function(req, res, next) 
                 console.log('Email sent: ' + info.response);
               }
             });
-            res.redirect('/admin/problem_verification/');
           });
         }
       });
-      res.redirect('/admin/problem_verification/');
+      res.redirect('/admin/problem_verification/'+req.params.page_no);
     }
   })
 });
-
-
-
-
-
-
 
 
 

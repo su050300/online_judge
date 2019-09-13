@@ -21,19 +21,23 @@
         <tbody id="problem-list">  </tbody>
       </table>
 
+      <p id = "pagination"></p>
+      
 
 <script type="text/javascript">
     function getproblems(){
       var xhttp;
   xhttp = new XMLHttpRequest();
+  xhttp.responseType = "json";
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("problem-list").innerHTML = this.responseText;
+    document.getElementById("problem-list").innerHTML = this.response.senddata;
+    document.getElementById("pagination").innerHTML = this.response.page_info;
     // console.log(this.responseText);
     }
   };
   
-  xhttp.open("POST", "/admin/contest_problem_verification", true);
+  xhttp.open("POST", window.location.href, true);
   xhttp.send();}
 
 </script>

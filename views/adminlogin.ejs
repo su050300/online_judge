@@ -1,19 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/adminlogin.css">
+    <%-include('footheader');-%>
+        <div class="container">
+            <form method='post' action='/admin/login'>
+                <!-- login section -->
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Admin Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- username -->
+                        <div class="row form-group">
+                            <div class="col-lg-3 pt-1">
+                                <label for="user">Username</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="user" class="form-control" name='username' placeholder='Username' required />
+                            </div>
 
-    </title>
-</head>
-<body>
-<h1>Admin Login</h1>
-        <form method = 'post' action = '/admin/login'>
+                        </div>
+                        <br>
+                        <!-- password -->
+                        <div class="row form-group">
+                            <div class="col-lg-3 pt-1">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='password' id="password" class="form-control" name='password' placeholder='Password' required />
+                            </div>
 
-            <input type = 'text' name = 'username' placeholder = 'Username' required />
-            <input type = 'password' name = 'password' placeholder = 'Password' required />
-            <%if(message)%>
-            <p><%=message%></p>
-            <button name = 'submit'>Submit</button>
-        </form>
-    </body>
-        </html>
+                        </div>
+                        <!-- message -->
+                         <%if(message)%>
+                            <p>
+                                <%=message%>
+                            </p>
+ -->
+
+                    </div>
+                    <div class="card-footer text-center">
+                        <button name='submit' class="btn btn-success">Submit</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+        <%-include('footer');-%>

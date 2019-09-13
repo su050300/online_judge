@@ -1,21 +1,21 @@
-var crypto=require('crypto');
+var crypto=require('crypto');   //npm module for creating hash password using algorithm
 var express=require('express');
 var router=express.Router();
 var redirectContestHome = require('../middleware/check').redirectContestHome;
 var connection = require('./db_connection.js');
 
 
+//get api for contest login page
 router.get('/',redirectContestHome,function(req,res,next){
-
     res.render('contestlogin.ejs',{message:''});
-  
-  });
+});
 
 
+//post api for contest login page and checking for valid credentials
 router.post('/',redirectContestHome,function(req,res,next){
 
-
-    var  pass = saltHashPassword(req.body.password);
+      //finding hashed password of the entered password    
+      var  pass = saltHashPassword(req.body.password);
       connection.query('SELECT contest_id,password FROM verified_contest_details WHERE username = ?',[req.body.username], function (err, rows, fields) {
           if (err) throw err
           if(!rows.length){
@@ -30,11 +30,11 @@ router.post('/',redirectContestHome,function(req,res,next){
               res.redirect('/contest/home');
           }
     });
-
     
 });
 
 
+// function for creating hashed password
 function saltHashPassword(password)
 {
 var salt = "aejjdgerjrxzcxzvbfahjaer";

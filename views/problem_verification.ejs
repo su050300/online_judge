@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <title></title>
   </head>
+  <!-- on page reload it will call the function getproblems() -->
   <body onload="getproblems()">
     <h1>problems</h1>
 
       <table>
         <thead>
           <tr>
+            <!-- details to be displayed -->
             <td>Problem Name</td>
             <td>Difficulty</td>
             <td>Subdomain</td>
@@ -17,23 +19,32 @@
           </tr>
         </thead>
 
+        <!-- here problems will be displayed -->
         <tbody id="problem-list">  </tbody>
       </table>
 
+      <!-- pagination details here -->
+      <p id = "pagination"></p>
 
+<!-- script starts here -->
 <script type="text/javascript">
     function getproblems(){
       var xhttp;
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("problem-list").innerHTML = this.responseText;
-    console.log(this.responseText);
-    }
-  };
-  
-  xhttp.open("POST", "/admin/problem_verification", true);
-  xhttp.send();}
+      xhttp = new XMLHttpRequest();
+      xhttp.responseType = "json";
+      xhttp.onreadystatechange = function() {
+      
+      // readystate denotes that the request is completed and the data is received and request is ok for status 200        
+      if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("problem-list").innerHTML = this.response.senddata;
+          document.getElementById("pagination").innerHTML = this.response.page_info;
+      }
+    };
+
+  //sending the post ajax request to the same page    
+  xhttp.open("POST", window.location.href, true);
+  xhttp.send();
+}
 
 </script>
   </body>

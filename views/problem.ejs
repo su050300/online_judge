@@ -1,42 +1,168 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/problem.css">
+    <link rel="stylesheet" href="/css/ide.css">
+    <%-include('footheader');-%>
+        <div class="con">
+            <div class="row header-row">
+                <div class="col-lg-7">
+                    <!-- description header -->
+                    <div class="description-header">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h4 class="font-weight-bold">
+                                    <a class="problem" href="#">Problems</a>
+                                </h4>
+                            </li>
+                            <li class="list-inline-item">
+                                <h4 class="font-weight-bold">
+                                    <a class="problem" href="#">Submissions</a>
+                                </h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-right">
+                    <!-- checking if the message is verified or unverified and show the buttons accordingly -->
+                    <%if(status === "unverified"){%>
+                        <button type="button" class="btn btn-success mr-3" formaction="/admin/problem_verification/verify/">Verify</button>
+                        <button type="button" class="btn btn-danger" formaction="/admin/problem_verification/discard/">Discard</button>
+                    <%}%>
+                    
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
+                </div>
 
-<body>
+            </div>
+            <div class="prob-cont">
+                <div class="row">
 
-  <a href="<%=problem_id%>/verify/">verify</a>
-  <a href="<%= problem_id%>/discard/">discard</a>
-  <h1>
-    <%= problem_name%>
-  </h1>
-  <div class="problem-details">
-    <p>author:<%=author%></p>
-    <p>difficulty:<%=difficulty%></p>
-    <p>subdomain:<%=subdomain%></p>
-  </div>
-  <div class="problem">
-    <h3>Problem Statement</h3>
-    <p><%-problem_statement%></p>
-    <h3>Input Format</h3>
-    <p><%-input%></p>
-    <h3>Output Format</h3>
-    </h3>
-    <p><%-output%></p>
-    <h3>Constraints</h3>
-    <p><%-constraints%></p>
-    <h3>Sample Input</h3>
-    <p><%-sample_in%></p>
-    <h3>Sample Output</h3>
-    <p><%-sample_out%></p>
-    <h3>Explanation</h3>
-    <p><%-explanation%></p>
+                    <div class="col-lg-10">
+                        <div class="container border cont">
 
+                            <!-- problem name,author,difficulty,tags -->
+                            <div class="row padit problem-description">
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <h2 class="text-capitalize font-weight-bold">
+                                            <%= problem_name%>
+                                        </h2>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-muted">Subdomain:
+                                            <span class="text-capitalize text-muted"><%=subdomain%></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 text-center">
+                                    <div class="row">
+                                        <p class="text-muted">Author:
+                                            <span class="text-capitalize text-info">
+                                                <%=author%>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-muted">Difficulty:
+                                            <% if (difficulty=="easy") { %>
+                                                <span class="text-capitalize text-success"><%= difficulty%></span>
+                                                <% } %>
+                                                    <% if (difficulty=="medium") { %>
+                                                        <span class="text-capitalize text-warning"><%= difficulty%></span>
+                                                        <% } %>
+                                                            <% if (difficulty=="hard") { %>
+                                                                <span class="text-capitalize text-danger"><%= difficulty%></span>
+                                                                <% } %>
 
-  </div>
-</body>
+                                        </p>
+                                    </div>
 
-</html>
+                                </div>
+
+                            </div>
+
+                            <hr>
+                            <!-- problem statement -->
+                            <div class="row padit problem_statement">
+
+                                <div class="col">
+                                    <p>
+                                        <%=problem_statement%>
+                                    </p>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <!-- input format -->
+                            <h5 class="padit font-weight-bold">Input:</h5>
+                            <div class="row padit input">
+                                <div class="col">
+                                    <p>
+                                        <%=input%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- contraints -->
+                            <h5 class="padit font-weight-bold">Constraints:</h5>
+                            <div class="row padit constraints">
+                                <div class="col">
+                                    <p>
+                                        <%=constraints%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- output format -->
+                            <h5 class="padit font-weight-bold">Output:</h5>
+                            <div class="row padit output">
+                                <div class="col">
+                                    <p>
+                                        <%=output%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- sample input -->
+                            <h5 class="padit font-weight-bold">Sample Input</h5>
+                            <div class="row padit">
+                                <div class="col sample">
+                                    <p>
+                                        <%=sample_in%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- sample output -->
+                            <h5 class="padit font-weight-bold">Sample Output</h5>
+                            <div class="row padit">
+                                <div class="col sample">
+                                    <p>
+                                        <%=sample_out%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- explanations -->
+                            <h5 class="padit font-weight-bold">Explanation</h5>
+                            <div class="row padit">
+                                <div class="col">
+                                    <p>
+                                        <%=explanation%>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 submission-button">
+                        <button class="btn sub">
+                                         My Submissions
+                                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- including the editor file here  -->
+            <%-include('editor');-%>
+            <%-include('footer');-%>

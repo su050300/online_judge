@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <!-- on page reload it will call the function leaderboard_change() -->
+  <body onload="leaderboard_change()">
+    <h1>Leaderboard</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <!-- details to be displayed -->
+            <td>Username</td>
+            <td>Points</td>
+            <td>Last submission</td>
+            <%if(message){%>
+            <%-message%>
+            <%}%>
+            <td></td>
+          </tr>
+        </thead>
+
+        <!-- here users will be displayed -->        
+        <tbody id="user-list">  </tbody>
+      </table>
+
+<!-- script starts here -->
+<script type="text/javascript">
+    function leaderboard_change(){
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+      // readystate denotes that the request is completed and the data is received and request is ok for status 200
+      if (this.readyState == 4 && this.status == 200) {
+      //displaying the response coming of the request
+      document.getElementById("user-list").innerHTML = this.responseText;
+      }
+    };
+  
+  //sending the post ajax request to the same page  
+  xhttp.open("POST", window.location.href, true);
+  xhttp.send();
+}
+// setInterval("leaderboard_change()",1000*60);
+
+
+</script>
+  </body>
+</html>

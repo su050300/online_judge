@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <!-- on page reload it will call the function getproblems() -->
+  <body onload="getproblems()">
+    <!-- link for accessing the leaderboard of a contest -->
+    <a href = "window.location.redirect = window.location.href+/../leaderboard">Go to Leaderboard</a>
+    <h1>Solve Problems</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <!-- details to be displayed -->
+            <td>Problem Name</td>
+            <td>Difficulty</td>
+            <td>Points</td>
+            <td>Subdomain</td>
+            <td></td>
+          </tr>
+        </thead>
+
+        <!-- here problems will be displayed -->
+        <tbody id="problem-list">  </tbody>
+      </table>
+
+<!-- script starts here -->
+<script type="text/javascript">
+    function getproblems(){
+      var xhttp;
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        // readystate denotes that the request is completed and the data is received and request is ok for status 200
+      if (this.readyState == 4 && this.status == 200) {
+          //displaying the response coming of the request
+      document.getElementById("problem-list").innerHTML = this.responseText;
+    
+      }
+    };
+  
+  //sending the post ajax request to the same page  
+  xhttp.open("POST", window.location.href, true);
+  xhttp.send();
+}
+
+
+</script>
+  </body>
+</html>

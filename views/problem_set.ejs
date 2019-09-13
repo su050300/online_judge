@@ -1,6 +1,9 @@
 <%-include('headheader');-%>
         <script type = 'text/javascript' src= "/js/tinymce.min.js" referrerpolicy="origin"></script>
         <script type="text/javascript">
+        
+        // using the npm module tinymce for adding rich html text editor
+        // the other parameters in object are custi=omizing the editor according to the requirement 
         tinymce.init({
           selector: '.textarea1',
           branding:false,
@@ -15,16 +18,18 @@
             var freeTiny = document.querySelectorAll('.tox .tox-notification--in');
             freeTiny.forEach(element => {
                 element.style.display = 'none';
+            });
+          }   
         });
 
-
-        }
-        });
         </script>
+
         <link rel="stylesheet" href="/css/problem_set.css">
         <link rel="stylesheet" href="/css/headertop.css">
- <%-include('footheader');-%>
- <div class="containit">
+ 
+        <%-include('footheader');-%>
+ 
+        <div class="containit">
 
         <form method = 'post' action = '/problem_set' enctype = 'multipart/form-data'>
             <% if(message === 0){%>

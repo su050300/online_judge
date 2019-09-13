@@ -1,0 +1,73 @@
+body {
+    background-color: #673AB7;
+}
+
+
+/* container */
+
+.container {
+    margin: 7% 15%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding-bottom: 5%;
+}
+
+.padit {
+    padding-top: 5%;
+    padding-left: 3%;
+}
+
+.backg {
+    background-color: #24c6dc;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+label {
+    text-shadow: 1px 1px 1px #595959;
+    font-size: 1.2rem;
+}
+
+
+/* select */
+
+.form-control,
+.custom-select {
+    border-radius: 18px;
+    border-color: #584b42;
+}
+
+
+/* submit button */
+
+.submit-button {
+    margin: 3% 55%;
+}
+
+
+/* media queries */
+
+@media (max-width:900px) {
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+    .submit-button {
+        margin: 10% 25%;
+    }
+    .row {
+        padding: 0 0;
+        margin: 0;
+    }
+    .col-lg-2 {
+        width: 40%;
+        margin: 7% 15%;
+    }
+    .col-lg-3 {
+        width: 45%;
+        margin: 7% 15%;
+    }
+    .col-lg-5 {
+        width: 80%;
+    }
+}

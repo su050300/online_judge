@@ -69,3 +69,6 @@ create table admin(id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50
 
 create table contest_signups(contest_id INT(6) NOT NULL,user_id INT(6) NOT NULL); 
 
+create table contest_logins(contest_id INT(6) NOT NULL,user_id INT(6) NOT NULL);
+
+create table contest_submission( problem_id INT(6) NOT NULL ,contest_id INT(6) NOT NULL, user_id INT(6) NOT NULL, datetime datetime NOT NULL, status SET('AC','RE','WA','TLE','CE') NOT NULL, solution TEXT NOT NULL, time FLOAT NOT NULL, memory FLOAT NOT NULL, language SET('C','C++','Java','Python','NodeJs') NOT NULL);

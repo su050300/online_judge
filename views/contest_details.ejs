@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body onload="set_date()">
-    <form action='/contest/create_details' method='post'>
+    <form action='/compete/create_contest' method='POST'>
         <label>Contest Name</label><input type="text" name="contest_name" placeholder="contest name">
         <% if(message === 0){%>
           <p><script>alert('low number of points');
