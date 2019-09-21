@@ -1,0 +1,29 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/problem_verification.css">
+    <%-include('footheaderadmin');-%>
+        <div class="cont border padit">
+            <h4 class="font-weight-bold text-center py-4">Submissions</h4>
+            <!-- table for problems -->
+            <table class="table table-bordered table-hover text-center">
+                <thead id = "thead">
+                    <tr>
+                      <!-- details to be displayed -->
+                        <th scope="col">Problem Name</th>
+                        <th scope="col">Language</th>
+
+                        <th scope="col">DateTime</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                 <!-- here problems will be displayed -->
+               <tbody id="problem-list">  </tbody>
+            </table>
+            <p id = "no_data"></p>
+
+        </div>
+
+        <%-include('headfooter');-%>
+            <script src="/js/jsubmission.js"></script>
+            <%-include('footfooter');-%>

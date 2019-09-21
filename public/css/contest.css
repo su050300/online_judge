@@ -7,7 +7,7 @@ body {
 
 .container-fluid {
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Space Mono', monospace;
     font-size: 1.1rem;
     color: white;
     background-image: url("/images/code.jpg");
@@ -19,8 +19,19 @@ body {
     padding: 9% 0%;
 }
 
+
+/* transparent bootstrap header */
+
 .transp {
     background-color: transparent !important;
+}
+.navbar-brand {
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
 }
 
 
@@ -43,8 +54,12 @@ body {
     font-family: 'Montserrat', sans-serif;
     padding: 2% 7%;
 }
-
-
+/* prob button */
+ .prob-button{
+    
+     display:flex;
+     justify-content:center;
+ }
 /* about section */
 
 .about {
@@ -65,7 +80,13 @@ body {
     margin: 0 0;
 }
 
+/* timer section */
 
+.timer{
+    padding:5% 1%;
+    color:black;
+
+}
 /* rules section */
 
 .rule-section {
@@ -106,14 +127,14 @@ body {
     stroke: white;
     stroke-width: 4;
     stroke-dasharray: 112;
-    animation: chall 1s ease-in-out;
+    animation: chall 0.5s ease-in-out;
 }
 
 .pract:hover {
     stroke: white;
     stroke-width: 4;
     stroke-dasharray: 83;
-    animation: pract 1s ease-in-out;
+    animation: pract 0.5s ease-in-out;
 }
 
 .nav-link {
@@ -229,5 +250,9 @@ li svg {
     .scoring,
     .about {
         background-image: none;
+    }
+    .col-sm-1,
+    .col-sm-3 {
+        width: 50%;
     }
 }

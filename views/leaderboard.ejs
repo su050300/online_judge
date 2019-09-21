@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <!-- on page reload it will call the function leaderboard_change() -->
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/leaderboard.css">
+    <%-include('footheader');-%>
+  <!-- on page load it will call the function leaderboard_change() -->
   <body onload="leaderboard_change()">
-    <h1>Leaderboard</h1>
-
-      <table>
-        <thead>
-          <tr>
-            <!-- details to be displayed -->
-            <td>Username</td>
-            <td>Points</td>
-            <td>Last submission</td>
-            <%if(message){%>
-            <%-message%>
-            <%}%>
-            <td></td>
-          </tr>
-        </thead>
-
-        <!-- here users will be displayed -->        
-        <tbody id="user-list">  </tbody>
-      </table>
+    <div class="ldtabcont">
+      <h4 class="text-center font-weight-bold">Leaderboard</h4>
+     <div class="addscroll">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <!-- details to be displayed -->
+                    <th scope="col">Username</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Last submission</th>
+                    <%if(message){%>
+                        <%-message%>
+                            <%}%>
+  
+                </tr>
+            </thead>
+            <!-- here users will be displayed -->
+            <tbody id="user-list">
+  
+            </tbody>
+        </table>
+     </div>
+      
+  </div>
+  <%-include('headfooter');-%>
 
 <!-- script starts here -->
 <script type="text/javascript">
@@ -35,7 +39,18 @@
       // readystate denotes that the request is completed and the data is received and request is ok for status 200
       if (this.readyState == 4 && this.status == 200) {
       //displaying the response coming of the request
-      document.getElementById("user-list").innerHTML = this.responseText;
+      document.getElementById("user-list").innerHTML = "";
+      var data = JSON.parse(this.response);
+      
+      data.forEach(function(element){
+        var date = new Date(element.datetime);          
+            date = date.toUTCString();
+            date = date.slice(4,26);
+          
+            
+        document.getElementById("user-list").innerHTML += "<tr><td>" + element.username + "</td><td>" + element.points + "</td><td>" + date + "</td>" + element.data + "</tr>"
+      })
+  
       }
     };
   
@@ -47,5 +62,4 @@
 
 
 </script>
-  </body>
-</html>
+<%-include('footfooter');-%>

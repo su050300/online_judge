@@ -1,33 +1,19 @@
 <%-include('headheader');-%>
     <link rel="stylesheet" href="/css/problem.css">
-    <link rel="stylesheet" href="/css/ide.css">
     <%-include('footheader');-%>
         <div class="con">
             <div class="row header-row">
                 <div class="col-lg-7">
                     <!-- description header -->
-                    <div class="description-header">
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h4 class="font-weight-bold">
-                                    <a class="problem" href="#">Problems</a>
-                                </h4>
-                            </li>
-                            <li class="list-inline-item">
-                                <h4 class="font-weight-bold">
-                                    <a class="problem" href="#">Submissions</a>
-                                </h4>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
                 <div class="col-lg-5 text-right">
                     <!-- checking if the message is verified or unverified and show the buttons accordingly -->
                     <%if(status === "unverified"){%>
-                        <button type="button" class="btn btn-success mr-3" formaction="/admin/problem_verification/verify/">Verify</button>
-                        <button type="button" class="btn btn-danger" formaction="/admin/problem_verification/discard/">Discard</button>
+                        <a type="button" class="btn btn-success mr-3" href="<%=problem_id%>/verify/">Verify</a>
+                        <a type="button" class="btn btn-danger" href="<%= problem_id%>/discard/">Discard</a>
                     <%}%>
-                    
+
 
                 </div>
 
@@ -35,7 +21,7 @@
             <div class="prob-cont">
                 <div class="row">
 
-                    <div class="col-lg-10">
+                    <div class="col-lg-9">
                         <div class="container border cont">
 
                             <!-- problem name,author,difficulty,tags -->
@@ -55,7 +41,7 @@
                                 <div class="col-lg-4 text-center">
                                     <div class="row">
                                         <p class="text-muted">Author:
-                                            <span class="text-capitalize text-info">
+                                            <span class="text-info">
                                                 <%=author%>
                                             </span>
                                         </p>
@@ -85,7 +71,7 @@
 
                                 <div class="col">
                                     <p>
-                                        <%=problem_statement%>
+                                        <%-problem_statement%>
                                     </p>
                                 </div>
 
@@ -96,7 +82,7 @@
                             <div class="row padit input">
                                 <div class="col">
                                     <p>
-                                        <%=input%>
+                                        <%-input%>
                                     </p>
                                 </div>
                             </div>
@@ -107,7 +93,7 @@
                             <div class="row padit constraints">
                                 <div class="col">
                                     <p>
-                                        <%=constraints%>
+                                        <%-constraints%>
                                     </p>
                                 </div>
                             </div>
@@ -118,7 +104,7 @@
                             <div class="row padit output">
                                 <div class="col">
                                     <p>
-                                        <%=output%>
+                                        <%-output%>
                                     </p>
                                 </div>
                             </div>
@@ -128,7 +114,7 @@
                             <div class="row padit">
                                 <div class="col sample">
                                     <p>
-                                        <%=sample_in%>
+                                        <%-sample_in%>
                                     </p>
                                 </div>
                             </div>
@@ -138,7 +124,7 @@
                             <div class="row padit">
                                 <div class="col sample">
                                     <p>
-                                        <%=sample_out%>
+                                        <%-sample_out%>
                                     </p>
                                 </div>
                             </div>
@@ -148,15 +134,16 @@
                             <div class="row padit">
                                 <div class="col">
                                     <p>
-                                        <%=explanation%>
+                                        <%-explanation%>
                                     </p>
                                 </div>
                             </div>
                             <hr>
                         </div>
                     </div>
+                    <div class="col-lg-1"></div>
                     <div class="col-lg-2 submission-button">
-                        <button class="btn sub">
+                        <button class="btn btn-primary" type = "submit" onclick = "mysub()">
                                          My Submissions
                                     </button>
                     </div>
@@ -164,5 +151,8 @@
             </div>
         </div>
             <!-- including the editor file here  -->
-            <%-include('editor');-%>
-            <%-include('footer');-%>
+            <%-include('editori');-%>
+            <%-include('headfooter');-%>
+            <script src="/js/jproblem.js"></script>
+            <script src="/js/jide.js"></script>
+            <%-include('footfooter');-%>

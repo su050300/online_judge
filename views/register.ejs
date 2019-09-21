@@ -1,55 +1,72 @@
 <%-include('headheader');-%>
 
     <link rel="stylesheet" href="/css/register.css">
-    <link rel="stylesheet" href="/css/headertop.css">
-    <%-include('footheader');-%>
+    <%-include('footheaderlogin');-%>
     <!-- container -->
     <div class="contain">
-        <form method='post' action='/register' class="form-horizontal">
+        <form  onsubmit = "return formValidation()" method='post' action='/register' class="form-horizontal">
             <div class="card">
-                <div class="card-header">
+                <div class="register-header">
                     <h4>Register</h4>
                 </div>
+                <!-- ejs message if email or username already exists -->
+            <% if(message)%>
+            <p  class="text-danger text-center py-2">
+                <%=message%>
+            </p>
                 <div class="card-body">
                     <!-- name of the user -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="name">Name</label>
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="name" name='name' class="form-control" placeholder='Name' required />
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            <input type='text' id="name" name='name' class="form-control" placeholder='Name' required />
-                        </div>
+                        <span id = "nameerror" style = "color:red;font-weight:bold;font-size:13px;"></span><br>
                     </div>
                     <!-- username -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="username">Username</label>
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="username" name='username' class="form-control" placeholder='Username' required />
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            <input type='text' id="username" name='username' class="form-control" placeholder='Username' required />
-                        </div>
+                        <span id = "usernameerror" style = "color:red;font-weight:bold;font-size:13px;"</span><br>
                     </div>
                     <!-- email id -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="mail">Email</label>
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="mail">Email</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='email' id="mail" name='email' class="form-control" placeholder='Email' required />
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            <input type='email' id="mail" name='email' class="form-control" placeholder='Email' required />
-                        </div>
+                        <span id = "emailerror" style = "color:red;font-weight:bold;font-size:13px;"></span><br>
 
                     </div>
                     <!-- password -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="password">Password</label>
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='password' id="password" name='password' class="form-control" placeholder='Password' required />
+                            </div>
+
                         </div>
-                        <div class="col-lg-8">
-                            <input type='password' id="password" name='password' class="form-control" placeholder='Password' required />
-                        </div>
+                        <span id = "passworderror" style = "color:red;font-weight:bold;font-size:13px;"></span><br>
                     </div>
                     <!-- gender -->
-                    <div class="row">
+                    <div class="row pado">
                         <div class="col-lg-3">
                             <label>Gender</label>
                         </div>
@@ -76,30 +93,38 @@
                     </div>
 
                     <!-- city -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="city">City</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type='text' id="city" name='city' class="form-control" placeholder='City' required />
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="city">City</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="city" name='city' class="form-control" placeholder='City' required />
+                            </div>
                         </div>
                     </div>
                     <!-- state -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="state">State</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type='text' id="state" name='state' class="form-control" placeholder='State' required />
+                    <div class="form-group">
+                        <div class="row pado">
+
+                            <div class="col-lg-3 pt-2">
+                                <label for="state">State</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="state" name='state' class="form-control" placeholder='State' required />
+                            </div>
+
                         </div>
                     </div>
                     <!-- college -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="college">College</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type='text' name='college' class="form-control" placeholder='College' required />
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="college">College</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' name='college' class="form-control" placeholder='College' required />
+                            </div>
                         </div>
                     </div>
 
@@ -111,22 +136,63 @@
                         <button class="btn btn-success" name='submit'>Submit</button>
                     </div>
 
-                    <p class="text-muted text-center">already have an account?<a href='/login'>Login</a></p>
+                    <p class="text-muted text-center py-2">Already have an account? &nbsp;<a href='/login'>Login</a></p>
                 </div>
 
 
             </div>
 
-
-
-            <!-- ejs message if email or username already exists -->
-            <% if(message)%>
-                <p>
-                    <%=message%>
-                </p>
-
         </form>
     </div>
 
 
-    <%-include('footer');-%>
+        <%-include('headfooter');-%>
+        <script type = "text/javascript">
+
+            function formValidation(){
+                
+                var name = document.getElementById('firstname').value;
+                var username = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+                
+                var namecheck = /^[A-Za-z ]{3,30}$/;
+                var usernamecheck = /^[A-Za-z0-9._]{3,30}$/;
+                var passwordcheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@##$$%^&*]{8,20}$/;
+                var emailcheck = /^[A-Za-z_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+                
+                
+                if (!namecheck.test(name)){
+                    document.getElementById('nameerror').innerHTML = "*Name must be (3-30) characters long";
+                    return false;
+                }
+                else{
+                    document.getElementById('nameerror').innerHTML = "";
+                }
+                if (!usernamecheck.test(username)){
+                    document.getElementById('usernameerror').innerHTML = "*Username must be (3-30) characters long and can also have (0-9 or _ or .)";
+                    return false;
+                }
+                else{
+                    document.getElementById('usernameerror').innerHTML = "";
+                }
+                if (!passwordcheck.test(password)){
+                    document.getElementById('passworderror').innerHTML = "*Password atleast have one special symbol,0-9 and of length 8-20";
+                    return false;
+                }
+                else{
+                    document.getElementById('passworderrorerror').innerHTML = "";
+                }
+                if (!emailcheck.test(email)){
+                    document.getElementById('emailerror').innerHTML = "*Email is Invalid";
+                    return false;
+                }
+                else{
+                    document.getElementById('emailerror').innerHTML = "";
+                }
+                
+            }
+            
+            </script>
+
+        <%-include('footfooter');-%>

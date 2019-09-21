@@ -1,3 +1,5 @@
+// animate the information of contest
+
 $(document).ready(function() {
     $(window).scroll(function() {
         var scrollHeight = $(window).scrollTop();

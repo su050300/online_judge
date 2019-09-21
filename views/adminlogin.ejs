@@ -1,7 +1,7 @@
 <%-include('headheader');-%>
     <!-- css link -->
     <link rel="stylesheet" href="/css/adminlogin.css">
-    <%-include('footheader');-%>
+    <%-include('footheaderlogin');-%>
         <div class="container">
             <form method='post' action='/admin/login'>
                 <!-- login section -->
@@ -9,6 +9,11 @@
                     <div class="card-header text-center">
                         <h4>Admin Login</h4>
                     </div>
+                     <!-- message -->
+                     <%if(message)%>
+                     <p>
+                         <%=message%>
+                     </p>
                     <div class="card-body">
                         <!-- username -->
                         <div class="row form-group">
@@ -31,12 +36,6 @@
                             </div>
 
                         </div>
-                        <!-- message -->
-                         <%if(message)%>
-                            <p>
-                                <%=message%>
-                            </p>
- -->
 
                     </div>
                     <div class="card-footer text-center">
@@ -48,4 +47,5 @@
         </div>
 
 
-        <%-include('footer');-%>
+        <%-include('headfooter');-%>
+        </html>

@@ -1,0 +1,110 @@
+<%-include('headheader');-%>
+
+    <link rel="stylesheet" href="/css/register.css">
+    <%-include('footheaderlogin');-%>
+    <!-- container -->
+    <div class="contain">
+        <form method='post' action='/auth/github/form' class="form-horizontal">
+            <div class="card">
+                <div class="register-header">
+                    <h4>Register</h4>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" id="username" name="username" value="<%=message1%>">
+                    <input type="hidden" id="email" name="email" value="<%=message2%>">
+                    <!-- name of the user -->
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="name" name='name' class="form-control" placeholder='Name' required />
+                            </div>
+                        </div>
+                        <span id = "nameerror" style = "color:red;font-weight:bold;font-size:13px;"></span><br>
+                    </div>
+            
+                    <!-- gender -->
+                    <div class="row pado">
+                        <div class="col-lg-3">
+                            <label>Gender</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-check padit">
+                                <input type='radio' class="form-check-input" id="male" name='gender' value='male'>
+                                <label for="male" class="form-check-label text-muted">Male</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="form-check padit">
+                                <input type='radio' class="form-check-input" id="medium" name='gender' value='female'>
+                                <label for="female" class="form-check-label text-muted">Female</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-check padit">
+
+                                <input type='radio' class="form-check-input" id="other" name='gender' value='other'>
+                                <label for="other" class="form-check-label text-muted">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- city -->
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="city">City</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="city" name='city' class="form-control" placeholder='City' required />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- state -->
+                    <div class="form-group">
+                        <div class="row pado">
+
+                            <div class="col-lg-3 pt-2">
+                                <label for="state">State</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' id="state" name='state' class="form-control" placeholder='State' required />
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- college -->
+                    <div class="form-group">
+                        <div class="row pado">
+                            <div class="col-lg-3 pt-2">
+                                <label for="college">College</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type='text' name='college' class="form-control" placeholder='College' required />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- submit -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-success" name='submit'>Submit</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </form>
+    </div>
+
+
+        <%-include('headfooter');-%>
+
+        <%-include('footfooter');-%>

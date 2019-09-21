@@ -15,6 +15,8 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+
+//setting mail options to send user emails of the contest notification one hour before the contest
 var mailOptions = {
   from: 'blackhat050300@gmail.com',
   subject: 'Contest starting reminder from codespark'
@@ -46,7 +48,7 @@ connection.query(sql_query_notification,[indiaTime[0],indiaTime[1]],function(err
         mailOptions.to = rows[i]['email'];
         mailOptions.html = '<p>You have registered for the contest ' + rows[i]['contest_name'] + ' that is going to start at ' + indiaTime[1] + 'on ' + indiaTime[0]  + '. </p>';
         transporter.sendMail(mailOptions, function(error, info) {
-            console.log(rows[i]['email']);
+            
             console.log('mailed');
           if (error) {
             console.log(error);
@@ -60,13 +62,10 @@ connection.query(sql_query_notification,[indiaTime[0],indiaTime[1]],function(err
 
 var time = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
 time = new Date(time);
-console.log(time.toLocaleString());
 time.setSeconds(time.getSeconds() + 5);
 time = time.toLocaleString().split(',');
 time[0] = time[0].split('/').reverse().join('-');
 time[1] = time[1].slice(1,time[1].length);
-console.log(time[0]);
-console.log(time[1])
 
 var arr = [];
 
@@ -103,12 +102,14 @@ connection.query(sql_query_contest_start,[time[0],time[1]],function(err,rows,fie
                 }
               });
             }
+
             else {
               var prevdir =__dirname+'/../contest_new_problems/testcase/' + rows[i]['problem_id'];
               var nextdir =__dirname+'/../problems/testcase/' + new_problem_id;
             fs.copySync(prevdir, nextdir);
             fs.removeSync(prevdir);
             var ext=['.png', '.jpg', '.jpeg'];
+
 
             //checking for all image extension that can exists for a problem
             ext.forEach(function(imgext)
@@ -122,6 +123,7 @@ connection.query(sql_query_contest_start,[time[0],time[1]],function(err,rows,fie
             });
           }
         }
+
         delete_query = delete_query.slice(0,delete_query.length-1) + ")"; 
 
 
@@ -138,6 +140,7 @@ connection.query(sql_query_contest_start,[time[0],time[1]],function(err,rows,fie
             problem_id_query += (start_id+i) + ",";
           }
 
+
           problem_id_query = problem_id_query.slice(0,problem_id_query.length-1);
           sql_query_contest_start += problem_id_query + ")";   
           connection.query(sql_query_contest_start, function(err, rows, fields) {
@@ -148,6 +151,7 @@ connection.query(sql_query_contest_start,[time[0],time[1]],function(err,rows,fie
               });
             });
         
+
             //deleting problems from contest_new_problems
           connection.query(delete_query, function(err, rows, fields) {
               if (err) throw err  

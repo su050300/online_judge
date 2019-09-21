@@ -1,0 +1,29 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <%-include('footheader');-%>
+        <div class="cont border padit">
+            <h4 class="font-weight-bold text-center py-4">Pending Friend Request</h4>
+            <!-- table for problems -->
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                      <!-- details to be displayed -->
+                        <th scope="col">Username</th>
+                        <th scope="col">College</th>
+                        <th scope="col">Response</th>
+                    </tr>
+                </thead>
+                 <!-- here problems will be displayed -->
+               <tbody id="followers-list"> 
+               </tbody>
+            </table>
+
+            <!-- pagination details here -->
+            <p id = "pagination"></p>
+
+        </div>
+
+        <%-include('headfooter');-%>
+            <script src="/js/jfollowers.js"></script>
+            <%-include('footfooter');-%>

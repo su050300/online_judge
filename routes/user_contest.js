@@ -162,21 +162,39 @@ router.post('/:contest_id', redirectLogin, function(req, res, next) {
 
                contest_end_datetime = (rows[0]['end_date'].toISOString()).slice(0,10) + " " + rows[0]['end_time'];
                
+               var csd=new Date(contest_start_datetime);
+               csd=csd.getTime();
+               var ced=new Date(contest_end_datetime);
+               ced=ced.getTime();
+               let startDate = new Date();
+               startDate = startDate.getTime();
+               var startdt;
+               var enddt;
+
                if (rows1.length){
                     var register = "";
-                    register = "registered";       //check for registered user
+                    register = "registered";    //check for registered user     
+                    startdt=startDate;
+                    enddt=csd;   
+                    
+
                     var contest_start_datetime,contest_end_datetime;
                     
                     //check for live contest
                     if(isLater(curr_datetime,contest_start_datetime) && isLater(contest_end_datetime,curr_datetime)){
                          register = "Solve Problems";
+                         startdt=startDate;
+                         enddt=ced;
                     }
 
                     //check for contest ended
                     else if(isLater(curr_datetime,contest_end_datetime)){
                          register = "Practice Problems";
+                         startdt=startDate;
+                         enddt=ced;
                     }
-                    var data = {rows,register};
+                    // console.log(startdt + " " + enddt);
+                    var data = {rows,register,startdt,enddt};
                     res.send(data);
                }
                else{
@@ -184,20 +202,27 @@ router.post('/:contest_id', redirectLogin, function(req, res, next) {
                     connection.query('SELECT * FROM verified_contest_details WHERE contest_id = ? AND user_id = ?',[contest_id,req.session.userId],function(err,rows2,fields){
                          if (err) throw err
                          var register = "Not Registered";
+                         startdt=startDate;
+                         endt=csd;
                          if (rows2.length === 1){
                               register = "Not Allowed";
+                              startdt=startDate;
+                              enddt=ced;
                          }
                          else{
                               if(isLater(curr_datetime,contest_end_datetime)){
                                    register = "Practice Problems";
+                                   startdt=startDate;
+                                   enddt=ced;
                               }
                          }
-                         var data = {rows,register};
+                         
+                         
+                         var data = {rows,register,startdt,enddt};
                          res.send(data);    
-                    });
+                    });       
                     
-               }
-               
+               } 
                
           });
    });  
@@ -205,58 +230,58 @@ router.post('/:contest_id', redirectLogin, function(req, res, next) {
 });
 
 //get api for fetching leaderboard data for particular contest id
-router.get('/:contest_id/leaderboard', redirectLogin, function(req, res, next) {
+router.get('/:contest_id/leaderboard', redirectLogin, async function(req, res, next) {
      var contest_id = req.params.contest_id;
      
      //query for choosing the names of the problems in a particular contest
-     connection.query('SELECT vp.problem_name FROM contest_old_problems AS cop INNER JOIN verified_problems AS vp ON (vp.problem_id = cop.problem_id AND contest_id = ?)',[contest_id],function(err,rows,fields){ 
+     await connection.query('SELECT vp.problem_name FROM contest_old_problems AS cop INNER JOIN verified_problems AS vp ON (vp.problem_id = cop.problem_id AND contest_id = ?)',[contest_id],async function(err,rows,fields){ 
           if (err) throw err
           
           var senddata = "";
           for (var i = 0;i < rows.length;i++){
                senddata += '<td>' + rows[i]['problem_name'] + '</td>';          
           }
-          res.render('leaderboard',{message:senddata});
+          await res.render('leaderboard',{message:senddata});
         });
 });
 
 
 //post api for fetching leaderboard data for particular contest id
-router.post('/:contest_id/leaderboard', redirectLogin,async (function(req, res, next) {
+router.post('/:contest_id/leaderboard', redirectLogin,async function(req, res, next) {
      var contest_id = req.params.contest_id;
 
      //checking if there exists any problem in contest or not
-     connection.query('SELECT vp.problem_name FROM contest_old_problems AS cop INNER JOIN verified_problems AS vp ON (vp.problem_id = cop.problem_id AND contest_id = ?)',[contest_id],function(err,rows2,fields){ 
+          await connection.query('SELECT vp.problem_name FROM contest_old_problems AS cop INNER JOIN verified_problems AS vp ON (vp.problem_id = cop.problem_id AND contest_id = ?)',[contest_id],async function(err,rows2,fields){ 
           if (err) throw err
           if (rows2.length){
             
           //getting the users list of those users who entered the contest when it is live      
-          connection.query("SELECT us.username,cl.user_id FROM contest_logins AS cl INNER JOIN user AS us ON (cl.user_id = us.id AND cl.contest_id = ?)",[contest_id],function(err,rows,fields){ 
+          await connection.query("SELECT us.username,cl.user_id FROM contest_logins AS cl INNER JOIN user AS us ON (cl.user_id = us.id AND cl.contest_id = ?)",[contest_id],async function(err,rows,fields){ 
                if (err) throw err
                var user_list = [];
                if (!rows.length)
                     res.send('No registered users for the contest');
                else{
-                    for (var i = 0;i < rows.length;i++){
-                         var idid = rows[i]['user_id'];
+                    await rows.forEach(async (user)=>{
+                         var idid = user['user_id'];
                          
                          //finding the last submission time for a user
-                         var p = await (connection.query("SELECT MAX(cs.datetime) FROM contest_submission AS cs WHERE cs.user_id = " + idid + " AND cs.contest_id = ? AND cs.status = 'AC'",[contest_id], function(err,rows3,fields){ 
+                         await connection.query("SELECT MAX(cs.datetime) FROM contest_submission AS cs WHERE cs.user_id = " + idid + " AND cs.contest_id = ? AND cs.status = 'AC'",[contest_id],async function(err,rows3,fields){ 
                               if (err) throw err
                               var temp_user = {};
 
                               //finding the points or the number of problems solved by a particular user
-                              var q = await (connection.query("SELECT DISTINCT vp.problem_name,cs.problem_id FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id = vp.problem_id) WHERE cs.user_id = ? AND cs.contest_id = ? AND cs.status = 'AC'",[idid,contest_id],function(err,rows1,fields){ 
+                         await connection.query("SELECT DISTINCT vp.problem_name,cs.problem_id FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id = vp.problem_id) WHERE cs.user_id = ? AND cs.contest_id = ? AND cs.status = 'AC'",[idid,contest_id],async function(err,rows1,fields){ 
                                    if (err) throw err
 
                               // getting the username from user_id  
-                              var r = await (connection.query("SELECT username from user WHERE id = ?",[idid],function(err,rows4,fields){ 
+                         await connection.query("SELECT username from user WHERE id = ?",[idid],async function(err,rows4,fields){ 
                                    if (err) throw err
                                    temp_user.username = rows4[0]['username'];
-                              }));
+                              });
                                    temp_user.points = rows1.length*100;
                                    temp_user.datetime = rows3[0]['MAX(cs.datetime)'];
-                                   temp_user.data = "<tr>";
+                                   temp_user.data = "";
                                    for (var j = 0;j < rows2.length;j++){
                                         var flag = 0;
                                         for (var k = 0;k < rows1.length;k++){
@@ -270,14 +295,14 @@ router.post('/:contest_id/leaderboard', redirectLogin,async (function(req, res, 
                                              temp_user.data += "<td>0</td>";
                                         }
                                    }
-                                   temp_user.data += "</tr>";
-
+                                   temp_user.data += "";
+                                   
                                    //pushing each users data as object in an array
                                    user_list.push(temp_user);
-                              }));
+                              });
                     
-                         }))
-               }
+                         })
+               });
           }
           //sorting the array on the basis of compare function first criteria points and second criteria the time of submission
           setTimeout((err)=> {user_list.sort(function(a,b){
@@ -287,12 +312,13 @@ router.post('/:contest_id/leaderboard', redirectLogin,async (function(req, res, 
                     }
                     return b.points-a.points;           
                })
+               
           res.send(user_list);
-          },1000);     
+          },200);     
           });
      }
 });
-}));
+});
 
 
 //get api to register a user into the contest
@@ -307,6 +333,7 @@ router.get('/:contest_id/register', redirectLogin, function(req, res, next) {
 
 //get api to let user enter the contest once it is started and let him see the problems of the contest
 router.get('/:contest_id/solve_problems', redirectLogin, function(req, res, next) {
+
      var contest_id = req.params.contest_id;
      connection.query('SELECT * FROM contest_logins WHERE contest_id = ? AND user_id = ?',[contest_id,req.session.userId],function(err,rows,fields){ 
           if (err) throw err
@@ -363,6 +390,7 @@ router.get('/:contest_id/solve_problems/:problem_id',redirectLogin, function(req
          connection.query('SELECT username FROM user WHERE id = ?', [rows[0]['user_id']], function(err, rows1, fields) {
            if (err) throw err
            var problem = {
+             check_id : req.params.contest_id,
              status: 'verified',
              author: rows1[0]['username'],
              problem_id:rows[0]['problem_id'],
@@ -430,6 +458,7 @@ router.get('/:contest_id/practice_problems/:problem_id',redirectLogin, function(
          connection.query('SELECT username FROM user WHERE id = ?', [rows[0]['user_id']], function(err, rows1, fields) {
            if (err) throw err
            var problem = {
+             check_id:0,
              status: 'verified',
              author: rows1[0]['username'],
              problem_id:rows[0]['problem_id'],
@@ -451,5 +480,145 @@ router.get('/:contest_id/practice_problems/:problem_id',redirectLogin, function(
        }
      });
  });
+
+
+//get api for getting the submissions of a user during a particular contest
+ router.get('/:contest_id/submission', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     
+  res.render('submission');
+
+});
+
+//post api for fetching details of the submissions of a user during a particular contest
+router.post('/:contest_id/submission', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var data;
+     connection.query('SELECT cs.id,cs.language,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id=? ORDER BY cs.datetime DESC',[user_id,contest_id], function(err, rows, fields) {
+          if (err) throw err
+          if (!rows.length) {
+            var senddata = '0';
+          data = {senddata}
+          } 
+          else {
+               data = rows;
+          }
+          res.json(data);
+     });
+
+});
+
+
+
+//get api for opening the submitted solution during a contest
+router.get('/:contest_id/submission/:sid', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var sid=req.params.sid;
+     
+     connection.query('SELECT cs.solution,cs.language,cs.id,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id=? AND cs.id=? ORDER BY cs.datetime DESC',[user_id,contest_id,sid], function(err, rows, fields) {
+          if (err) throw err
+
+          data = rows;
+          res.render('solution',rows[0]);
+          
+     });
+
+});
+
+
+//get api for rendering the same page as the submissions of a contest and will show the submissions for a contest
+router.get('/:contest_id/practice_problems/:problem_id/submission', redirectLogin, function(req, res, next) {
+     
+  res.render('submission');
+
+});
+
+//post api for fetching the details of the submissions of a contest and will show the submissions for a contest
+router.post('/:contest_id/practice_problems/:problem_id/submission', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var problem_id=req.params.problem_id;
+     var data;
+     connection.query('SELECT cs.id,cs.language,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id = ? AND cs.problem_id=? ORDER BY cs.datetime DESC',[user_id,contest_id,problem_id], function(err, rows, fields) {
+          if (err) throw err
+          if (!rows.length) {
+            var senddata = '0';
+          data = {senddata}
+          } 
+          else {
+               data = rows;
+          }
+          res.json(data);
+     });
+
+
+});
+
+
+//opening the code that is submitted during a contest using particular submission id
+router.get('/:contest_id/practice_problems/:problem_id/submission/:sid', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var sid=req.params.sid;
+     
+     connection.query('SELECT cs.solution,cs.language,cs.id,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id = ? AND cs.id=? ORDER BY cs.datetime DESC',[user_id,contest_id,sid], function(err, rows, fields) {
+          if (err) throw err
+
+          data = rows;
+          res.render('solution',rows[0]);
+          
+     });
+
+});
+
+
+//get api for the submissions of a user for a problem id during a contest 
+router.get('/:contest_id/solve_problems/:problem_id/submission', redirectLogin, function(req, res, next) {
+     
+  res.render('submission');
+
+});
+
+
+//post api for the submissions of a user for a problem id during a contest 
+router.post('/:contest_id/solve_problems/:problem_id/submission', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var problem_id=req.params.problem_id;
+     var data;
+     connection.query('SELECT cs.id,cs.language,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id=? AND cs.problem_id=? ORDER BY cs.datetime DESC',[user_id,contest_id,problem_id], function(err, rows, fields) {
+          if (err) throw err
+          if (!rows.length) {
+            var senddata = '0';
+          data = {senddata}
+          } 
+          else {
+               
+               data = rows;
+          }
+          res.json(data);
+     });
+
+
+});
+
+
+//get api for opening the submissions of a user for a problem id 
+router.get('/:contest_id/solve_problems/:problem_id/submission/:sid', redirectLogin, function(req, res, next) {
+     var contest_id = req.params.contest_id;
+     var user_id=req.session.userId;
+     var sid=req.params.sid;
+
+     connection.query('SELECT cs.solution,cs.language,cs.id,cs.datetime,cs.status,vp.problem_name,us.username FROM contest_submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND contest_id=? AND cs.id=? ORDER BY cs.datetime DESC',[user_id,contest_id,sid], function(err, rows, fields) {
+          if (err) throw err
+
+          data = rows;
+          res.render('solution',rows[0]);
+          
+     });
+
+});
 
 module.exports = router;

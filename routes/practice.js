@@ -72,13 +72,14 @@ router.post('/',redirectLogin,function(req,res,next){
           table_join = " LEFT JOIN";
 
       sql_query = sql_query + table_join + submission_query + where_query + order_by_query + order_by_date;
-    
+      
        connection.query(sql_query, [user_id], function(err, rows, fields) {
             if (err) throw err
             if (!rows) {
-            res.write('No problems match your search');
+              res.send('0');
             }
             else {
+              var arr = [];
                 for (var i = 0; i < rows.length; i++) {
                   if (rows[i]['status'] === 'AC' && status.length == 1 && status[0] == '0')
                     continue;
@@ -93,9 +94,16 @@ router.post('/',redirectLogin,function(req,res,next){
                   if (rows[i]['status'] === null)
                     problem_status = 'Unsolved';
                   else
-                    problem_status = 'solved';
-                  var senddata = '<tr><td><a href="/practice/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty'] + '</td><td>' + problem_points + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + problem_status + '</td></tr>';
-                  res.write(senddata);
+                     problem_status = 'solved';
+                  
+                     //checking if problem id is already been pushed into the senddata or not
+                     if (!arr.find(function(problem){
+                       return problem === rows[i]['problem_id'];
+                     })){
+                       arr.push(rows[i]['problem_id']);
+                      var senddata = '<tr><td><a href="/practice/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty'] + '</td><td>' + problem_points + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + problem_status + '</td></tr>';
+                      res.write(senddata);
+                     }
                 }
                 res.end();
               }
@@ -114,6 +122,8 @@ router.get('/:problem_id',redirectLogin, function(req,res){
         connection.query('SELECT username FROM user WHERE id = ?', [rows[0]['user_id']], function(err, rows1, fields) {
           if (err) throw err
           var problem = {
+            check_id:-1,
+            contest_id:0,
             status: 'verified',
             author: rows1[0]['username'],
             problem_id:rows[0]['problem_id'],
@@ -135,4 +145,51 @@ router.get('/:problem_id',redirectLogin, function(req,res){
       }
     });
 });
+
+//get api for getting the submisssions for a particular problem id
+router.get('/:problem_id/submission', redirectLogin, function(req, res, next) {
+  var contest_id = req.params.contest_id;
+  
+res.render('submission');
+
+});
+
+//post api for fetching the detailsof  the submisssions for a particular problem id
+router.post('/:problem_id/submission', redirectLogin, function(req, res, next) {
+  var user_id=req.session.userId;
+  var problem_id=req.params.problem_id;
+  var data;
+  connection.query('SELECT cs.id,cs.language,cs.date_time AS datetime,cs.status,vp.problem_name,us.username FROM submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND cs.problem_id=? ORDER BY cs.date_time DESC',[user_id,problem_id], function(err, rows, fields) {
+       if (err) throw err
+       if (!rows.length) {
+         var senddata = '0';
+       data = {senddata}
+       } 
+       else {
+            
+            data = rows;
+       }
+       res.json(data);
+  });
+
+
+});
+
+
+//get api for getting the submission by using submission id
+router.get('/:problem_id/submission/:sid', redirectLogin, function(req, res, next) {
+  var user_id=req.session.userId;
+  var sid=req.params.sid;
+  
+  connection.query('SELECT cs.solution,cs.language,cs.id,cs.date_time AS datetime,cs.status,vp.problem_name,us.username FROM submission AS cs INNER JOIN verified_problems AS vp ON (cs.problem_id=vp.problem_id) INNER JOIN user AS us ON (cs.user_id=us.id) WHERE cs.user_id=? AND cs.id=? ORDER BY cs.date_time DESC',[user_id,sid], function(err, rows, fields) {
+       if (err) throw err
+
+       
+       data = rows;
+       res.render('solution',rows[0]);
+       
+  });
+
+});
+
 module.exports = router;

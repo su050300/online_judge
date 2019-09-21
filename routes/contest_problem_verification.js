@@ -16,6 +16,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+//setting mail options for sending mail through nodemailer
 var mailOptions = {
   from: 'blackhat050300@gmail.com',
   subject: 'Contest problem response from codespark'
@@ -36,16 +37,18 @@ router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
     if (err) throw err
 
     if (!rows.length) {
-      res.write('No more problems to verify');
+      var senddata = '0';
+      var data = {senddata}
+      res.send(data);
     } 
     else {
-
+      
       //setting info for pagination
       var pages = Math.ceil(rows.length*1.0/20.0);
       var page_info = "";
-
+      
       for (var i = 1;i <= pages;i++){
-        page_info += "<a href = '/admin/problem_verification/" + i + "'>" + i + "</a>"; 
+        page_info += "<li class='page-item'><a class='page-link' href = '/admin/contest_problem_verification/" + i + "'>" + i + "</a></li>"; 
       }
 
       //setting each page upper bound of problems
@@ -59,6 +62,7 @@ router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
         senddata += '<tr><td><a href="/admin/contest_problem_verification/' + page_no + '/' + rows[i]['problem_id'] + '">' + rows[i]['problem_name'] + '</a></td><td>' + rows[i]['difficulty']  + '</td><td>' + rows[i]['subdomain'] + '</td><td>' + rows[i]['date'] + '</td></tr>';
         
       }
+    
 
       var data = {senddata,page_info}
       res.send(data);
@@ -84,6 +88,8 @@ router.get('/:page_no/:problem_id', redirectAdminLogin, function(req, res) {
     }
     else {
         var problem = {
+          check_id:-1,
+          contest_id: 0,
           status: 'unverified',
           author: rows[0]['username'],
           problem_id:rows[0]['problem_id'],

@@ -2,7 +2,7 @@
 
 .cont {
     margin: 7% 20%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
 }
 
@@ -11,4 +11,13 @@
 
 .padit {
     padding: 3% 5%;
+}
+
+
+/* media query */
+
+@media (max-width:900px) {
+    .cont {
+        margin: 15% 9%;
+    }
 }

@@ -1,57 +1,73 @@
 <!-- header using ejs -->
 <%-include('headheader');-%>
     <link rel="stylesheet" href="/css/login.css">
-    <link rel="stylesheet" href="/css/headertop.css">
-    <%-include('footheader');-%>    
+    <%-include('footheaderlogin');-%>    
     <!-- container for the form -->
     <div class="contain">
         <!-- form -->
         <form method='post' action='/login'>
             <div class="card">
-                <div class="card-header">
-                    <h4>Login</h4>
-                </div>
                 <div class="card-body">
+                    <div class="login-header">
+                        <h4 class="font-weight-bold pt-3">Login</h4>
+                        <a class="btn btn-dark btn-lg my-4" role="button" href = "/auth/github"><i class="fab fa-github"></i>Sign in with GitHub</a>
+                    </div>
+
+                    <!-- ejs message if invalid credentials -->            
+                    <%if(message)%>
+                    <p class="text-danger text-center py-2">
+                        <%=message%>
+                    </p>
+
                     <!-- username -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="user">Username</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type='text' id="user" class="form-control" name='username' placeholder='Username' required />
-                        </div>
-
-                    </div>
-                    <!-- password -->
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type='password' id="password" class="form-control" name='password' placeholder='Password' required />
+                    <div class="login-form">
+                        <div class="form-group">
+                            <div class="row padi">
+                                <div class="col-sm-1 pl-4"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                <div class="col-sm-2 text-deco"><label for="user">Username</label></div>
+                            </div>
+                            <div class="row padi">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-10"> <input type='text' id="user" class="form-control" name='username' placeholder='Username' required /></div>
+                            </div>
                         </div>
 
+                        <!-- password -->
+                        <div class="form-group">
+                            <div class="row padi">
+                                <div class="col-sm-1 pl-4"> <i class="fa fa-lock" aria-hidden="true"></i></div>
+                                <div class="col-sm-2 text-deco"> <label for="password">Password</label></div>
+                            </div>
+                            <div class="row padi">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-10"> <input type='password' id="password" class="form-control" name='password' placeholder='Password' required /></div>
+                                <div class="col-sm-1" id="eye"><i id="aye" class="fa fa-eye pt-1" aria-hidden="true"></i></div>
+                            </div>
+
+                        </div>
+                        <p class="text-muted text-right mr-5">
+                                <a class="text-muted" href='/forget_password'>Forget Password?</a>
+                            </p>  
                     </div>
-                    <div class="cont">
+
+                </div>
+                   
+                
+                <div class="card-footer text-center">
                         <button class="btn btn-success self-align-flex-end" name='submit'>Submit</button>
-                        <p class="text-muted">
-                            Don't have an account?<a class="text-muted" href='/register'>Register</a>
+                        <p class="text-muted py-2">
+                            Don't have an account? &nbsp;<a class="text-blue" href='/register'>Register</a>
                         </p>
                     </div>
 
-
-
-                </div>
-
             </div>
-            <!-- ejs message if invalid credentials -->            
-            <%if(message)%>
-                <p>
-                    <%=message%>
-                </p>
+            
 
         </form>
     </div>
 
-
-    <%-include('footer');-%>
+    
+    <%-include('headfooter');-%>
+    <script src = "js/jlogin.js"></script>
+    <%-include('footfooter');-%>
+    

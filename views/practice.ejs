@@ -1,105 +1,101 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/practice.css">
+    <%-include('footheader');-%>
 
-  <!-- on page reload it will call the function load_practice() -->
-  <body onload="load_practice()">
-    <h1>Practice</h1>
-  <!-- on changing the checkboxes it will call the function getproblems() -->
-    <form onchange = "load_practice()">
-    <label>Status</label>
-    <input type="checkbox" class="status" value="1"> Solved<br>
-    <input type="checkbox" class="status" value="0"> Unsolved<br>
-    
-    <label>Difficulty</label>
-    <input type="checkbox" class="difficulty" value="easy"> Easy<br>
-    <input type="checkbox" class="difficulty" value="medium"> Medium<br>
-    <input type="checkbox" class="difficulty" value="hard"> Hard<br>
+        <div class="container container-margin">
+            <div class="dropdown">
 
-    <label>Subdomain</label>
-    <input type="checkbox" class="subdomain" value="search"> Search<br>
-    <input type="checkbox" class="subdomain" value="arrays"> Arrays<br>
-    <input type="checkbox" class="subdomain" value="strings"> Strings<br>
-    <input type="checkbox" class="subdomain" value="sorting"> Sorting<br>
-    <input type="checkbox" class="subdomain" value="recursion"> Recursion<br>
-    <input type="checkbox" class="subdomain" value="bitman"> Bit Manipulation<br>
-    <input type="checkbox" class="subdomain" value="greedy"> Greedy<br>
-    <input type="checkbox" class="subdomain" value="dp"> Dynamic Programming<br>
-    <input type="checkbox" class="subdomain" value="graph"> Graph<br>
-    <input type="checkbox" class="subdomain" value="game"> Game Theory<br>
-    <input type="checkbox" class="subdomain" value="algorithm"> Algorithm<br>
-    <input type="checkbox" class="subdomain" value="np"> NP Complete NP Hard<br>
+                <a class="btn btn-secondary btn-lg btn-block"  href = "#collit" role  = "button" data-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-controls= "collit">
+                      Filter <i class = "fa fa-caret-down ml-2"></i>
+                </a>
 
-    
-      <table>
-        <!-- <thead>
-          <tr>
-            <td>Problem Id</td>
-            <td>Problem Name</td>
+                <!-- dropdown filters -->
+                <div class="collapse" id = "collit">
+                    <form>
+                        <div class="dropdown-item bord">
+                            <div class="row">
+                                <!-- status -->
+                                <h5 class="text-muted">Status:</h5>
+                                <div class="col-lg-2 py-4 text-muted">
+                                    <input type="checkbox" class="status" value="1"> Solved<br>
+                                    <input type="checkbox" class="status" value="0"> Unsolved<br>
+                                </div>
 
-          </tr>
-        </thead> -->
+                                <!-- difficulty -->
+                                <h5 class="text-muted">Difficulty:</h5>
+                                <div class="col-lg-2 py-4 text-muted">
+                                    <input type="checkbox" class="difficulty" value="easy"> Easy<br>
+                                    <input type="checkbox" class="difficulty" value="medium"> Medium<br>
+                                    <input type="checkbox" class="difficulty" value="hard"> Hard<br>
+                                </div>
+                                <h5 class="text-muted">Subdomain:</h5>
+                                <!-- subdomain -->
+                                <div class="col-lg-2 py-4 text-muted">
+                                    <input type="checkbox" class="subdomain" value="search"> Search<br>
+                                    <input type="checkbox" class="subdomain" value="arrays"> Arrays<br>
+                                    <input type="checkbox" class="subdomain" value="strings"> Strings<br>
+                                    <input type="checkbox" class="subdomain" value="sorting"> Sorting<br>
+                                    <input type="checkbox" class="subdomain" value="recursion"> Recursion<br>
+                                    <input type="checkbox" class="subdomain" value="bitman"> Bit Manipulation<br>
+                                </div>
+                                <div class="col-lg-2 py-4 text-muted">
 
-        <!-- here problems will be displayed -->
-        <tbody id="problem-list">  </tbody>
-      </table>
+                                    <input type="checkbox" class="subdomain" value="greedy"> Greedy<br>
+                                    <input type="checkbox" class="subdomain" value="dp"> Dynamic Programming<br>
+                                    <input type="checkbox" class="subdomain" value="graph"> Graph<br>
+                                    <input type="checkbox" class="subdomain" value="game"> Game Theory<br>
+                                    <input type="checkbox" class="subdomain" value="algorithm"> Algorithm<br>
+                                    <input type="checkbox" class="subdomain" value="np"> NP Complete NP Hard<br>
+                                </div>
+                                <div class="col-lg-2">
+                                    <!-- apply button -->
+                                   <button class="btn btn-secondary"  href = "#collit" type = "button" data-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-controls= "collit" id="apply">Apply Changes</button>
+                                </div>
+                            </div>
 
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+    <div class="addscroll">
+            <table class="table table-bordered table-hover text-center">
+                    <!-- here problems will be displayed -->
+                    <thead id = "thead">
+                       <tr>
+                         <th scope="col">
+                            Problem Name
+                         </th>
+                         <th scope="col">
+                            Difficulty
+                         </th>
+                         <th scope="col">
+                           Points
+                         </th>
+                         <th scope="col">
+                            Sub Domain
+                         </th>
+                         <th scope="col">
+                            Status
+                         </th>
+                       </tr>
+                    </thead>
+                    <tbody id="problem-list"> 
+                           
+                      </tbody>
+                  </table>
+    </div>
+      
+      <p id = "no_data"></p>
+
+
+        </div>
+        <%-include('headfooter');-%>
+            <script src="/js/jpractice.js"></script>
+
+            <%-include('footfooter');-%>
 
       
-<!-- script starts here -->
-<script type="text/javascript">
-function load_practice(){
-
-    var xhttp;
-    var query = {status: '',difficulty: '',subdomain: ''};
-    xhttp = new XMLHttpRequest();
-    var status = document.getElementsByClassName('status');
-    var difficulty = document.getElementsByClassName('difficulty');
-    var  subdomain = document.getElementsByClassName('subdomain');
-    
-    //appending different parameters choosen
-    if (status.length != 0 || difficulty.length != 0 || subdomain.length != 0){
-      for (var i = 0;i < status.length;i++){
-        if (status[i].checked){
-         query.status += status[i].value + ' ';  
-        } 
-      }
-    
-      //appending different parameters choosen
-      for (var i = 0;i < difficulty.length;i++){
-          if (difficulty[i].checked){
-          query.difficulty += difficulty[i].value + ' ';  
-        } 
-      }
-
-      //appending different parameters choosen
-      for (var i = 0;i < subdomain.length;i++){
-          if (subdomain[i].checked){
-          query.subdomain += subdomain[i].value + ' ';  
-        } 
-      }
-      
-    }
-    xhttp.onreadystatechange = function() {
-        // readystate denotes that the request is completed and the data is received and request is ok for status 200
-      if (this.readyState == 4 && this.status == 200) {
-        //displaying the response coming of the request        
-      document.getElementById("problem-list").innerHTML = this.responseText;
-     }
-    };
-  
-  //sending the post ajax request to practice page  
-    xhttp.open("POST", "/practice", true);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    //sending data as sring in json format
-    xhttp.send(JSON.stringify(query));
-  }
-
-</script>
-
-</body>
-
-</html>

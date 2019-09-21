@@ -1,42 +1,50 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body onload="getcontests()">
-    <h1>Contest</h1>
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/contest_verification.css">
+    <%-include('footheaderadmin');-%>
+        <!-- contest verification -->
+        <div class="cont">
 
-      <table>
-        <thead>
-          <tr>
-            <td>Contest Id</td>
-            <td>Contest Name</td>
+            <h4 class="text-center">Contest</h4>
+            <div class="pad-table">
+                <table class="table table-bordered table-hover text-center">
+                    <thead id = "thead"> 
+                        <tr>
+                            <th scope="col">Contest Id</th>
+                            <th scope="col">Contest Name</th>
 
-          </tr>
-        </thead>
+                        </tr>
+                    </thead>
 
-        <tbody id="contest-list">  </tbody>
-      </table>
+                    <tbody id="contest-list"> </tbody>
+                </table>
+                <p id = "no_data"></p>
 
-      <p id = "pagination"></p>
 
-<script type="text/javascript">
-    function getcontests(){
-      var xhttp;
-  xhttp = new XMLHttpRequest();
-  xhttp.responseType = "json";
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("contest-list").innerHTML = this.response.senddata;
-    document.getElementById("pagination").innerHTML = this.response.page_info;
-    // console.log(this.response); 
-    }
-  };
+                <!-- pagination details here -->
+            <nav aria-label="Page navigation example">
+                  
+                <ul class="pagination justify-content-center" id = "arrows">
+                           <ul class="pagination">
+                                <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                          <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                      </li>
+                           </ul>
+                        <ul class="pagination" id="pagination">
+                            </ul>
+                        <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                        </li>
+                </ul>
+        </nav>
 
-  xhttp.open("POST", window.location.href, true);
-  xhttp.send();}
-
-</script>
-  </body>
-</html>
+            </div>
+        </div>
+        <%-include('headfooter');-%>
+            <script src="/js/jcontest_verification.js">
+            </script>
+        <%-include('footfooter');-%>

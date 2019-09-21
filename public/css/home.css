@@ -1,0 +1,31 @@
+ /* containers */
+ 
+ .contest_home {
+     margin: 7% 15%;
+ }
+ 
+ .contain {
+     font-size: 1.8rem;
+     font-family: 'IBM Plex Sans', sans-serif;
+     color: white;
+ }
+ 
+ .toppad {
+     padding: 5% 0;
+ }
+ 
+ .card {
+     box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+ }
+ 
+ @media(max-width:900px) {
+     .contain {
+         font-size: 1;
+     }
+     .cont {
+         align-content: center;
+     }
+     .col-lg-5 {
+         padding: 10% 0;
+     }
+ }

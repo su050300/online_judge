@@ -1,15 +1,61 @@
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-      <% if (!message) { %>
-        <p> welcome !!!</p>
-        <a href = 'logout'>Logout!!</a>
-        <a href = 'problem_verification/1'>Problem Verifcation</a>
-        <a href = 'contest_verification/1'>Contest Verifcation</a>
-        <a href = 'contest_problem_verification/1'>Contest Problem Verifcation</a>
-        <%}%>
-  </body>
-</html>
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/adminhome.css">
+    <%-include('footheaderadmin');-%>
+        <!-- admin home -->
+        <div class="admin-home">
+            <!-- verify section -->
+            <div class="row toppad">
+
+                <div class="col-lg-1"></div>
+                <!-- problem_verification -->
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="300px" src="/images/problem_verification.jpg" alt="problem_verification">
+                        <div class="card-body">
+                            <a class="btn btn-primary" href='problem_verification/1'>Problem Verifcation</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-1"></div>
+                <!-- contest_problem_verification -->
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="300px" src="/images/contest_problem_verification.jpg" alt="contest_verification">
+                        <div class="card-body">
+                            <a class="btn btn-primary" href='contest_problem_verification/1'>Contest problem Verifcation</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row toppad">
+                <div class="col-lg-1"></div>
+                <!-- contest verification-->
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="300px" src="/images/contest.jpg" alt="problem verification">
+                        <div class="card-body">
+                            <a class="btn btn-primary" href='contest_verification/1'>Contest Verification</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-1"></div>
+                <!-- all hosted contests -->
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="300px" src="/images/contest_verification.png" alt="contet verification">
+                        <div class="card-body">
+                            <a class="btn btn-primary" href='compete'>All contests</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+           
+        </div>
+        <%-include('headfooter');-%>
+            <%-include('footfooter');-%>

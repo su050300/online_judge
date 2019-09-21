@@ -8,24 +8,36 @@
     width: 300px;
     height: 50px;
     border-radius: 25px;
-    border: solid 2px;
     padding: 20px;
+    border:solid 2px;
+    font-size:1.1rem;
+   
 }
 
 #existing_challenge {
     display: none;
-    padding: 2% 15%;
+    padding: 1% 15%;
+   
 }
 
-
+.problems{
+    border-bottom:0px;
+}
 /*problem items section */
 
 .problem_item {
     width: 300px;
     height: 50px;
-    border-bottom: solid;
+    text-align:center;
+   
+    font-size:1.1rem;
+    background-color:lightgrey;
+    border:1px solid grey;
+    padding-top:1%;
 }
-
+.problem_item:hover{
+    background-color: grey;
+}
 .problem_item:active {
     background-color: grey;
 }

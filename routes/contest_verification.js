@@ -41,7 +41,9 @@ router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
     if (err) throw err
     
     if (!rows.length) {
-      res.write('no more contest to verify');
+      var senddata = '0';
+      var data = {senddata}
+      res.send(data);
     } 
     else {
       var pages = Math.ceil(rows.length*1.0/20.0);
@@ -49,7 +51,7 @@ router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
 
       //setting info for pagination
       for (var i = 1;i <= pages;i++){
-        page_info += "<a href = '/admin/contest_verification/" + i + "'>" + i + "</a>"; 
+        page_info += "<li class='page-item'><a class='page-link' href = '/admin/contest_verification/" + i + "'>" + i + "</a></li>"; 
       }
 
       var senddata = "";

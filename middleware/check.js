@@ -5,7 +5,7 @@ module.exports = {
     //for redirecting to the user login page if user is not logged in
     redirectLogin: function redirectLogin(req, res, next) {
         if (!req.session.username) {
-            return res.redirect('/home');
+            return res.redirect('/homepge');
         }
         next();
     },

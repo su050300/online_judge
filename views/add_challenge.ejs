@@ -1,172 +1,63 @@
-<html lang="en" dir="ltr">
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/add_challenge.css">
+    <%-include('footheadercontest');-%>
+        <!-- adding challenge section -->
+        <div class="challenge_section">
+            <h4 class="text-center py-5 font-weight-bold"> Add challenges here</h4>
+            <!-- button for adding challenges -->
+            <div class="text-center">
+                <button id="exist_challenge" class="btn btn-primary mr-4">Add exising challenge</button>
+                <button id="new_challenge" class="btn btn-primary ml-4">Add new Challenge</button>
+            </div>
+            <!-- search for existing challenges -->
+            <div id='existing_challenge'>
+                <div id="challenges">
+                    <input type="text" class="form-control" id="search_existing" value="" placeholder="Search for problems"><br>
+                    
+                     <ul class="list-group problems">
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <style>
-    #challenges {
-      background-color: lightgrey;
-      display: inline-block;
-    }
+                     </div>
+                </div>
+            </div>
+            <!-- contest_problem -->
+            <div id="contest_problem">
+                <h4 class="text-center font-weight-bold">Contest Problems</h4>
+                <!-- table for problems of contest -->
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Problem Name</th>
+                            <th scope="col">Subdomain</th>
+                            <th scope="col">Difficulty</th>
+                            <th scope="col">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="verified_problems">
 
-    #search_existing {
-      width: 300px;
-      height: 50px;
-      border-radius: 25px;
-      border: solid 2px;
-      padding: 20px;
-    }
+                    </tbody>
 
-    .problem_item {
-      width: 300px;
-      height: 50px;
-      border-bottom: solid;
-    }
+                </table>
+                <!-- pending problems section -->
+                <h4 class="text-center font-weight-bold">Pending Problems:</h4>
+                <!-- table for pending problems -->
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Problem Name</th>
+                            <th scope="col">Subdomain</th>
+                            <th scope="col">Difficulty</th>
+                            <th scope="col">Points</th>
+                        </tr>
+                    </thead>
+                    <!-- body of the table -->
+                    <tbody id="pending_problems">
 
-    .problem_item:active {
-      background-color: grey;
-    }
-  </style>
-</head>
+                    </tbody>
+                </table>
+            </div>
 
-<body onload="get_contest_problems()">
-  <p> Add challenges here</p>
-  <button onclick='existing_challenges()'>Add exising challenge</button>
-  <button onclick="window.location='/contest/add_challenge/new_challenge';">Add new Challenge</button>
-  <div id='existing_challenge' style="display:none">
-    <div id="challenges">
+        </div>
 
-
-      <input type="text" id="search_existing" value="" placeholder="Search for problems" onkeyup="search_problems()"><br>
-      <div class="problems">
-
-      </div>
-    </div>
-  </div>
-  <h1>Contest Problems</h1>
-  <div id="contest_problem">
-    <table>
-      <thead>
-        <tr>
-          <td>Problem Name</td>
-          <td>Subdomain</td>
-          <td>Difficulty</td>
-          <td>Points</td>
-        </tr>
-      </thead>
-      <tbody id="verified_problems">
-
-      </tbody>
-
-    </table>
-    <h3>Pending Problems:</h3>
-    <table>
-      <thead>
-        <tr>
-          <td>Problem Name</td>
-          <td>Subdomain</td>
-          <td>Difficulty</td>
-          <td>Points</td>
-        </tr>
-      </thead>
-      <tbody id="pending_problems">
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</body>
-<script>
-  function existing_challenges() {
-    document.getElementById('existing_challenge').style.display = 'block';
-  }
-
-  function search_problems() {
-    var search = document.getElementById('search_existing').value;
-    if (search) {
-      console.log(search);
-      var xhttp;
-      xhttp = new XMLHttpRequest();
-      xhttp.responseType = "json";
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.querySelector(".problems").innerHTML = "";
-          for (var i = 0; i < 6 && i < this.response.length; ++i)
-            document.querySelector(".problems").innerHTML += '<div class="problem_item" id="' + this.response[i].problem_id + '" onclick="select_problem(this.id)">' + this.response[i].problem_name + '</div>';
-          console.log(this.response);
-        }
-      };
-      // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhttp.open("POST", "/contest/add_challenge", true);
-      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhttp.send("search=" + search);
-
-    } else {
-      document.querySelector(".problems").innerHTML = "";
-    }
-  }
-
-  function select_problem(id) {
-
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        alert('Challenge ' + document.getElementById(id).innerHTML + ' added successfully');
-        document.getElementById('search_existing').value = "";
-        document.querySelector(".problems").innerHTML = "";
-        get_contest_problems();
-      }
-    };
-    xhttp.open("POST", "/contest/add_challenge/select_existing_challenge", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("problem_id=" + id);
-  }
-
-  function get_contest_problems() {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.responseType = "json";
-    var rows;
-
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-      rows=this.response;
-      var points;
-      document.getElementById('verified_problems').innerHTML="";
-        rows.rows1.forEach(function(element){
-          switch(element.difficulty){
-            case 'easy':points=30;
-                        break;
-            case 'medium':points=60;
-                        break;
-            case 'hard':points=100;
-                        break;
-
-          }
-            document.getElementById('verified_problems').innerHTML+='<tr><td>'+element.problem_name+'</td><td>'+element.subdomain+'</td><td>'+element.difficulty+'</td><td>'+points+'</td></tr>';
-        });
-        document.getElementById('pending_problems').innerHTML="";
-          rows.rows2.forEach(function(element){
-            switch(element.difficulty){
-              case 'easy':points=30;
-                          break;
-              case 'medium':points=60;
-                          break;
-              case 'hard':points=100;
-                          break;
-
-            }
-              document.getElementById('pending_problems').innerHTML+='<tr><td>'+element.problem_name+'</td><td>'+element.subdomain+'</td><td>'+element.difficulty+'</td><td>'+points+'</td></tr>';
-          });
-      }
-    };
-    xhttp.open("POST", "/contest/add_challenge/get_challenge", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send();
-  }
-</script>
-
-</html>
+        <%-include('headfooter');-%>
+            <script src="/js/jadd_challenge.js"></script>
+            <%-include('footfooter');-%>

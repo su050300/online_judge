@@ -1,15 +1,24 @@
+body {
+    background-color: #e4f2f0;
+}
+
 .contain {
     margin: 7% 20%;
 }
 
 .card {
     font-size: 1.2rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
 }
 
-.card-header {
+.pado {
+    padding: 1% 1%;
+}
+
+.register-header {
     text-align: center;
+    margin-top: 7%;
 }
 
 .card-body {
@@ -31,4 +40,17 @@
 
 .card-footer {
     background-color: none;
+}
+
+@media(max-width:900px) {
+    .card {
+        font-size: 1rem;
+    }
+    .contain {
+        margin: 10% 12%;
+    }
+    h4 {
+        font-size: 1.3rem;
+        font-weight: lighter;
+    }
 }

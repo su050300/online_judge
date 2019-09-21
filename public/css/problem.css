@@ -1,13 +1,81 @@
+body {
+    background-color: #a8c0ff;
+}
+
+.con {
+    margin: 0 0;
+}
+
+
 /* description-header */
+
+.header-row {
+    margin: 3% 0% 0% 6%;
+}
+
+.prob-cont {
+    padding-left: 3%;
+}
+
+.prob-cont>.row {
+    margin: 0;
+}
+
+.text-right {
+    padding: 0 6%;
+}
+
+.list-inline {
+    padding: 2% 4%;
+}
+
+.list-inline-item {
+    border-right: 1px solid #111;
+    padding: 0 3%;
+}
+
+.problem {
+    display: block;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+}
+
+.problem:hover {
+    text-decoration: none;
+    color: #474a56;
+}
+
+.problem:active {
+    pointer-events: none;
+}
 
 
 /* container */
 
 .cont {
     margin: 5% 3%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
     background-color: #fff;
+}
+
+
+/* my submission button */
+
+.submission-button {
+    margin: 5% 0;
+    margin-right: 0;
+}
+
+.sub {
+    background-color: #333333;
+    color: #eeeeee;
+}
+
+.sub:hover {
+    background-color: #737373;
+    color: #eeeeee;
 }
 
 
@@ -20,6 +88,10 @@
 
 /*problem desciption page */
 
+.problem-description {
+    padding-top: 5%;
+}
+
 .sample {
     background-color: #d4d7dd;
     padding: 2% 2%;
@@ -31,5 +103,20 @@
 @media (max-width:700px) {
     .container {
         margin: 7% 0%;
+    }
+    .header-row {
+        margin: 7% 0% 0% 0%;
+    }
+    .text-right {
+        padding: 0 3%;
+    }
+    .col-lg-7 {
+        width: 60%;
+    }
+    .col-lg-5 {
+        width: 40%;
+    }
+    .problem {
+        font-size: 1.1rem;
     }
 }

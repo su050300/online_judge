@@ -1,19 +1,20 @@
 body {
-    background-color: #673AB7;
+    background-color: #fff;
 }
 
 
 /* container */
 
 .container {
-    margin: 7% 15%;
+    margin: 7% 18%;
+    padding: 5% 1%;
     font-family: 'IBM Plex Sans', sans-serif;
     padding-bottom: 5%;
 }
 
 .padit {
-    padding-top: 5%;
-    padding-left: 3%;
+    padding-top: 7%;
+    padding-left: 5%;
 }
 
 .backg {
@@ -50,7 +51,7 @@ label {
 @media (max-width:900px) {
     .container {
         margin: 0;
-        padding: 0;
+        padding: 15% 7%;
     }
     .submit-button {
         margin: 10% 25%;

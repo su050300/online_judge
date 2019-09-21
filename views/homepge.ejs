@@ -1,0 +1,145 @@
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/homepge.css">
+
+    <!-- header container -->
+    <div class="container-fluid headr">
+        <nav class="navbar navbar-expand-lg navbar-dark transp bg-dark">
+            <a class="navbar-brand" href="homepge">
+                <!-- name of the brand -->
+                <%-include('brand');-%>
+            </a>
+            <!-- ending -->
+           
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-haspopup="true" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+           </button>
+           
+            
+           <%if (!message){%>
+            
+            <div class="collapse navbar-collapse mt-4" id="navb">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link log" href="/login">
+                            <h4 class="tags mr-3">Login</h4>
+                            <svg height="2" width="56">
+                                  <line x1="0" y1="0" x2="56" y2="0" class="line">                                                    
+                                      
+                                  </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <%}else{%>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link dash" href="/home">
+                                    <h5 class="tags">Go to Dashboard</h5>
+                                    <svg height="2" width="148">
+                                          <line x1="0" y1="0" x2="148" y2="0" class="line">                                                    
+                                              
+                                          </svg>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                </div>
+
+                <%}%>
+        </nav>
+        <!-- top section -->
+        <div class="top-sec">
+            <div class="d-flex flex-row-reverse">
+                <div class="col-lg-6">
+                    <h2 class="font-weigth-bold">
+                        Code Compete Conquer
+                    </h2>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <div class="col-lg-6">
+                    <p class="text py-4">Codespark is a platform for passionate programmers and beginners to hone and strengthen their programming skills.
+                    </p>
+            <%if (!message){%>
+                    <a href = "/register" class="btn btn-primary">Register</a>
+                <%}%>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- description section -->
+    <div class="desc-sect row">
+        <div class="col-lg-6">
+            <div class="text-center">
+                <i class="fas fa-flag-checkered"></i>
+                <h3 class="text-center py-4">Participate in coding challenges and win exciting and cool prizes</h3>
+            </div>
+
+        </div>
+        <div class="col-lg-6">
+            <div class="text-center">
+                <i class="fas fa-code"></i>
+                <h3 class="text-center py-4">
+                    Practice problems and hone your programming skill.
+                </h3>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ide section -->
+    <div class="ide-sect">
+        <div class="row mx-0">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5">
+                <img src="/images/text-editor.png" alt="ide">
+            </div>
+            <div class="col-lg-6 ide-part">
+                <h3 class="text-center">
+                    An ide is best friend of programmer.
+                </h3>
+                <div class="text-center py-5">
+                    <a class="btn btn-primary" href="/editor">Open ide</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <a id = "news"></a>
+    <!-- news section -->
+    <h4 class="text-center padiit font-weight-bold">Fresh Feeds</h4>
+    <div class="news-section">
+        
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div class="carousel-inner" id="getnews">
+                      
+                        
+                      
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon bg" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+        
+            
+        
+            </div>
+    </div>
+    <%-include('headfooter');-%>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src = "/js/jnews.js"></script>    
+
+        <%-include('footfooter');-%>
+            .

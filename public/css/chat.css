@@ -1,0 +1,139 @@
+body{
+    background-color: #ecfcff;
+}
+.chat-contain{ 
+    padding: 6% 5%; 
+}
+
+
+/* user-info-container */
+
+.usr-ifo-contr {
+    font-size: 1.3rem;
+    height: 600px;
+    overflow-y: scroll;
+}
+.usr-ifo-contr::-webkit-scrollbar { width: 0 !important }
+
+.list-group-item {
+    border: 0 !important;
+    background-color:lightgray;
+    color: black;
+
+    
+}
+.friendlist{
+    height:500px;
+    background-color: lightgray;
+    
+}
+.friendchat{
+    height:410px;
+    overflow:scroll;
+}
+
+/* card styling */
+
+.card-body {
+    margin: 0;
+    padding: 0;
+    background-color:lightgray;
+    overflow-x:hidden;
+}
+
+
+/* chat header */
+
+.card-header {
+    background-color: #212529;
+    color: white;
+    font-weight: 900;
+}
+
+.card-footer {
+    background-color: #212529;
+}
+
+.chat-header {
+    padding: 5% 0;
+}
+
+
+/* list styling */
+
+.cht-lt {
+    padding: 7% 15%;
+}
+
+.cht-lt a {
+    color: black;
+}
+
+.cht-lt:hover {
+    background-color: lightgrey;
+    
+}
+
+li a:hover {
+    text-decoration: none;
+    color: none;
+}
+
+
+/* chat box */
+
+.chat-box {
+    font-size: 1.3rem;
+    height: 600px;
+}
+
+
+/* received chat */
+
+.rcdbg {
+    background-color: #80ffaa;
+    border-radius: 36px;
+    padding: 2% 2%;
+}
+
+.sndbg {
+    background-color: #ff8a5c;
+    border-radius: 36px;
+    padding: 2% 2%;
+}
+
+.chat-rcd {
+    margin: 2% 3%;
+    color:black;
+}
+
+
+
+/* received chat */
+
+.chat-snd {
+    margin: 2% 3%;
+    border-radius: 36px;
+    color: black;
+}
+
+.dated {
+    font-size: 0.8rem;
+}
+
+
+/* textarea */
+
+.chat-reader {
+    background-color: lightgray;
+}
+
+textarea {
+    resize: none;
+}
+
+.fa-location-arrow {
+    color: #5b0080;
+    font-size: 1.8rem;
+    transform: rotate(45deg);
+}

@@ -4,8 +4,10 @@ var redirectAdminLogin = require('../middleware/check').redirectAdminLogin;
 
 //get api for logout for the admin and destroying the session for the admin 
 router.get('/', redirectAdminLogin, function(req, res, next) {
+    
   req.session.adminname = null;
 
-  res.redirect('/admin/login');
+  res.redirect('/homepge');
 });
+
 module.exports = router;

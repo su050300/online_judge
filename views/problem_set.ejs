@@ -25,11 +25,10 @@
         </script>
 
         <link rel="stylesheet" href="/css/problem_set.css">
-        <link rel="stylesheet" href="/css/headertop.css">
  
         <%-include('footheader');-%>
  
-        <div class="containit">
+    <div class="containit">
 
         <form method = 'post' action = '/problem_set' enctype = 'multipart/form-data'>
             <% if(message === 0){%>
@@ -53,182 +52,255 @@
                     window.location.assign('/home');
                 </script></p>
             <%}%>
-            <h3 class="text-lead padit">Problems Details</h3>
+            <h4 class="font-weight-bold padit">Problems Details</h4>
             <!-- problem name -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="problem">Problem Name</label>
+            <div class="deta-cont">
+                <div class="form-group row padit">
+                    <div class="col-lg-2 col-xl-2">
+                        <label for="problem">Problem Name</label>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-8 med-pad">
+                        <input type='text' id="problem" class="form-control" name='problem_name' required placeholder='problem name'>
+                    </div>
+
                 </div>
-                <div class="col-lg-5">
-
-                    <input type='text' id="problem" class="form-control" name='problem_name' required placeholder='problem name'>
-                </div>
-
-            </div>
-            <!-- difficulty -->
-            <div class="row padit">
-                <div class="col-lg-3">
-                    <label>Difficulty</label>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-check">
-
-                        <input type='radio' class="form-check-input" id="easy" name='difficulty' value='easy'>
-
-
-                        <label for="easy" class="form-check-label text-muted text-center">Easy</label>
-
+                <!-- difficulty -->
+                <div class="row padit">
+                    <div class="col-lg-2">
+                        <label>Difficulty</label>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-2">
+                        <div class="form-check med-pad sep-pad">
+                            <input type='radio' class="form-check-input" id="easy" name='difficulty' value='easy'>
+                            <label for="easy" class="form-check-label text-muted text-center">Easy</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-check med-pad sep-pad">
+                            <input type='radio' class="form-check-input" id="medium" name='difficulty' value='medium'>
+                            <label for="medium" class="form-check-label text-muted">Medium</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-check med-pad sep-pad">
+                            <input type='radio' class="form-check-input" id="hard" name='difficulty' value='hard'>
+                            <label for="hard" class="form-check-label text-muted">Hard</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <input type='radio' class="form-check-input" id="medium" name='difficulty' value='medium'>
-                    <label for="medium" class="form-check-label text-muted">Medium</label>
-
-                </div>
-                <div class="col-lg-2">
-
-                    <input type='radio' class="form-check-input" id="hard" name='difficulty' value='hard'>
-                    <label for="hard" class="form-check-label text-muted">Hard</label>
-
-
-                </div>
-            </div>
 
 
 
-            <!-- subdomain -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="subdomain">Subdomain</label>
+                <!-- subdomain -->
+                <div class="form-group row padit">
+                    <div class="col-lg-2">
+                        <label for="subdomain">Subdomain</label>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-8 med-pad">
+                        <select class="custom-select" name="subdomain">
+                                <option value="strings">Strings</option>
+                                <option value="sorting">Sorting</option>
+                                <option value="search">Searching</option>
+                                <option value="arrays">Arrays</option>
+                                <option value="graph">Graph Theory</option>
+                                <option value="greedy">Greedy</option>
+                                <option value="dp">Dynamic Programming</option>
+                                <option value="bitman">Bit Manipulation</option>
+                                <option value="game">Game Theory</option>
+                                <option value="recursion">Recursion</option>
+                                <option value="algorithm">Algorithm</option>
+                                <option value="np">NP Hard NP Complete</option>
+
+                    </select>
+                    </div>
                 </div>
-                <div class="col-lg-5">
-                    <input type='text' class="form-control addmar" name='subdomain' required placeholder='subdomain'>
+                <!-- time limit -->
+                <div class="form-group row padit ">
+                    <div class="col-lg-2">
+                        <label for="time ">Time Limit</label>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-8 med-pad">
+                        <input type='number' class="form-control addmar" name='time_limit' min='0.5' max='5.0' required placeholder='time_limit' step='0.5'>
+                    </div>
+
                 </div>
-            </div>
-            <!-- time limit -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="time">Time Limit</label>
+                <!-- memory limit -->
+                <div class="form-group row padit">
+                    <div class="col-lg-2">
+                        <label for="memory">Memory Limit</label>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-8 med-pad">
+                        <input type='number' class="form-control addmar" name='memory_limit' required placeholder='memory_limit'>
+                    </div>
+
                 </div>
-                <div class="col-lg-5">
-                    <input type='number' class="form-control addmar" name='time_limit' min='0.5' max='5.0' required placeholder='time_limit' step='0.5'>
+                <hr/>
+                <!-- problem statement -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="statement" class="inputbackg">Problem Statement</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' id="statement" rows="8" cols="60" class="form-control" name='problem_statement' required></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- image upload -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>
+                        Upload image here if any
+                    </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-8 med-pad">
+                            <input type='file' class="form-control" name='image' accept='.png, .jpg, .jpeg' size='1024*250'>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
-            <!-- memory limit -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="memory">Memory Limit</label>
-                </div>
-                <div class="col-lg-5">
-                    <input type='number' class="form-control addmar" name='memory_limit' min="1" max="512" required placeholder='memory_limit'>
-                </div>
-
-            </div>
-            <hr/>
-            <!-- problem statement -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="statement">Problem Statement</label>
-                </div>
-
-                <div class="col-lg-8">
-                    <textarea class='textarea1' id="statement" rows="8" cols="60" class="form-control" name='problem_statement' required></textarea>
-                </div>
-            </div>
-            <!-- image upload -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label>
-                            Upload image here if any
+                <!-- input -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="input">
+                           Input
                         </label>
-                </div>
-                <div class="col-lg-4">
-                    <input type='file' class="form-control" name='image' accept='.png, .jpg, .jpeg' size='1024*250'>
-                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea id="input" class='textarea1' class="form-control" rows="8" cols="60" name='input' required placeholder='input'></textarea>
+                        </div>
+                    </div>
 
-            </div>
-            <!-- input -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="input">
-                        INPUT
-                    </label>
                 </div>
-                <div class="col-lg-8">
-                    <textarea id="input" class='textarea1' class="form-control" rows="8" cols="60" name='input' required placeholder='input'></textarea>
-                </div>
-            </div>
-            <!-- constraints -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="constrant">
-                        CONSTRAINTS
-                    </label>
-                </div>
+                <!-- constraints -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-2">
 
-                <div class="col-lg-8">
-                    <textarea class='textarea1' id="constrant" class="form-control" rows="8" cols="60" name='constraints' required placeholder='constraints'></textarea>
-                </div>
-            </div>
-            <!-- output -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label for="output">
-                                OUTPUT
+                            <label for="constrant">
+                              Constraints
                              </label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' id="constrant" class="form-control" rows="8" cols="60" name='constraints' required placeholder='constraints'></textarea>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-lg-8">
-                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='output' required placeholder='output'></textarea>
-                </div>
-            </div>
-            <!-- sample input -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label>
-                                SAMPLE INPUT
-                               </label>
+                <!-- output -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-2">
+
+                            <label for="output">
+                            Output
+                         </label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' class="form-control" rows="8" cols="60" name='output' required placeholder='output'></textarea>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="col-lg-8">
-                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_in' required placeholder='sample input'></textarea>
-                </div>
-            </div>
-            <!-- sample output -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label>
-                                SAMPLE OUTPUT
-                            </label>
-                </div>
-                <div class="col-lg-8">
-                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_out' required placeholder='sample output'></textarea>
-                </div>
-            </div>
-            <!-- explanations -->
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <label>
-                                EXPLANATIONS
-                            </label>
-                </div>
+                <!-- sample input -->
+                <div class="form-group padit">
+                    <div class="row ">
+                        <div class="col-lg-3">
 
-                <div class="col-lg-8">
-                    <textarea class='textarea1' class="form-control" rows="8" cols="60" name='explanation' required placeholder='explanation'></textarea>
+                            <label>
+                             Sample Input
+                        </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_in' required placeholder='sample input'></textarea>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row padit">
-                <div class="col-lg-3">
-                    <input type='file' class="form-control" name='testcase' accept='.zip' required>
+                <!-- sample output -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>
+                        Sample Output
+                        </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' class="form-control" rows="8" cols="60" name='sample_out' required placeholder='sample output'></textarea>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- button -->
-            <div class="submit padit">
-                <button type='submit' class="btn btn-success">Submit</button>
+                <!-- explanations -->
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-2">
+
+                            <label>
+                         Explanations
+                           </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-8 med-pad">
+                            <textarea class='textarea1' class="form-control" rows="8" cols="60" name='explanation' required placeholder='explanation'></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group padit">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="file">Upload test cases</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-8 med-pad"><input type='file' class="form-control" name='testcase' accept='.zip' required></div>
+                    </div>
+
+                </div>
+                <!-- button -->
+                <div class="submit padit">
+                    <button type='submit' class="btn btn-success">Submit</button>
+                </div>
             </div>
             
-
         </form>
     </div>
-        <%-include('footer');-%>
+    
+
+    <%-include('headfooter');-%>
+    <%-include('footfooter');-%>

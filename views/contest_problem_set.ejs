@@ -1,6 +1,9 @@
 <%-include('headheader');-%>
         <script type = 'text/javascript' src= "/js/tinymce.min.js" referrerpolicy="origin"></script>
         <script type="text/javascript">
+        
+        // using the npm module tinymce for adding rich html text editor
+        // the other parameters in object are custi=omizing the editor according to the requirement         
         tinymce.init({
           selector: '.textarea1',
           branding:false,
@@ -220,4 +223,5 @@
 
         </form>
     </div>
-        <%-include('footer');-%>
+    <%-include('headfooter');-%>
+    <%-include('footfooter');-%> 

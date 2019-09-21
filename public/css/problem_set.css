@@ -1,30 +1,78 @@
 /* container */
 
 .containit {
-    margin: 4% 10%;
+    margin: 4% 15%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     font-size: 1.2rem;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
 }
 
 .containit textarea {
     resize: none;
 }
 
-.form-control:focus {
-    border-color: #d6d6c2;
-    box-shadow: none;
+.padit {
+    margin: 3% 0%;
+    padding: 2% 5%;
 }
 
-.padit {
-    margin-top: 5%;
-    padding-left: 3%;
+.font-weight-bold {
+    color: black;
 }
+
+
+/* .backg {
+    background-color: #24c6dc;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.inputbackg {
+    padding: 0.5rem 1rem;
+    background-color: #24c6dc;
+    border-radius: 20px;
+    text-align: center;
+} */
+
+
+/* input */
+
+input[type=file] {
+    padding-left: 18%;
+    padding-top: 1%;
+}
+
+
+/* submit */
 
 .submit {
     display: flex;
     justify-content: center;
     flex-direction: row;
+}
+
+
+/* media queries */
+
+@media(max-width:900px) {
+    textarea {
+        width: 400px;
+    }
+    .med-pad {
+        padding-top: 3%;
+        padding-bottom: 3%;
+    }
+    .sep-pad {
+        padding-left: 20%;
+        font-size: 1rem;
+    }
+    .deta-cont {
+        margin-left: 7%;
+        margin-top: 5%;
+    }
+    .containit {
+        margin: 13% 7%;
+    }
 }

@@ -1,0 +1,36 @@
+.container-margin {
+    margin: 7% 8%;
+    font-family: sans-serif;
+}
+
+
+/* dropdowns */
+
+.dropdown-menu {
+    background-color: #f9f9f9;
+    position: static;
+    float: none;
+}
+
+.dropdown-item:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown-item:active {
+    color: black;
+}
+
+
+/* media queries */
+
+@media (max-width:900px) {
+    .container-margin {
+        margin: 12% 0%;
+    }
+}
+@media(max-width:500px)
+{
+    .addscroll{
+        overflow-x:scroll;
+    }
+}

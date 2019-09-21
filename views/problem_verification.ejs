@@ -1,51 +1,51 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <!-- on page reload it will call the function getproblems() -->
-  <body onload="getproblems()">
-    <h1>problems</h1>
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/problem_verification.css">
+    <%-include('footheaderadmin');-%>
+        <div class="cont border padit">
+            <h4 class="font-weight-bold text-center py-4">Problems</h4>
+            <!-- table for problems -->
+            <table class="table table-bordered table-hover text-center">
+                <thead id = "thead">
+                    <tr>
+                      <!-- details to be displayed -->
+                        <th scope="col">Problem Name</th>
+                        <th scope="col">Difficulty</th>
+                        <th scope="col">Subdomain</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                 <!-- here problems will be displayed -->
+               <tbody id="problem-list">  </tbody>
+            </table>
+            <p id = "no_data"></p>
 
-      <table>
-        <thead>
-          <tr>
-            <!-- details to be displayed -->
-            <td>Problem Name</td>
-            <td>Difficulty</td>
-            <td>Subdomain</td>
-            <td>Date</td>
-          </tr>
-        </thead>
 
-        <!-- here problems will be displayed -->
-        <tbody id="problem-list">  </tbody>
-      </table>
+            <!-- pagination details here -->
+            <nav aria-label="Page navigation example">
+                  
+                    <ul class="pagination justify-content-center" id = "arrows">
+                               <ul class="pagination">
+                                    <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                              <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                          </li>
+                               </ul>
+                            <ul class="pagination" id="pagination">
+                                </ul>
+                            <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                            </li>
+                    </ul>
+            </nav>
+            
 
-      <!-- pagination details here -->
-      <p id = "pagination"></p>
+        </div>
 
-<!-- script starts here -->
-<script type="text/javascript">
-    function getproblems(){
-      var xhttp;
-      xhttp = new XMLHttpRequest();
-      xhttp.responseType = "json";
-      xhttp.onreadystatechange = function() {
-      
-      // readystate denotes that the request is completed and the data is received and request is ok for status 200        
-      if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("problem-list").innerHTML = this.response.senddata;
-          document.getElementById("pagination").innerHTML = this.response.page_info;
-      }
-    };
-
-  //sending the post ajax request to the same page    
-  xhttp.open("POST", window.location.href, true);
-  xhttp.send();
-}
-
-</script>
-  </body>
-</html>
+        <%-include('headfooter');-%>
+            <script src="/js/jproblem_verification.js"></script>
+            <%-include('footfooter');-%>

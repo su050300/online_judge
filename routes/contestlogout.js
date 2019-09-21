@@ -7,6 +7,7 @@ var redirectContestLogin = require('../middleware/check').redirectContestLogin;
 router.get('/', redirectContestLogin, function(req, res, next) {
   req.session.contest_username = null;
 
-  res.redirect('/contest/login');
+  res.redirect('/homepge');
 });
+
 module.exports = router;

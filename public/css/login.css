@@ -1,34 +1,102 @@
 /* positioning of form */
 
 .contain {
-    margin: 7% 30%;
+    margin: 7% 25%;
 }
 
 
 /* positioning of content of form */
 
 .card {
-    font-size: 1.2rem;
-    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    font-family: sans-serif;
     box-shadow: 0.2em 0.2em 0.4em rgba(0, 0, 0, 0.3);
 }
 
-.card-header {
+.login-header {
     text-align: center;
 }
 
-.card-body {
-    padding: 10% 10%;
+.login-form {
+    padding: 7% 5%;
 }
 
-.card-footer {
-    text-align: center;
+.text-deco {
+    font-size: 1.1rem;
+    font-weight: lighter;
 }
 
-.text-muted {
-    font-size: 1rem;
+.padi {
+    padding: 1% 0;
 }
 
 .cont {
     margin: 10% 15%;
+}
+
+
+/* icons */
+
+.fa-user,
+.fa-lock,
+.fa-eye {
+    color: #bbbccc;
+}
+
+.fa-eye-slash {
+    color: #aaabbb;
+}
+
+.fa-eye,
+.fa-eye-slash {
+    position: relative;
+    left: -5vw;
+}
+
+
+/* input */
+
+.form-control {
+    border: 0;
+    border-bottom: 1px solid #bbbccc;
+    border-radius: 0;
+}
+
+
+/* adding border-radius for the button */
+
+.btn-success {
+    border-radius: 18px;
+}
+
+
+/* media queries */
+
+@media (max-width:900px) {
+    .contain {
+        margin: 15% 9%;
+    }
+    .text-deco {
+        font-size: 1rem;
+    }
+    .padi {
+        padding: 1% 0;
+    }
+    .fa-eye,
+    .fa-eye-slash {
+        position: relative;
+        left: -12vw;
+    }
+    .login-form {
+        padding: 3% 1%;
+    }
+    .col-sm-1 {
+        width: 8%;
+    }
+    .col-sm-2 {
+        width: 15%;
+    }
+    .col-sm-10 {
+        width: 75%;
+    }
 }

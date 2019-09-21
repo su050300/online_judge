@@ -1,0 +1,53 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/leaderboard.css">
+    <%-include('footheader');-%>
+    <div class="ldtabcont">
+        <div class="card">
+            <div class="card-header">
+                    <h4 class="text-center">Users signup and login details</h4>
+            </div>
+            <div class="card-body">
+                
+                <div class="row pt-4">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <p class="font-weight-bold" id="signups"></p><br>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                                <p class="font-weight-bold" id="logins"></p>
+                        </div>
+                 </div>
+                  
+                
+            </div>
+        </div>
+    </div>
+
+
+        <%-include('headfooter');-%>
+            <script>
+            var xhttp;
+            xhttp = new XMLHttpRequest();
+            xhttp.responseType = "json";
+            xhttp.onreadystatechange = function() {
+                // readystate denotes that the request is completed and the data is received and request is ok for status 200
+                if (this.readyState == 4 && this.status == 200) {
+                //displaying the response coming of the request
+
+                    document.getElementById('signups').innerHTML = "Signups for the contest : " + this.response.signups;
+                    document.getElementById('logins').innerHTML = "Logins for the contest : " + this.response.logins;
+
+                }
+            };
+            //sending the post ajax request to contest/home  
+            xhttp.open("POST", window.location.href, true);
+            xhttp.send();
+            
+
+            </script>
+            <%-include('footfooter');-%>

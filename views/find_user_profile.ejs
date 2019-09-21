@@ -1,0 +1,274 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/user_profile.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>        
+            .user_item {
+              width: 300px;
+              height: 50px;
+              border-bottom: solid;
+            }
+        
+            .user_item:active {
+              background-color: grey;
+            }
+            .padd{
+                padding:3% 3%;
+            }
+          </style>
+    <!-- user profile  -->
+    <%-include('footheader');-%>
+    <body onload = 'button_change()'>
+        <div class="d-flex flex-row-reverse padd">
+                <div class="text-center px-2">
+                        <button onclick="window.location.href=window.location.href+'/follow'" class="btn btn-primary" id ="follow" style="display:none;"></button>
+                </div>
+                <div class="text-center px-2">
+                        <button onclick="window.location.href=window.location.href+'/friend_request'" class="btn btn-primary" id ="friend" style="display:none;"></button>
+                </div>
+        </div>
+           
+        <div class="user">
+            <div class="row">
+                <div class="col-lg-3 pic">
+                    <div class="profile-pic">
+                        <a href="">
+                            <img src="/images/user-default.png" class="border" width="180px" height="180px" alt="userhandle">
+                        </a>
+
+                    </div>
+                </div>
+                <!-- user follower section -->
+                <div class="col-lg-3">
+                    <div class="name">
+                        <h3 class="text-muted">
+                            <%=name%>
+                        </h3>
+                    </div>
+                    <div class="folow">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+                                Followers:
+                                <span class="badge badge-primary badge-pill"><%=followers%></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                Following:
+                                <span class="badge badge-primary badge-pill"><%=following%></span>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                Friends:
+                                <span class="badge badge-primary badge-pill"><%=friends%></span>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                Points:
+                                <span class="badge badge-primary badge-pill"><%=points%></span>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- about user -->
+                <div class="col-lg-6">
+                    <div class="col pad-adder">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="username"><p class="text-muted">Username:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=username%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="state"><p class="text-muted">State:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=state%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="city"><p class="text-muted">City:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=city%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="college"><p class="text-muted">College:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=college%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+
+            <hr>
+        </div>
+         <!-- pie charts -->
+         <div class="pie-chart">
+            <div id="chart_wrap">
+                <div id="chart_div">
+                    <div id="piechart" style="width: 900px; height: 600px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- problem solved -->
+        <div class="problm-solved">
+
+        </div>
+        </body>
+        <%-include('headfooter');-%>
+
+        <script>
+                function button_change() {
+                    var xhttp;
+                    xhttp = new XMLHttpRequest();
+                    xhttp.responseType = "json";  //setting responsetype as json to handle json incoming data
+                    xhttp.onreadystatechange = function() {
+                    // readystate denotes that the request is completed and the data is received and request is ok for status 200
+        
+                    if (this.readyState == 4 && this.status == 200) {
+        
+                        //if user is already following the searched username
+                        if (this.response.follow === "followed"){
+                            document.getElementById('follow').innerHTML = "Following";
+                            document.getElementById('follow').style.display = "block";
+                            document.getElementById('follow').style.backgroundColor = "grey";
+                            document.getElementById("follow").disabled = true;
+                        }
+                        else{
+                            document.getElementById('follow').innerHTML = "Follow";
+                            document.getElementById('follow').style.display = "block";
+                        } 
+                        //if user is already friend with the searched username                        
+                        if (this.response.friend === "friends"){
+                            document.getElementById('friend').innerHTML = "Friends";
+                            document.getElementById('friend').style.display = "block";
+                            document.getElementById('friend').style.backgroundColor = "grey";
+                            document.getElementById("friend").disabled = true;
+                        }
+                        else if(this.response.friend === "request pending from your side"){
+                            document.getElementById('friend').innerHTML = "Request pending from your side";
+                            document.getElementById('friend').style.display = "block";
+                            document.getElementById('friend').style.backgroundColor = "grey";
+                            document.getElementById("friend").disabled = true; 
+                        }
+                        else if (this.response.friend === "request pending from other side"){
+                            document.getElementById('friend').innerHTML = "Request pending from other side";
+                            document.getElementById('friend').style.display = "block";
+                            document.getElementById('friend').style.backgroundColor = "grey";
+                            document.getElementById("friend").disabled = true; 
+                        }
+                        else{
+                            document.getElementById('friend').innerHTML = "Send friend request";
+                            document.getElementById('friend').style.display = "block";
+                        }
+                    }
+                }
+        
+                //sending the post ajax request to the same page  
+                    xhttp.open("POST", window.location.href, true);
+                    xhttp.send();               
+            }
+
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var total_submissions = 0,re = 0,wa = 0,tle = 0,ac = 0,ce = 0;
+                var xhttp;
+                xhttp = new XMLHttpRequest();
+                xhttp.responseType = "json";
+                xhttp.onreadystatechange = function() {
+                // readystate denotes that the request is completed and the data is received and request is ok for status 200        
+                    if (this.readyState == 4 && this.status == 200) {
+                       re = this.response.re;
+                       wa = this.response.wa;
+                       tle = this.response.tle;                       
+                       ac = this.response.ac;
+                       ce = this.response.ce;
+                       total_submissions = ac+wa+tle+re+ce+'';
+                        
+                       var run_time = 'Runtime_Error',wrong_ans = 'Wrong_Answers',time_limit = 'Time_Limit_Exceeded',accept_ans = 'Accepted_Solutions',compile_err = 'Compile_Error';
+                        var data = google.visualization.arrayToDataTable([
+
+                            ['total_submission',''],
+                            [run_time, re],
+                            [wrong_ans, wa],
+                            [time_limit, tle],
+                            [accept_ans, ac],
+                            [compile_err, ce],
+
+                        ]);
+
+                        var options = {
+
+                            title: 'Submissions',
+                            sliceVisibilityThreshold:0,
+                            titleTextStyle: {
+                                fontName: 'sans serif',
+                                fontSize: '24',
+                            },
+                            colors: ['#79d2a6', '#dc3912', '#ff9900', '#109618', '#999966'],
+                            pieSliceText: 'value',
+                            fontName: 'sans serif',
+                            fontSize: '16',
+                            is3D: 'true',
+                            tooltip: {
+                                text: 'value',
+
+                                textStyle: {
+                                    color: '#333333',
+                                }
+                            },
+                            legend: {
+                                alignment: 'center',
+                            }
+                            };
+
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            chart.draw(data, options);
+                    }
+                };
+
+            //sending the post ajax request to the same page    
+            xhttp.open("POST", window.location.href+'/info', true);
+            xhttp.send();
+                
+              
+                $(window).on("throttledresize", function(event) {
+                    var options = {
+                        width: '100%',
+                        height: '100%'
+                    };
+
+                    var data = google.visualization.arrayToDataTable([]);
+                    drawChart(data, options);
+                });
+            }
+            </script>
+            
+        <%-include('footfooter');-%>

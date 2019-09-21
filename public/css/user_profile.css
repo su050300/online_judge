@@ -1,8 +1,29 @@
+/* user search */
+
+#challenges {
+   
+    display: inline-block;
+   }      
+   .user_item {
+     width: 210px;
+     height: 50px;
+     text-align:center;
+     font-size:1rem;
+     border:1px solid grey;
+      padding-top:1%;
+   }
+   .user_item:hover{
+          background-color: grey;
+          }
+   .user_item:active {
+     background-color: grey;
+   }
+  
 /* user */
 
 .user {
     font-size: 1.1rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     margin: 7% 15%;
 }
 
@@ -12,4 +33,58 @@
 
 .specfont {
     font-size: 1rem;
+}
+/* pie-chart */
+#piechart{
+    width: 900px;
+     height: 600px;
+}
+#chart_wrap{
+    position:relative;
+    height:0;
+    overflow:hidden;
+    padding-bottom:70%;
+}
+#chart_div{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+li a{
+    color:#333333;
+}
+li a:hover{
+    text-decoration: none;
+    color:grey;
+}
+/* pad-pader */
+.pad-adder{
+    padding-top:11%;
+}
+/* media queries */
+
+@media (max-width:900px) {
+    .user {
+        font-size: 1.1rem;
+        font-family: 'IBM Plex Sans', sans-serif;
+        margin: 12% 15%;
+    }
+    .col-lg-3 {
+        padding-top: 4%;
+    }
+    .col-sm-4 {
+        width: 40%;
+    }
+    .col-sm-8 {
+        width: 60%;
+    }
+    .pad-adder {
+        padding: 9% 0%;
+    }
+    #piechart{
+        width: 400px;
+         height: 400px;
+    }
 }

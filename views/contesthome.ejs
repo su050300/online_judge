@@ -1,69 +1,225 @@
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body onload="getcontestdetails()">
-      <% if (!message) { %>
-        <p> welcome here you can manage your contest!!!</p>
-        <a href = 'logout'>Logout!!</a>
-        <a href = 'add_challenge'>Add Challenge</a>
-        <%}%>
-        <form action="/contest/home/change" method="post">
-            <label>Contest Id:</label><input type="text" id="contest_id" disabled><br>
-            <label>Contest Name:</label><input type="text" id="contest_name" disabled><br>
-            <label>Contest Link:</label><input type="text" id="contest_link" disabled><br>
-            <label>Start Date:</label><input type="date" id="start_date" disabled><br>
-            <label>Start Time:</label><input type="time" id="start_time" disabled><br>
-            <label>End Date:</label><input type="date" id="end_date" name="end_date"><br>
-            <label>End Time:</label><input type="time" id="end_time" name="end_time"><br>
-            <label>Organisation Type:</label><input type="text" id="org_type" disabled><br>
-            <label>Organisation Name:</label><input type="text" id="org_name" disabled><br>
-            <label>Description:</label> <textarea name="description" rows="8" cols="80" id="description"></textarea><br>
-            <label>Prizes:</label><textarea name="prizes" rows="8" cols="80" id="prizes"></textarea><br>
-            <label>Rules:</label><textarea name="rules" rows="8" cols="80" id="rules"></textarea><br>
-            <label>Scoring:</label><textarea name="scoring" rows="8" cols="80" id="scoring"></textarea><br>
-            <button type="submit">Apply Changes</button>
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/contesthome.css">
+    <%-include('footheadercontest');-%>
+        <!-- on page load it will call the function getcontestdetails() -->
 
+        <body onload="getcontestdetails()">
 
+            <% if (!message) { %>
+                <%}%>
+                    <div class="contest_home">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-1"></div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <!-- navigation bar -->
+                                        <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary navpd">
 
+                                            <ul class="navbar-nav flex-row w-100">
+                                                <li class="nav-item navit active">
+                                                    <a class="nav-link navbg" href="#">
+                                                            Contest Details
+                                                        </a>
+                                                </li>
+                                                <li class="nav-item navit">
+                                                    <a class="nav-link navbg" href="add_challenge">
+                                                        Add Challenge
+                                                        </a>
+                                                </li>
+                                                <li class="nav-item navit">
+                                                    <a class="nav-link navbg" href="logins_signups">
+                                                            Logins And Signups
+                                                        </a>
+                                                </li>
+                                                <li class="nav-item navit">
+                                                    <a class="nav-link navbg" href="submission">
+                                                            Submissions
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                            <!-- </div> -->
+                                        </nav>
+                                    </div>
+                                    <div class="card-body">
 
-        </form>
-        <div id="problem-list">
+                                        <form action="/contest/home/change" method="post">
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="contest_id" class="font-weight-bold">Contest Id:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="contest_id" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="contest_name" class="font-weight-bold">Contest Name:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="contest_name" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="contest_link" class="font-weight-bold">Contest Link:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="contest_link" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="start_date" class="font-weight-bold">Start Date:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="date" class="form-control" id="start_date" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="start_time" class="font-weight-bold">Start Time:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="time" class="form-control" id="start_time" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="end_date" class="font-weight-bold">End Date:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="date" class="form-control" id="end_date" name="end_date"><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="end_time" class="font-weight-bold">End Time:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="time" class="form-contol" id="end_time" name="end_time"><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="org_type" class="font-weight-bold">Organisation Type:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="org_type" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="org_name" class="font-weight-bold">Organisation Name:</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="org_name" disabled><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="description" class="font-weight-bold">Description:</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <textarea class="form-control" name="description" rows="8" cols="80" id="description"></textarea><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="prizes" class="font-weight-bold">Prizes:</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <textarea name="prizes" class="form-control" rows="8" cols="80" id="prizes"></textarea><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="rules" class="font-weight-bold">Rules:</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <textarea name="rules" class="form-control" rows="8" cols="80" id="rules"></textarea><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 pt-2">
+                                                        <label for="scoring" class="font-weight-bold">Scoring:</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <textarea name="scoring" class="form-control" rows="8" cols="80" id="scoring"></textarea><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-success">Apply Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
 
-        </div>
-        <script type="text/javascript">
-            function getcontestdetails(){
-              var xhttp;
-          xhttp = new XMLHttpRequest();
-          xhttp.responseType="json";
-          xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+                            </div>
+                        </div>
 
-            document.getElementById('contest_id').setAttribute('value',this.response.contest_id);
-            document.getElementById('contest_name').setAttribute('value',this.response.contest_name);
-            document.getElementById('contest_link').setAttribute('value',this.response.contest_link);
-            document.getElementById('start_date').setAttribute('value',this.response.start_date);
-            document.getElementById('start_time').setAttribute('value',this.response.start_time);
-            document.getElementById('end_date').setAttribute('value',this.response.end_date);
-            document.getElementById('end_time').setAttribute('value',this.response.end_time);
-            document.getElementById('org_type').setAttribute('value',this.response.org_type);
-            document.getElementById('org_name').setAttribute('value',this.response.org_name);
-            document.getElementById('description').innerHTML=this.response.description;
-            document.getElementById('prizes').innerHTML=this.response.prizes;
-            document.getElementById('rules').innerHTML=this.response.rules;
-            document.getElementById('scoring').innerHTML=this.response.scoring;
+                    </div>
+                    <!-- here problems will be displayed -->
+                    <div id="problem-list">
 
+                    </div>
 
+                    <%-include('headfooter');-%>
+                        <!-- script starts here -->
+                        <script type="text/javascript">
+                            function getcontestdetails() {
+                                var xhttp;
+                                xhttp = new XMLHttpRequest();
+                                xhttp.responseType = "json";
+                                xhttp.onreadystatechange = function() {
+                                    // readystate denotes that the request is completed and the data is received and request is ok for status 200
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        //displaying the response coming of the request
 
-            console.log(this.response);
-            }
-          };
+                                        document.getElementById('contest_id').setAttribute('value', this.response.contest_id);
+                                        document.getElementById('contest_name').setAttribute('value', this.response.contest_name);
+                                        document.getElementById('contest_link').setAttribute('value', this.response.contest_link);
+                                        document.getElementById('start_date').setAttribute('value', this.response.start_date);
+                                        document.getElementById('start_time').setAttribute('value', this.response.start_time);
+                                        document.getElementById('end_date').setAttribute('value', this.response.end_date);
+                                        document.getElementById('end_time').setAttribute('value', this.response.end_time);
+                                        document.getElementById('org_type').setAttribute('value', this.response.org_type);
+                                        document.getElementById('org_name').setAttribute('value', this.response.org_name);
+                                        document.getElementById('description').innerHTML = this.response.description;
+                                        document.getElementById('prizes').innerHTML = this.response.prizes;
+                                        document.getElementById('rules').innerHTML = this.response.rules;
+                                        document.getElementById('scoring').innerHTML = this.response.scoring;
 
-          xhttp.open("POST", "/contest/home", true);
-          xhttp.send();}
+                                    }
+                                };
+                                //sending the post ajax request to contest/home  
+                                xhttp.open("POST", "/contest/home", true);
+                                xhttp.send();
+                            }
+                        </script>
 
-        </script>
-
-  </body>
-</html>
+                        <%-include('footfooter');-%>

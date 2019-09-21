@@ -1,0 +1,54 @@
+/* log-container */
+
+.log-container {
+    margin: 4% 7%;
+}
+
+
+/* table container */
+
+.table-container {
+    margin: 2% 9%;
+    padding: 3% 6%;
+    font-family: sans-serif;
+}
+
+.common-pad {
+    padding: 3% 1%;
+}
+
+
+/* media queries */
+
+@media(max-width:900px) {
+    .table-container {
+        margin: 2% 0%;
+        padding: 3% 0%;
+        font-size: 1rem;
+    }
+    span {
+        font-size: 1.2rem;
+    }
+    .log-container {
+        margin: 4% 1%;
+    }
+    .col-sm-2 {
+        width: 30%;
+        align-items: center;
+    }
+    .col-sm-1 {
+        width: 20%;
+    }
+    .btn {
+        padding: 0.2rem 0.2rem;
+    }
+    .addscroll{
+        overflow-x:scroll;
+    }
+}
+@media(max-width:400px)
+{
+    .addscroll{
+        overflow-x:scroll;
+    }
+}

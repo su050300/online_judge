@@ -1,19 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/login.css">
+    <%-include('footheader');-%>
+        <!-- container for the form -->
+        <div class="contain">
+            <!-- form -->
+            <form method='post' action='/contest/login'>
+                <div class="card">
 
-    </title>
-</head>
-<body>
-<h1>Contest Login</h1>
-        <form method = 'post' action = '/contest/login'>
+                    <div class="card-body">
+                        <div class="login-header">
+                            <h4 class="font-weight-bold pt-3">Contest Login</h4>
+                        </div>
+                        <!-- username -->
+                        <div class="login-form">
+                            <div class="form-group">
+                                <div class="row padi">
+                                    <div class="col-sm-1 pl-4"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                    <div class="col-sm-2 text-deco"><label for="user">Username</label></div>
+                                </div>
+                                <div class="row padi">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10"> <input type='text' id="user" class="form-control" name='username' placeholder='Username' required /></div>
+                                </div>
+                            </div>
 
-            <input type = 'text' name = 'username' placeholder = 'Username' required />
-            <input type = 'password' name = 'password' placeholder = 'Password' required />
-            <%if(message)%>
-            <p><%=message%></p>
-            <button name = 'submit'>Submit</button>
-        </form>
-    </body>
-        </html>
+                            <!-- password -->
+                            <div class="form-group">
+                                <div class="row padi">
+                                    <div class="col-sm-1 pl-4"> <i class="fa fa-lock" aria-hidden="true"></i></div>
+                                    <div class="col-sm-2 text-deco"> <label for="password">Password</label></div>
+                                </div>
+                                <div class="row padi">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10"> <input type='password' id="password" class="form-control" name='password' placeholder='Password' required /></div>
+                                    <div class="col-sm-1" id="eye"><i id="aye" class="fa fa-eye pt-1" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="row">
+                                    <!-- displaying message -->
+                                    <!-- <%if(message)%>
+                                        <p>
+                                            <%=message%>
+                                        </p> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-success" name = "submit">Submit</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+        <%-include('headfooter');-%>
+            <script src="/js/jlogin.js"></script>
+        <%-include('footfooter');-%>

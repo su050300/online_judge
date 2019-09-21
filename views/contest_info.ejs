@@ -1,27 +1,65 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
-
-<body>
-
-  <a href="<%=contest_id%>/verify/">verify</a>
-  <a href="<%= contest_id%>/discard/">discard</a>
-  <h1>
-    <%= contest_name%>
-  </h1>
-  <div class="contest-details">
-    <p>Author: <%=author%></p>
-    <p>Start Date: <%=start_date%></p>
-    <p>Start Time: <%=start_time%></p>
-    <p>End Date: <%=end_date%></p>
-    <p>End Time: <%=end_time%></p>
-    <p>Organisation Type: <%=org_type%></p>
-    <p>Organisation Name: <%=org_name%></p>
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/contest_info.css">
+    <%-include('footheaderadmin');-%>
+  <!-- displaying contest basic details to the admin using ejs while contest verification process -->
+  <div class="verify-section">
+      <div class="d-flex flex-row-reverse">
+        <a class="btn btn-primary mr-4" href="<%=contest_id%>/verify/">verify</a>
+        <a class="btn btn-primary mr-4" href="<%= contest_id%>/discard/">discard</a>
+      </div>
   </div>
+ <div class="contest-details">
+      <div class="card">
+        <div class="card-body">
+            <h4 class="text-center border-bottom py-4">
+                <%= contest_name%>
+              </h1>
+            <div class="row py-2">
+                   <div class="col-lg-1"></div>
+
+                   <div class="col-lg-4">
+                      <h5>Author:<span class="text-muted pl-3"> <%=author%></span></p>
+                   </div>
+                 
+            </div>
+            <div class="row">
+              <div class="col-lg-1"></div>
+              <div class="col-lg-4">
+               <h5>Start Date:<span class="text-muted pl-3"><%=start_date%></span></p>
+              </div>
+              <div class="col-lg-2"></div>
+              <div class="col-lg-4">
+                <h5>End Date:<span class="text-muted pl-3"><%=end_date%></span></p>
+               </div>
+               <div class="col-lg-1"></div>
+           </div>
+           <div class="row">
+             <div class="col-lg-1"></div>
+             <div class="col-lg-4">
+             <h5>Start Time:<span class="text-muted pl-3">  <%=start_time%></span></p>
+             </div>
+             <div class="col-lg-2"></div>
+              <div class="col-lg-4">
+                <h5>End Time:<span class="text-muted pl-3">  <%=end_time%></span></p>
+            </div>
+            <div class="col-gl-1"></div>
+           </div>
+           <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-4">
+            <h5>Organisation Type:<span class="text-muted pl-3">  <%=org_type%></span></p>
+            </div>
+            <div class="col-lg-2"></div>
+             <div class="col-lg-4">
+               <h5>Organisation Name:<span class="text-muted pl-3">  <%=org_name%></span></p>
+           </div>
+           <div class="col-lg-1"></div>
+          </div>
+        </div>
+      </div>
+ </div>
+  
+  
 
 </body>
 

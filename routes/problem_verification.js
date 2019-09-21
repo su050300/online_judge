@@ -36,14 +36,17 @@ router.post('/:page_no', redirectAdminLogin, function(req, res, next) {
   connection.query('SELECT problem_id,problem_name,difficulty,subdomain,date FROM problems ', function(err, rows, fields) {
     if (err) throw err
     if (!rows.length) {
-      res.send('no more problems to verify');
-    } else {
+      var senddata = '0';
+      var data = {senddata}
+      res.send(data);
+    } 
+    else {
 
       //setting info for pagination
       var pages = Math.ceil(rows.length*1.0/20.0);
       var page_info = "";
       for (var i = 1;i <= pages;i++){
-        page_info += "<a href = '/admin/problem_verification/" + i + "'>" + i + "</a>"; 
+        page_info += "<li class='page-item'><a class='page-link' href = '/admin/problem_verification/" + i + "'>" + i + "</a></li>"; 
       }
 
       var senddata = "";
@@ -80,6 +83,8 @@ router.get('/:page_no/:problem_id', redirectAdminLogin, function(req, res) {
         if (err) throw err
         
         var problem = {
+          check_id:-1,
+          contest_id:0,
           status: 'unverified',
           author: rows1[0]['username'],
           problem_id: rows[0]['problem_id'],
@@ -97,7 +102,6 @@ router.get('/:page_no/:problem_id', redirectAdminLogin, function(req, res) {
           explanation: rows[0]['explanation']
         }
         
-        //rendering the problem data
         res.render('problem', problem);
       });
     }
@@ -146,7 +150,7 @@ router.get('/:page_no/:problem_id/verify/', redirectAdminLogin, function(req, re
                 if (err) throw err
 
                 mailOptions.to = rows[0]['email'];
-                mailOptions.text = 'Your problem ' + problem_name + ' setted on ' + problem_date + ' has been verified and is added to the site';
+                mailOptions.text = 'Your problem ' + problem_name + ' has been verified and is added to the site';
                 transporter.sendMail(mailOptions, function(error, info) {
                   console.log('mailed');
                   if (error) {

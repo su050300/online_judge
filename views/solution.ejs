@@ -1,0 +1,51 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/solution.css">
+    <%-include('footheader');-%>
+        <!-- result container -->
+        <div class="result-container">
+            <div class="row pad1">
+                <div class="col-lg-6">
+                    <label class="font-weight-bold">Problem Name:</label>
+                    <span class="text-muted pl-2">
+                        <%=problem_name%>
+                    </span>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <label class="font-weight-bold">Language:</label>
+                    <span class="text-muted pl-2">
+                            <%=language%>
+                        </span>
+                </div>
+            </div>
+            
+            <div class="result border bg-light">
+                <div class="row pad2">
+                    <div class="col-lg-10">
+                        <label class="font-weight-bold">Date &amp; Time:</label>
+                        <span class="text-muted pl-2">
+                            <%=datetime%>
+                            </span>
+                    </div>
+                    <div class="col-lg-2 text-right">
+                        <label class="font-weight-bold">Status:</label>
+                        <span class="text-muted pl-2">
+                            <%=status%>
+                                </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col px-5 py-5">
+                        <textarea cols="70" rows="20" style= "resize:none;" disabled><%=solution%></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <%-include('headfooter');-%>
+        <%-include('footfooter');-%>

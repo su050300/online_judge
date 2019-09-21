@@ -1,0 +1,26 @@
+.result-container {
+    margin: 7% 20%;
+    font-size: 1.1rem;
+}
+
+
+/* rows */
+
+.pad1 {
+    padding: 2% 1%;
+    font-size: 1.4rem;
+}
+
+
+/* pad2 */
+
+.pad2 {
+    padding: 2% 3%;
+}
+
+
+/* result */
+
+.result {
+    margin: 5% 0%;
+}

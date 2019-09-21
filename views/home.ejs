@@ -1,20 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-      <% if (message) { %>
-        <p> welcome  <%=message%>!!!</p>
-        <a href = 'logout'>Logout!!</a>
-        <a href = 'problem_set'>Problem Set!!</a>
-        <a href = 'practice'>Practice</a>
-        <a href = '/compete'>Contest</a>
-        <%} else { %>
-        <p> Invalid </p>
-        <a href = 'login'>Login</a>
-        <a href = 'register'>Register</a>
-        <% } %>
-  </body>
-</html>
+<%-include('headheader');-%>
+    <!-- css link -->
+    <link rel="stylesheet" href="/css/home.css">
+    <%-include('footheader');-%>
+    <!-- divisions for cards -->
+        <div class="contest_home">
+            <div class="row toppad">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="200px" src="/images/problemset.jpg" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">Set Problems</h5>
+                            <p class="card-text">Got bored of practicing problems and giving contest.Codespark invites you to set problems that will be made available to users to practice after the verification is done by the admin.</p>
+                            <a href='problem_set' class="btn btn-primary">Problem Set!!</a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="200px" src="/images/prctice.jpg" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">Practice</h5>
+                            <p class="card-text py-2">want to master your problem solving skills and write awesome algorithms.Start practicing problems.</p>
+                            <a href='practice' class="btn btn-primary my-3">Practice</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row toppad">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="200px" src="/images/contest.jpg" alt="host contest">
+                        <div class="card-body">
+                            <h5 class="card-title">Contest</h5>
+                            <p class="card-text py-2">Compete in or host your contest.</p>
+                            <a href='compete' class="btn btn-primary">Contest</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5">
+                    <div class="card">
+                        <img class="card-img-top" height="200px" src="/images/news.jpg" alt="news">
+                        <div class="card-body">
+                            <h5 class="card-title">News</h5>
+                            <p class="card-text">Get rid of ugly font of newspaper.Come and visit our site to get all the tech news at one go.</p>
+                            <a href='/homepge/#news' class="btn btn-primary">Get News</a>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+
+
+        <%-include('headfooter');-%>
+            <%-include('footfooter');-%>

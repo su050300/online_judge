@@ -1,0 +1,51 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+<link rel="stylesheet" href="/css/chat.css">
+<%-include('footheader');-%>
+<div class="chat-contain">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="usr-ifo-contr">
+        <div class="card">
+          <div class="card-header">
+            <div class="chat-header">
+              <h4 class="text-center">Friends</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush friendlist">
+
+
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-lg-6">
+      <!-- chat-box -->
+      <div class="chat-box">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="text-center py-3" id = "username">Select username</h4>
+          </div>
+          <!-- friendchat here -->
+          <div class="card-body friendchat">
+
+          </div>
+          <div class="card-footer chatbutton">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%-include('headfooter');-%>
+<script src="/js/jchat.js"></script>
+<%-include('footfooter');-%>

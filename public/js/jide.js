@@ -6,6 +6,8 @@ text.innerHTML = 1;
 var sel = document.getElementById("numbering");
 sel.appendChild(text);
 
+
+//for setting enter key to break the line
 document.getElementById("txtarea").addEventListener("keydown", (key) => {
     sel = document.getElementById("numbering");
     var num = document.getElementById("txtarea").value.split("\n").length;
@@ -41,6 +43,7 @@ document.getElementById("txtarea").addEventListener("keydown", (key) => {
 
 });
 
+//for paste feature of ide
 document.getElementById("txtarea").onpaste = () => {
     setTimeout(() => {
         var childcoun = sel.childElementCount;

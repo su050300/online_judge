@@ -1,0 +1,18 @@
+/* table container */
+
+.ldtabcont {
+    margin: 7% 18%;
+}
+/* card css */
+.card{
+   margin:2% 3%;
+}
+@media(max-width:500px)
+{
+    .ldtabcont {
+        margin: 7% 4%;
+    }
+    .addscroll{
+        overflow-x:scroll;
+    }
+}

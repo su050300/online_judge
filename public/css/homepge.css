@@ -1,0 +1,181 @@
+/* container-fluid */
+
+.container-fluid {
+    background-image: url("/images/codesp.jpg");
+    background-attachment: fixed;
+}
+
+.headr {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+}
+
+.fo {
+    font-family: sans-serif;
+}
+
+.transp {
+    background-color: transparent !important;
+}
+
+
+/* challenges and practice section */
+
+.chall,
+.pract,
+.log {
+    transition: 1s;
+}
+
+.chall:hover {
+    stroke: white;
+    stroke-width: 4;
+    stroke-dasharray: 95;
+    animation: chall 1s ease-in-out;
+    transform: translateY(-2px);
+}
+
+.log:hover {
+    stroke: white;
+    stroke-width: 4;
+    stroke-dasharray: 56;
+    animation: log 1s ease-in-out;
+    transform: translateY(-2px);
+}
+
+.pract:hover {
+    stroke: white;
+    stroke-width: 4;
+    stroke-dasharray: 70;
+    animation: pract 1s ease-in-out;
+    transform: translateY(-2px);
+}
+
+.tags {
+    position: relative;
+    top: 14px;
+    left: 4.8px;
+}
+
+li svg {
+    position: relative;
+    top: -11.6px;
+    left: 4.8px;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+
+/* images */
+
+.top-sec {
+    padding: 12% 15%;
+    color: white;
+}
+
+
+/* descipt section */
+
+.desc-sect {
+    padding: 7% 15%;
+    margin: 0;
+}
+
+
+/* ide section */
+
+.ide-sect {
+    padding: 7% 5%;
+    background-color: #ffb997;
+}
+
+.ide-part {
+    padding: 7% 7%;
+}
+
+.fa-flag-checkered,
+.fa-code,
+.fa-brackets-curly {
+    font-size: 5rem;
+    color: #c70d3a;
+}
+
+
+/* news section */
+
+.padiit {
+    margin-top: 5%;
+}
+
+.news-section {
+    margin-top: 20%;
+    padding: 7% 25%;
+    background-color: #eaebd8;
+}
+
+.carousel {
+    transform: translateY(-70%);
+}
+/* carousel-control-prev */
+.carousel-control-prev,.carousel-control-next{
+    position:absolute;
+    top:20%;
+    bottom:20%;
+}
+img {
+    background-size: cover;
+    height: 300px;
+}
+
+.news-sec {
+    transform: translateY(-90%);
+}
+
+
+/* keyframes */
+
+@keyframes chall {
+    from {
+        stroke-dashoffset: 95;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes log {
+    from {
+        stroke-dashoffset: 56;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes pract {
+    from {
+        stroke-dashoffset: 70;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+/* media queries   */
+
+@media(max-width:900px) {
+    .carousel {
+        transform: translateY(-10%);
+    }
+    .news-section {
+        margin-top: 20%;
+        padding: 3% 0%;
+        background-color: #eaebd8;
+    }
+    .news-sec {
+        transform: translateY(0);
+    }
+}

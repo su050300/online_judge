@@ -21,19 +21,15 @@ router.post('/',redirectHome,function(req,res,next){
     if(rows.length){
       res.render('register',{message:'Username already exists'});
     }
-  });
-
-  //checking for existing email
-  connection.query('SELECT * FROM user WHERE email = ?', [req.body.email], function (err, rows, fields) {
-    if (err) throw err
-
-    if(rows.length){
-  res.render('register',{message:'Email already exists'});
-    }
-  });
-
-  //finding hashed password of the entered password
-      var  pass=saltHashPassword(req.body.password);
+    else{
+      connection.query('SELECT * FROM user WHERE email = ?', [req.body.email], function (err, rows, fields) {
+        if (err) throw err
+    
+        if(rows.length){
+      res.render('register',{message:'Email already exists'});
+        }
+        else{
+          var  pass=saltHashPassword(req.body.password);
       const user = {
          name : req.body.name,
          username : req.body.username,
@@ -56,7 +52,11 @@ router.post('/',redirectHome,function(req,res,next){
             });
          });
 
-   });
+        }
+      });
+    }
+  });
+});
 
 
 // function for creating hashed password

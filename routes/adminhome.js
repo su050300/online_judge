@@ -6,4 +6,5 @@ var redirectAdminLogin = require('../middleware/check').redirectAdminLogin;
 router.get('/' ,redirectAdminLogin,(function(req,res,next){
     res.render('adminhome.ejs',{message:''});
 }));
+
 module.exports=router;

@@ -10,7 +10,7 @@ router.get('/' ,redirectContestLogin,(function(req,res,next){
 }));
 
 
-//post api for the home page of user after login is successful
+//post api for the home page of contest after login is successful
 router.post('/',redirectContestLogin,function(req,res,next)
 {
   var contest_id=req.session.contest_id;

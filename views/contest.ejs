@@ -5,14 +5,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     </head>
-
+  <!-- on page reload it will call the function button_change()-->
     <body onload = 'button_change()'>
         <!-- header container -->
         <div class="container-fluid headr">
             <nav class="navbar navbar-expand-lg navbar-dark transp bg-dark">
-                <a class="navbar-brand" href="index.html">
-                    <button class="btn-secondary fo">Codespark</button>
-                </a>
+                    <a class="navbar-brand" href="/homepge">
+                            Codespark
+                        </a>
                 <!-- ending -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navba" aria-controls="navba" aria-expanded="false">
                     
@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navba">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link chall" href="#">
+                            <a class="nav-link chall" href="/compete">
                                 <h5 class="tags">Challenges </h5>
                                 <svg height="2" width="112">
                                         <line x1="0" y1="0" x2="112" y2="0" class="line">
@@ -35,7 +35,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pract" href="#">
+                            <a class="nav-link pract" href="/practice">
                                 <h5 class="tags">
                                     Practice</h5><svg height="2" width="83">
                                     <line x1="0" y1="0" x2="83" y2="0" class="line">
@@ -52,9 +52,12 @@
                                 <i class="fa fa-user-circle"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="drop">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Submissions</a></li>
-                                <li><a class="dropdown-item" href="#">Followers</a></li>
+                                <li><a class="dropdown-item" href="/user_profile">Profile</a></li>
+                            
+                                <li><a class="dropdown-item" href="follower">Followers</a></li>
+                            <li><a class="dropdown-item" href="chat">Chat</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="logout">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -63,7 +66,24 @@
                 </div>
             </nav>
 
-            <div class="contn">
+            <div class="timer" id = "ttttt">
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-1 bg-light py-3 px-2">
+                            <label class="font-weight-bold text-center">Days</label><div class="px-3" id="days"></div>
+                    </div>
+                    <div class="col-lg-1 bg-light py-3 px-2">  
+                            <label class="font-weight-bold text-center">Hours</label><div class="px-3" id="hours"></div>
+                    </div>
+                    <div class="col-lg-1 bg-light py-3 px-2">
+                            <label class="font-weight-bold text-center">Minutes</label><div class="px-3" id="minutes"></div>
+                    </div>
+                    <div class="col-gl-1 bg-light py-3 px-2">
+                            <label class="font-weight-bold text-center">Seconds</label><div class="px-3" id="seconds"></div>
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>      
+            </div>
                 <h3 class="text-center py-4">
                     <p id = "contest_name"></p>
                 </h3>
@@ -94,12 +114,12 @@
                     <div class="col-sm-1">
                         <p>End Time:</p>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <span class="pad" id = "end_time"></span>
                     </div>
                 </div>
 
-                <div class="button text-center py-5">
+                <div class="prob-button py-4">
                     <button onclick="window.location.href=window.location.href+'/register'" class="btn btn-success btn-lg" id ="button_status" style="display:none;"></button>
                 </div>
 
@@ -170,42 +190,58 @@
         </div>
         </div>
 
+        <%-include('headfooter');-%>
+
+        
         <script src="/js/contest.js"></script>
 
         <script>
         function button_change() {
-            // console.log("called");
             var xhttp;
             xhttp = new XMLHttpRequest();
-            xhttp.responseType = "json";
+            xhttp.responseType = "json";  //setting responsetype as json to handle json incoming data
             xhttp.onreadystatechange = function() {
+            // readystate denotes that the request is completed and the data is received and request is ok for status 200
+
             if (this.readyState == 4 && this.status == 200) {
                 var reference = this.response;
-                // console.log(reference.register + "status");
+                countdown(this.response.startdt,this.response.enddt);
+                console.log(this.response.indiaTime+ " " + this.response.rows[0]['start_date'] + " " + this.response.rows[0]['start_time']);
+                // gettimer(this.response.date,this.response.rows[0]['start_date']);
+               //checking for what message is coming and acts accordingly
+
+                //if user is registered but the contest is not live yet
                 if (this.response.register === "registered"){
                     document.getElementById('contest_name').innerHTML = "You are registered for the contest " + reference.rows[0]['contest_name'] + " and will be notified 1 hr before the contest.";
                 } 
+                //if user is not registered
                 else if (this.response.register === "Not Registered"){
                     document.getElementById('contest_name').innerHTML = "Register now for the contest " + reference.rows[0]['contest_name']; 
                     document.getElementById('button_status').innerHTML = "Register";
                     document.getElementById('button_status').style.display = "block";
                 }
+                //if contest is live
                 else if (this.response.register === "Solve Problems"){
                     document.getElementById('contest_name').innerHTML = "Contest " + reference.rows[0]['contest_name'] + " has started<br>Click below to solve problems "; 
                     document.getElementById('button_status').innerHTML = "Solve Problems";
                     document.getElementById('button_status').style.display = "block";
                     document.getElementById('button_status').setAttribute("onclick","window.location.href=window.location.href+'/solve_problems'");
                 }
+                //if contest setter tries to enter the contesst
                 else if (this.response.register === "Not Allowed"){
                     document.getElementById('contest_name').innerHTML = "You are not allowed to participate in this contest " + reference.rows[0]['contest_name'] + " because you are contest host "; 
                 }
+                //if contest has ended
                 else{
+                    document.getElementById('ttttt').style.display = "none"; 
                     document.getElementById('contest_name').innerHTML = "Contest " + reference.rows[0]['contest_name'] + " has ended<br>Click below to practice problems "; 
                     document.getElementById('button_status').innerHTML = "Practice Problems";
                     document.getElementById('button_status').style.display = "block";
                     document.getElementById('button_status').setAttribute("onclick","window.location.href=window.location.href+'/practice_problems'");
 
                 }
+
+                //common things for all condition
                 var startDate = new Date(reference.rows[0]['start_date']).toUTCString();
                 var endDate = new Date(reference.rows[0]['end_date']).toUTCString();
                 document.getElementById('start_date').innerHTML = startDate.slice(0,16);
@@ -219,11 +255,44 @@
                 document.getElementById('scoring').innerHTML = reference.rows[0]['scoring'];
             }
         }
+
+        //sending the post ajax request to the same page  
             xhttp.open("POST", window.location.href, true);
             xhttp.send();
         }
-        setInterval("button_change()",1000);
-        
+        setInterval("button_change()",1000); //sending request every second to check whether contest is ended or not
+
+        function countdown(startDate,endDate) {
+            let days, hours, minutes, seconds;
+
+                
+                let timeRemaining = parseInt((endDate - startDate) / 1000);
+                
+                if (timeRemaining >= 0) {
+                days = parseInt(timeRemaining / 86400);
+                timeRemaining = (timeRemaining % 86400);
+                
+                hours = parseInt(timeRemaining / 3600);
+                timeRemaining = (timeRemaining % 3600);
+                
+                minutes = parseInt(timeRemaining / 60);
+                timeRemaining = (timeRemaining % 60);
+                
+                seconds = parseInt(timeRemaining);
+                
+                document.getElementById("days").innerHTML = parseInt(days, 10);
+                document.getElementById("hours").innerHTML = ("0" + hours).slice(-2);
+                document.getElementById("minutes").innerHTML = ("0" + minutes).slice(-2);
+                document.getElementById("seconds").innerHTML = ("0" + seconds).slice(-2);
+                } else {
+                return;
+                }
+            }
+            
+
 
         </script>
-        <%-include('footer');-%>
+
+<%-include('footfooter');-%>
+
+

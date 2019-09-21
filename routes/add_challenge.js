@@ -16,7 +16,6 @@ router.get('/' ,redirectContestLogin,(function(req,res,next){
 
 //post api for adding a challenge either existing or a new challenge into the contest by the contest setter
 router.post('/',redirectContestLogin,function(req,res,next){
-    console.log(req.body.search);
     connection.query("SELECT problem_name,problem_id FROM verified_problems WHERE problem_name LIKE ? AND problem_id NOT IN(SELECT problem_id FROM contest_old_problems) LIMIT 6",['%'+req.body.search+'%'],function(err,rows,fields){
       if(err) throw err
 
@@ -118,6 +117,7 @@ router.post('/new_challenge',redirectContestLogin,function(req,res,next){
                                     if (!fs.existsSync(dir)){
                                         fs.mkdirSync(dir);
                                     }
+                                    
                                     //unziping the zipped folder and moving it to contest_new_problems folder
                                     var inputFileName = dir + '.zip';
                                     var extractToDirectory = dir;

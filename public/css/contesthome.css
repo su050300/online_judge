@@ -1,60 +1,73 @@
-    body {
-        background-color: #859398;
-        background-size: cover;
+body {
+    background-color: #e0e0e0;
+}
+
+.contest_home>.row {
+    margin-right: 0;
+}
+
+.contest_home {
+    margin: 7% 0;
+    font-size: 1.2rem;
+}
+
+
+/* cards */
+
+.card {
+    box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+    padding: 8% 8%;
+}
+
+.card-header {
+    background-color: #6c757d;
+}
+
+
+/* textarea */
+
+textarea {
+    resize: none;
+}
+
+
+/* navigation bar */
+
+
+
+.navbg {
+    font-size: 1.2rem;
+    margin: 3% 0%;
+}
+
+.navbg:hover {
+    background-color: #63707e !important;
+}
+
+@media (max-width:700px) {
+    .navbar-toggler-icon {
+        color: black !important;
+        z-index: 1;
     }
-    /* containers */
-    
-    .cont {
-        padding: 10% 0;
-        background-size: 100%;
-        font-family: 'IBM Plex Sans', sans-serif;
+    .navit {
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+    .navbg {
+        font-size: 1rem;
         text-align: center;
     }
-    
-    .contain {
-        font-size: 1.8rem;
-        font-family: 'IBM Plex Sans', sans-serif;
-        color: white;
+    .navpd {
+        padding: 0;
+        background-color: #333333;
     }
-    
-    .display-bar {
-        width: 28%;
-        animation: dis-bar 1s ease-in-out;
-        text-align: center;
+    .card {
+        margin: 7% 3%;
     }
-    /* list */
-    
-    li a {
-        font-size: 1.2rem;
-        color: #647568;
+    .col-lg-2 {
+        width: 100%;
     }
-    
-    li a:hover {
-        text-decoration: none;
-    }
-    /* keyframes */
-    
-    @keyframes dis-bar {
-        from {
-            transform: translateX(-15%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    /* media queries */
-    
-    @media(max-width:900px) {
-        .col-sm-4 {
-            width: 50%;
-        }
-        .contain,
-        li a {
-            font-size: 1;
-        }
-        .cont {
-            align-content: center;
-        }
-    }
+}

@@ -1,0 +1,240 @@
+<!-- header using ejs -->
+<%-include('headheader');-%>
+    <link rel="stylesheet" href="/css/user_profile.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
+    <!-- user profile  -->
+    <%-include('footheader');-%>
+    <div class="d-flex flex-row-reverse py-4">
+          <div class="col-lg-2">
+            <a class="btn btn-primary" href = "/user_profile/requests/1" role = "button">Friend Request</a>
+          </div>
+          <div class="col-lg-4 text-right py-1">
+                <div class="search-container">
+            <div id="challenges">
+                <input type="text" class="form-control" placeholder="Search coders here.." id = "search_bar" name="search_user" onkeyup="searc()" >
+                        <div class="users_list">
+
+                        </div>
+            </div>
+        </div>
+          </div>
+    </div>
+   
+        <div class="user">
+            <div class="row">
+                <div class="col-lg-3 pic">
+                    <div class="profile-pic">
+                        <a href="">
+                            <img src="/images/user-default.png" class="border" width="180px" height="180px" alt="userhandle">
+                        </a>
+
+                    </div>
+                </div>
+                <!-- user follower section -->
+                <div class="col-lg-3">
+                    <div class="name">
+                        <h3 class="text-muted">
+                            <%=name%>
+                        </h3>
+                    </div>
+                    <div class="folow">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+                                <a href ="user_profile/followers/1">Followers:</a>
+                                <span class="badge badge-primary badge-pill"><%=followers%></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                <a href ="user_profile/following/1">Following:</a>
+                                <span class="badge badge-primary badge-pill"><%=following%></span>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                <a href ="user_profile/friends/1">Friends:</a>
+                                <span class="badge badge-primary badge-pill"><%=friends%></span>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
+
+                                Points:
+                                <span class="badge badge-primary badge-pill"><%=points%></span>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- about user -->
+                <div class="col-lg-6">
+                    <div class="col pad-adder">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="username"><p class="text-muted">Username:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=username%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="state"><p class="text-muted">State:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=state%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="city"><p class="text-muted">City:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=city%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="college"><p class="text-muted">College:</p></label>
+                            </div>
+                            <div class="col-sm-8 specfont">
+                                <p>
+                                    <%=college%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+        </div>
+         <!-- pie charts -->
+         <div class="pie-chart">
+            <div id="chart_wrap">
+                <div id="chart_div">
+                    <div id="piechart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- problem solved -->
+        <div class="problm-solved">
+
+        </div>
+        <%-include('headfooter');-%>
+       
+       <script>
+        function searc(){
+            var search = document.getElementById('search_bar').value;
+            
+            if (search) {
+              var xhttp;
+              xhttp = new XMLHttpRequest();
+              xhttp.responseType = "json";
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.querySelector(".users_list").innerHTML = "";
+                  for (var i = 0; i < 5 && i < this.response.length; ++i)
+                    document.querySelector(".users_list").innerHTML += '<div class="user_item" id="' + this.response[i].id + '" onclick="select_user(this.id)">' + this.response[i].username + '</div>';                
+                }
+              };
+              
+              xhttp.open("POST", window.location.href + "/search_user", true);
+              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhttp.send("search=" + search);
+        
+            } else {
+              document.querySelector(".users_list").innerHTML = "";
+            }
+          }
+
+          function select_user(id) {
+            window.location.href = "/user_profile/find_user/" + id;              
+          }
+          
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var total_submissions = 0,re = 0,wa = 0,tle = 0,ac = 0,ce = 0;
+                var xhttp;
+                xhttp = new XMLHttpRequest();
+                xhttp.responseType = "json";
+                xhttp.onreadystatechange = function() {
+                // readystate denotes that the request is completed and the data is received and request is ok for status 200        
+                    if (this.readyState == 4 && this.status == 200) {
+                       re = this.response.re;
+                       wa = this.response.wa;
+                       tle = this.response.tle;                       
+                       ac = this.response.ac;
+                       ce = this.response.ce;
+                       total_submissions = ac+wa+tle+re+ce+'';
+                        
+                       var run_time = 'Runtime_Error',wrong_ans = 'Wrong_Answers',time_limit = 'Time_Limit_Exceeded',accept_ans = 'Accepted_Solutions',compile_err = 'Compile_Error';
+                        var data = google.visualization.arrayToDataTable([
+
+                            ['total_submission',''],
+                            [run_time, re],
+                            [wrong_ans, wa],
+                            [time_limit, tle],
+                            [accept_ans, ac],
+                            [compile_err, ce],
+
+                        ]);
+
+                        var options = {
+
+                            title: 'Submissions',
+                            sliceVisibilityThreshold:0,
+                            titleTextStyle: {
+                                fontName: 'sans serif',
+                                fontSize: '24',
+                            },
+                            colors: ['#0066ff', '#ff4d4d', '#ffff00', '#99ff33', '#ff8000'],
+                            pieSliceText: 'value',
+                            fontName: 'sans serif',
+                            fontSize: '16',
+                            is3D: 'true',
+                            tooltip: {
+                                text: 'value',
+
+                                textStyle: {
+                                    color: '#333333',
+                                }
+                            },
+                            legend: {
+                                alignment: 'center',
+                            }
+                            };
+
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            chart.draw(data, options);
+                    }
+                };
+
+            //sending the post ajax request to the same page    
+            xhttp.open("POST", window.location.href, true);
+            xhttp.send();
+                
+              
+                $(window).on("throttledresize", function(event) {
+                    var options = {
+                        width: '100%',
+                        height: '100%'
+                    };
+
+                    var data = google.visualization.arrayToDataTable([]);
+                    drawChart(data, options);
+                });
+            }
+
+        </script>
+            <%-include('footfooter');-%>

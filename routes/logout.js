@@ -8,6 +8,7 @@ router.get('/',redirectLogin,function(req,res,next){
     req.session.username = null;
     req.session.userId = null;
         
-    res.redirect('/login');
+    res.redirect('/homepge');
 });
+
 module.exports=router;
