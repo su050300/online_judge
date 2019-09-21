@@ -21,6 +21,14 @@ REG no. -> 20184098
 ##http://localhost:3000/auth/github/redirect"  <--- ONLY MENTION THIS REDIRECT URL WHILE CREATING THE CLIENT_ID
 
 
+#RUN THE FOLLOWING BELOW COMMAND IN THE TERMINAL IN YOUR PROJECT DIRECTORY
+
+npm init
+npm install body-parser compile-run connect-flash cookie-parser ejs express express-fileupload express-session fs-extra memorystore mysql node-cron nodemailer path unzip
+
+
+
+
 DATABASE SCHEMA
 
 TABLES:-
